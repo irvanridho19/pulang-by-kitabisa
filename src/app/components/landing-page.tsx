@@ -1,34 +1,47 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router";
-import svgPaths from "../../imports/svg-sufop3nt1x";
 import imgImageProblemsBackground from "@/assets/problems-background.png";
 import imgImage9 from "@/assets/image-9.png";
-import imgHero from "@/assets/hero.svg";
+import imgHero from "@/assets/hero-2.png";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { usePageTransition } from "./page-transition";
 
 /* ── Sticky CTA ─── */
 function StickyBottomCtaBar({ visible }: { visible: boolean }) {
   const { navigateWithLoading } = usePageTransition();
+  const phoneLink = "tel:+6281234567890";
   return (
     <div
       className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-50 transition-all duration-300 ease-in-out ${visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"
         }`}
     >
       <div className="bg-[#f9f7f3] flex flex-col items-start overflow-clip pb-[16px] pt-[12px] px-[16px] rounded-tl-[12px] rounded-tr-[12px] shadow-[0px_-4px_20px_0px_rgba(89,70,53,0.12)] w-full">
-        <div className="flex items-center justify-center w-full mb-[12px]">
+        {/* <div className="flex items-center justify-center w-full mb-[12px]">
           <p className="font-['Outfit',sans-serif] font-medium leading-[normal] text-[#594635] text-[12px] whitespace-nowrap">
             Mulai dari Rp 200.000/tahun
           </p>
-        </div>
+        </div> */}
         <button
           onClick={() => navigateWithLoading("/purchase")}
-          className="bg-[#af9160] flex h-[52px] items-center justify-center overflow-clip rounded-[100px] shadow-[0px_2px_8px_0px_rgba(20,13,5,0.35)] w-full cursor-pointer border-none p-0"
+          className="bg-[#174291] flex h-[52px] items-center justify-center overflow-clip rounded-[8px] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] w-full cursor-pointer border-none p-0"
         >
           <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[16px] text-white whitespace-nowrap">
             Daftar jadi anggota
           </p>
         </button>
+        <a
+          href={phoneLink}
+          className="rounded-[12px] shrink-0 no-underline block w-full"
+        >
+          <div className="flex flex-col gap-[4px] items-center justify-center px-[16px] py-[8px] w-full">
+            <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#1f1f1f] text-[11px] text-center">
+              Belum jadi anggota dan butuh layanan cepat?
+            </p>
+            <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#750d33] text-[13px] text-center underline decoration-solid">
+              Pesan layanan langsung 24 jam
+            </p>
+          </div>
+        </a>
       </div>
     </div>
   );
@@ -41,7 +54,7 @@ function SectionHero({ ctaRef }: { ctaRef?: React.RefObject<HTMLDivElement | nul
 
   return (
     <div
-      className="bg-gradient-to-b from-[#fffdf9] to-[#f5f0e8] flex flex-col gap-[24px] items-start justify-center overflow-clip pb-[40px] pt-[44px] px-[20px] relative w-full"
+      className="bg-white flex flex-col gap-[24px] items-start justify-center overflow-clip pb-[40px] pt-[44px] px-[20px] relative w-full"
       id="hero-section"
     >
       {/* Decoration ellipse */}
@@ -65,9 +78,8 @@ function SectionHero({ ctaRef }: { ctaRef?: React.RefObject<HTMLDivElement | nul
       {/* Hero Content */}
       <div className="flex flex-col gap-[20px] items-start relative shrink-0 w-full">
         {/* Heading — centered */}
-        <p className="font-['Lora',serif] font-bold text-[#1f2a37] text-[28px] w-full leading-[1.3] text-center">
-          <span>{"Menemanimu Menyiapkan"}</span> <br />
-          <span className="text-[#af9160]">Kepulangan</span>
+        <p className="font-['Lora',serif] font-bold text-[#1f1f1f] text-[24px] w-full leading-[1.4] text-center">
+          Menemanimu Menyiapkan <br />Kepulangan
         </p>
 
         {/* Hero Image */}
@@ -86,30 +98,29 @@ function SectionHero({ ctaRef }: { ctaRef?: React.RefObject<HTMLDivElement | nul
         </p>
 
         {/* CTA Buttons */}
-        <div ref={ctaRef} className="flex flex-col gap-[12px] items-center shrink-0 w-full mt-[4px]">
+
+        <div ref={ctaRef} className="flex flex-col gap-[10px] items-center shrink-0 w-full mt-[4px]">
           <button
             onClick={() => navigateWithLoading("/purchase")}
-            className="bg-[#1f1912] rounded-[100px] shadow-[0px_8px_20px_-4px_rgba(26,18,10,0.3)] shrink-0 w-full cursor-pointer border-none p-0 block transition-transform active:scale-95"
+            className="bg-[#1f1912] rounded-[8px] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] shrink-0 w-full cursor-pointer border-none p-0 block transition-transform active:scale-95"
           >
-            <div className="flex items-center justify-center px-[24px] py-[16px] w-full">
-              <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[15px] text-white whitespace-nowrap">
+            <div className="flex items-center justify-center px-[24px] py-[14px] w-full">
+              <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[14px] text-white whitespace-nowrap">
                 Daftar jadi anggota
               </p>
             </div>
           </button>
           <a
             href={phoneLink}
-            className="rounded-[100px] shrink-0 no-underline block"
+            className="rounded-[12px] shrink-0 no-underline block w-full"
           >
-            <div className="flex gap-[6px] items-center justify-center px-[12px] py-[8px] w-full">
-              <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#750d33] text-[14px] whitespace-nowrap">
-                Ada keluarga meninggal? Telepon call center 24 jam
+            <div className="flex flex-col gap-[4px] items-center justify-center px-[16px] py-[8px] w-full">
+              <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#1f1f1f] text-[11px] text-center">
+                Belum jadi anggota dan butuh layanan cepat?
               </p>
-              <div className="overflow-clip relative shrink-0 size-[14px] flex items-center justify-center">
-                <svg width="12" height="12" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M2.91666 7H11.0833M11.0833 7L7.58332 3.5M11.0833 7L7.58332 10.5" stroke="#750D33" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-                </svg>
-              </div>
+              <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#750d33] text-[13px] text-center underline decoration-solid">
+                Pesan layanan langsung 24 jam
+              </p>
             </div>
           </a>
         </div>
@@ -118,96 +129,80 @@ function SectionHero({ ctaRef }: { ctaRef?: React.RefObject<HTMLDivElement | nul
   );
 }
 
-/* ── Icon SVGs for Problem Cards ─── */
-function IconHighCost() {
-  return (
-    <div className="relative shrink-0 size-[32px]">
-      <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 32">
-        <rect fill="#BDA67A" fillOpacity="0.15" height="32" rx="7.27" width="32" />
-        <rect height="10.54" rx="1.64" stroke="#BDA67A" strokeWidth="1.09" width="16.36" x="7.82" y="10.73" />
-        <rect height="4.73" rx="0.91" stroke="#BDA67A" strokeWidth="1.09" width="6.18" x="18" y="13.64" />
-        <circle cx="21.09" cy="16" fill="#BDA67A" r="1.45" />
-        <line stroke="#BDA67A" strokeLinecap="round" strokeWidth="1.09" x1="10.73" x2="21.27" y1="9.64" y2="9.64" />
-      </svg>
-    </div>
-  );
-}
-
-function IconLongAdmin() {
-  return (
-    <div className="relative shrink-0 size-[32px]">
-      <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 32">
-        <rect fill="#BDA67A" fillOpacity="0.15" height="32" rx="7.27" width="32" />
-        <rect height="16.36" rx="0.91" stroke="#BDA67A" strokeWidth="1.09" width="13.45" x="9.27" y="7.82" />
-        <line stroke="#BDA67A" strokeLinecap="round" strokeWidth="1.09" x1="12.91" x2="19.09" y1="13.27" y2="13.27" />
-        <line stroke="#BDA67A" strokeLinecap="round" strokeWidth="1.09" x1="12.91" x2="19.09" y1="16.18" y2="16.18" />
-        <line stroke="#BDA67A" strokeLinecap="round" strokeWidth="1.09" x1="12.91" x2="16.18" y1="19.09" y2="19.09" />
-      </svg>
-    </div>
-  );
-}
-
-function IconFarFamily() {
-  return (
-    <div className="relative shrink-0 size-[32px]">
-      <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 32 32">
-        <rect fill="#BDA67A" fillOpacity="0.15" height="32" rx="7.27" width="32" />
-        <path d={svgPaths.p1145ba80} stroke="#BDA67A" strokeWidth="1.09" />
-        <circle cx="16" cy="12.36" fill="#BDA67A" r="1.45" />
-        <line stroke="#BDA67A" strokeLinecap="round" strokeWidth="1.09" x1="16.24" x2="14.55" y1="20.36" y2="23.76" />
-        <line stroke="#BDA67A" strokeLinecap="round" strokeWidth="1.09" x1="16.73" x2="18.43" y1="20.6" y2="23.99" />
-      </svg>
-    </div>
-  );
-}
-
-/* ── Problems Section ─── */
+/* ── Problems / Misi Section ─── */
 function SectionProblems() {
-  const problemCards = [
-    { icon: <IconHighCost />, title: "Biaya pengurusan kematian mahal" },
-    { icon: <IconLongAdmin />, title: "Administrasi menyita waktu" },
-    { icon: <IconFarFamily />, title: "Risiko membebani keluarga" },
+  const problems = [
+    "Biaya pengurusan kematian mahal",
+    "Administrasi menyita waktu",
+    "Duka keluarga panjang",
   ];
 
   return (
-    <div className="bg-[rgba(31,31,31,0.8)] relative shrink-0 w-full">
-      <div className="flex flex-col justify-center overflow-clip size-full">
-        <div className="flex flex-col gap-[24px] items-start justify-center px-[20px] py-[36px] relative w-full">
-          {/* Background image */}
-          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 h-full w-full mix-blend-multiply pointer-events-none">
-            <img
-              alt=""
-              className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-              src={imgImageProblemsBackground}
-            />
-          </div>
+    <div className="relative shrink-0 w-full overflow-hidden bg-[#1a1613]">
+      {/* Background image */}
+      <img
+        alt=""
+        src={imgImageProblemsBackground}
+        className="absolute inset-0 size-full object-cover opacity-55 pointer-events-none"
+      />
+      {/* Vignette overlay for legibility */}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(20,16,12,0.55) 0%, rgba(20,16,12,0.75) 60%, rgba(20,16,12,0.92) 100%)",
+        }}
+      />
 
-          {/* Heading */}
-          <div className="flex flex-col gap-[16px] items-start relative shrink-0 w-full">
-            <p className="font-['Lora',serif] font-bold text-[22px] text-white w-full leading-[1.4]">
-              {"Menyiapkan kepulangan = "}
-              <br />
-              <span className="text-[#af9160]">cara bertanggung jawab menjalani hidup yang rentan</span>
-            </p>
-            <p className="font-['Outfit',sans-serif] font-normal leading-[1.55] text-[14px] text-white w-full">
-              Kematian bisa hadir tiba-tiba. Tanpa persiapan, keluarga harus menanggung beban berikut:
-            </p>
-          </div>
-
-          {/* Cards — horizontal row */}
-          <div className="flex gap-[8px] items-stretch relative shrink-0 w-full">
-            {problemCards.map((card, i) => (
-              <div key={i} className="flex flex-1 self-stretch">
-                <div className="bg-[rgba(31,31,31,0.7)] flex flex-1 flex-col gap-[16px] items-start p-[14px] rounded-[14px]">
-                  {card.icon}
-                  <p className="font-['Outfit',sans-serif] font-normal leading-[1.4] text-[13px] text-white w-full">
-                    {card.title}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+      <div className="relative flex flex-col gap-[22px] items-start px-[24px] py-[44px] w-full">
+        {/* MISI badge */}
+        <div className="bg-[rgba(189,166,122,0.18)] border border-[rgba(189,166,122,0.35)] flex items-center px-[14px] py-[5px] rounded-[100px]">
+          <p className="font-['Outfit',sans-serif] font-semibold text-[#d5bf92] text-[11px] tracking-[2px] whitespace-nowrap">
+            MISI
+          </p>
         </div>
+
+        {/* Heading */}
+        <p className="font-['Lora',serif] font-bold text-white text-[26px] leading-[1.28] w-full">
+          Logo Pulang terinspirasi dari simbol (&minus;) pada papan nisan
+        </p>
+
+        {/* Intro paragraphs */}
+        <div className="flex flex-col gap-[14px] w-full">
+          <p className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[14px] text-[rgba(255,255,255,0.82)] w-full">
+            Simbol di antara tahun lahir dan tahun wafat ini mengingatkan kita bahwa hidup ini sangat singkat.
+          </p>
+          <p className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[14px] text-[rgba(255,255,255,0.82)] w-full">
+            Tanpa persiapan, kematian yang tiba-tiba dapat membebani keluarga, seperti:
+          </p>
+        </div>
+
+        {/* Bullet list */}
+        <ul className="flex flex-col gap-[10px] w-full list-none p-0 m-0">
+          {problems.map((item, i) => (
+            <li key={i} className="flex gap-[12px] items-start w-full">
+              <span className="mt-[8px] shrink-0 size-[5px] rounded-full bg-[#d5bf92]" />
+              <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.6] text-[14px] text-white">
+                {item}
+              </p>
+            </li>
+          ))}
+        </ul>
+
+        {/* Closing paragraph */}
+        <p className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[14px] text-[rgba(255,255,255,0.82)] w-full">
+          Karena itu, Pulang menawarkan layanan kematian agar kamu dan keluarga tenang berpulang.
+        </p>
+
+        {/* CTA pill */}
+        <button
+          type="button"
+          className="bg-[rgba(189,166,122,0.14)] border border-[rgba(189,166,122,0.4)] flex items-center px-[18px] py-[10px] rounded-[100px] mt-[4px] cursor-pointer transition-colors hover:bg-[rgba(189,166,122,0.22)]"
+        >
+          <p className="font-['Outfit',sans-serif] font-semibold text-[#d5bf92] text-[13px] whitespace-nowrap">
+            Baca selengkapnya Misi Pulang
+          </p>
+        </button>
       </div>
     </div>
   );
@@ -321,11 +316,11 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
 
           {/* Price — tahunan only */}
           <div className="flex flex-col gap-[6px] items-start overflow-clip shrink-0 w-full">
-            <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#d8be90] text-[11px] whitespace-nowrap">
+            <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-white text-[11px] whitespace-nowrap">
               Iuran tahunan
             </p>
             <div className="flex gap-[4px] items-end leading-[normal] overflow-clip whitespace-nowrap">
-              <p className="font-['Lora',serif] font-bold text-[#e2d0a8] text-[32px]">Rp200.000</p>
+              <p className="font-['Lora',serif] font-bold text-white text-[32px]">Rp200.000</p>
               <p className="font-['Outfit',sans-serif] font-normal text-[14px] text-[rgba(255,255,255,0.35)]">/ tahun</p>
             </div>
           </div>
@@ -333,7 +328,7 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
           {/* CTA */}
           <button
             onClick={onNavigate}
-            className="bg-[#af9160] flex h-[42px] items-center justify-center overflow-clip py-[12px] rounded-[100px] shrink-0 w-full cursor-pointer border-none"
+            className="bg-[#174291] flex h-[42px] items-center justify-center overflow-clip py-[12px] rounded-[12px] shrink-0 w-full cursor-pointer border-none"
           >
             <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[14px] text-center text-white whitespace-nowrap">
               Daftar jadi anggota
@@ -350,19 +345,19 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
 
           {/* Card: Hari Kematian with Muslim/Non-Muslim tabs */}
           <div className="bg-[rgba(255,255,255,0.06)] relative rounded-[16px] shrink-0 w-full">
-            <div className="absolute border border-[rgba(175,145,96,0.15)] border-solid inset-0 pointer-events-none rounded-[16px]" />
+            <div className="absolute border border-[rgba(23,66,145,0.15)] border-solid inset-0 pointer-events-none rounded-[16px]" />
             <div className="flex flex-col gap-[14px] items-start p-[16px] w-full">
-              <p className="font-['Outfit',sans-serif] font-semibold leading-[18px] text-[#d5c9aa] text-[14px] whitespace-nowrap">
+              <p className="font-['Outfit',sans-serif] font-semibold leading-[18px] text-[#c6d2ea] text-[14px] whitespace-nowrap">
                 Hari Kematian
               </p>
 
               {/* Muslim / Non-Muslim toggle */}
-              <div className="bg-[rgba(255,255,255,0.05)] relative rounded-[12px] shrink-0 w-full">
-                <div className="flex gap-[4px] items-center p-[4px] w-full">
+              <div className="bg-[rgba(255,255,255,0.14)] relative rounded-[12px] shrink-0 w-full border border-[rgba(255,255,255,0.22)]">
+                <div className="flex gap-[6px] items-center p-[4px] w-full">
                   {/* Muslim tab */}
                   <button
                     onClick={() => setTradisiTab("muslim")}
-                    className={`flex-1 flex gap-[8px] items-center justify-center px-[12px] py-[8px] rounded-[9px] border-none cursor-pointer transition-all duration-150 ${isMuslim ? "bg-[#d5c9aa]" : "bg-transparent"
+                    className={`flex-1 flex gap-[8px] items-center justify-center px-[12px] py-[8px] rounded-[9px] border-none cursor-pointer transition-all duration-150 ${isMuslim ? "bg-[#c6d2ea]" : "bg-transparent"
                       }`}
                   >
                     <div className="relative shrink-0 size-[6px]">
@@ -370,14 +365,14 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
                         <circle cx="3" cy="3" fill="#94C7B5" r="3" />
                       </svg>
                     </div>
-                    <p className={`font-['Outfit',sans-serif] font-semibold leading-[16px] text-[12px] whitespace-nowrap ${isMuslim ? "text-[#17120d]" : "text-[rgba(213,201,170,0.8)]"}`}>
+                    <p className={`font-['Outfit',sans-serif] font-semibold leading-[16px] text-[12px] whitespace-nowrap ${isMuslim ? "text-[#17120d]" : "text-[#c6d2ea]"}`}>
                       Muslim
                     </p>
                   </button>
                   {/* Non-Muslim tab */}
                   <button
                     onClick={() => setTradisiTab("nonmuslim")}
-                    className={`flex-1 flex gap-[8px] items-center justify-center px-[12px] py-[8px] rounded-[9px] border-none cursor-pointer transition-all duration-150 ${!isMuslim ? "bg-[#d5c9aa]" : "bg-transparent"
+                    className={`flex-1 flex gap-[8px] items-center justify-center px-[12px] py-[8px] rounded-[9px] border-none cursor-pointer transition-all duration-150 ${!isMuslim ? "bg-[#c6d2ea]" : "bg-transparent"
                       }`}
                   >
                     <div className="relative shrink-0 size-[6px]">
@@ -385,7 +380,7 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
                         <circle cx="3" cy="3" fill="#9EB5DB" r="3" />
                       </svg>
                     </div>
-                    <p className={`font-['Outfit',sans-serif] font-semibold leading-[16px] text-[12px] whitespace-nowrap ${!isMuslim ? "text-[#17120d]" : "text-[rgba(213,201,170,0.8)]"}`}>
+                    <p className={`font-['Outfit',sans-serif] font-semibold leading-[16px] text-[12px] whitespace-nowrap ${!isMuslim ? "text-[#17120d]" : "text-[#c6d2ea]"}`}>
                       Non-Muslim
                     </p>
                   </button>
@@ -415,7 +410,7 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
 
           {/* Card: Pasca Kematian */}
           <div className="bg-[rgba(255,255,255,0.06)] relative rounded-[16px] shrink-0 w-full">
-            <div className="absolute border border-[rgba(175,145,96,0.15)] border-solid inset-0 pointer-events-none rounded-[16px]" />
+            <div className="absolute border border-[rgba(23,66,145,0.15)] border-solid inset-0 pointer-events-none rounded-[16px]" />
             <div className="flex flex-col gap-[12px] items-start p-[12px] w-full">
               <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#d5c9aa] text-[14px] whitespace-nowrap">
                 Pasca Kematian
@@ -606,8 +601,8 @@ function SectionPricing() {
     >
       {/* Heading Block */}
       <div className="flex flex-col gap-[10px] items-start overflow-clip shrink-0 w-full">
-        <div className="bg-[rgba(175,145,96,0.12)] flex items-start overflow-clip px-[12px] py-[4px] rounded-[100px] shrink-0">
-          <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#af9160] text-[11px] tracking-[1.2px] whitespace-nowrap">
+        <div className="bg-[rgba(23,66,145,0.12)] flex items-start overflow-clip px-[12px] py-[4px] rounded-[100px] shrink-0">
+          <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#174291] text-[11px] tracking-[1.2px] whitespace-nowrap">
             TIPE LAYANAN
           </p>
         </div>
@@ -620,26 +615,26 @@ function SectionPricing() {
       </div>
 
       {/* Outer Tab Pills: Keanggotaan | Darurat */}
-      <div className="bg-[#e8e8e8] flex h-[44px] items-center justify-center overflow-clip p-[4px] rounded-[100px] w-full">
+      <div className="bg-[#eee] flex h-[44px] items-center justify-center overflow-clip p-[4px] rounded-[12px] w-full">
         <button
           onClick={() => setOuterTab("keanggotaan")}
-          className={`flex-1 h-[36px] flex items-center justify-center rounded-[100px] border-none cursor-pointer transition-all duration-200 ${outerTab === "keanggotaan"
-            ? "bg-gradient-to-r from-[#d8be90] to-[#a88958] shadow-[0px_2px_8px_0px_rgba(20,13,5,0.35)]"
+          className={`flex-1 h-[36px] flex items-center justify-center rounded-[8px] border-none cursor-pointer transition-all duration-200 ${outerTab === "keanggotaan"
+            ? "bg-gradient-to-r from-black to-[#1a1a1a]"
             : "bg-transparent"
             }`}
         >
-          <p className={`font-['Outfit',sans-serif] font-semibold text-[14px] whitespace-nowrap ${outerTab === "keanggotaan" ? "text-[#1f1912]" : "text-[#3a3a3a]"}`}>
+          <p className={`font-['Outfit',sans-serif] font-semibold text-[14px] whitespace-nowrap ${outerTab === "keanggotaan" ? "text-white" : "text-[#333]"}`}>
             Keanggotaan
           </p>
         </button>
         <button
           onClick={() => setOuterTab("darurat")}
-          className={`flex-1 h-[36px] flex items-center justify-center rounded-[100px] border-none cursor-pointer transition-all duration-200 ${outerTab === "darurat"
-            ? "bg-gradient-to-r from-[#d8be90] to-[#a88958] shadow-[0px_2px_8px_0px_rgba(20,13,5,0.35)]"
+          className={`flex-1 h-[36px] flex items-center justify-center rounded-[8px] border-none cursor-pointer transition-all duration-200 ${outerTab === "darurat"
+            ? "bg-gradient-to-r from-black to-[#1a1a1a]"
             : "bg-transparent"
             }`}
         >
-          <p className={`font-['Outfit',sans-serif] font-medium text-[14px] whitespace-nowrap ${outerTab === "darurat" ? "text-[#1f1912] font-semibold" : "text-[#3a3a3a]"}`}>
+          <p className={`font-['Outfit',sans-serif] font-medium text-[14px] whitespace-nowrap ${outerTab === "darurat" ? "text-white font-semibold" : "text-[#333]"}`}>
             Darurat
           </p>
         </button>
@@ -658,7 +653,7 @@ function SectionCtaCards() {
   const { navigateWithLoading } = usePageTransition();
 
   return (
-    <div className="bg-[#f9f7f3] relative shrink-0 w-full">
+    <div className="bg-[#f9fafb] relative shrink-0 w-full">
       <div className="flex flex-col gap-[24px] items-start px-[20px] py-[36px] w-full">
         {/* Heading */}
         <div className="flex flex-col gap-[8px] items-start shrink-0 w-full">
@@ -684,7 +679,7 @@ function SectionCtaCards() {
             </p>
             <button
               onClick={() => navigateWithLoading("/purchase")}
-              className="bg-[#af9160] flex items-center justify-center overflow-clip px-[14px] py-[8px] rounded-[100px] shrink-0 w-full border-none cursor-pointer"
+              className="bg-[#174291] flex items-center justify-center overflow-clip px-[14px] py-[8px] rounded-[8px] shrink-0 w-full border-none cursor-pointer"
             >
               <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[12px] text-white whitespace-nowrap">
                 Daftarkan diri sendiri
@@ -703,11 +698,11 @@ function SectionCtaCards() {
           </div>
           <div className="flex flex-col gap-[14px] items-start w-full">
             <p className="font-['Outfit',sans-serif] font-normal leading-[1.48] text-[#707070] text-[12px] w-full">
-              Muliakan orang tua, pasangan, atau anakmu dengan prosesi kepulangan yang bermartabat tanpa merepotkan keluarga yang lain.
+              Muliakan orang tua atau pasanganmu, pastikan mereka mendapat layanan terbaik saat berpulang.
             </p>
             <button
               onClick={() => navigateWithLoading("/purchase")}
-              className="bg-[#594635] flex items-center justify-center overflow-clip px-[14px] py-[8px] rounded-[100px] shrink-0 w-full border-none cursor-pointer"
+              className="bg-[#174291] flex items-center justify-center overflow-clip px-[14px] py-[8px] rounded-[8px] shrink-0 w-full border-none cursor-pointer"
             >
               <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[12px] text-white whitespace-nowrap">
                 Daftarkan keluarga jadi anggota
@@ -745,7 +740,7 @@ function SectionSocialImpact() {
         />
         <div className="absolute bottom-0 left-0 right-0 h-[90px] bg-gradient-to-b from-[rgba(20,15,10,0)] via-[rgba(20,15,10,0.7)] via-[60%] to-[#140f0a]" />
         {/* Badge */}
-        <div className="absolute bg-[#bda67a] flex items-start left-[20px] overflow-clip px-[12px] py-[5px] rounded-[100px] top-[24px]">
+        <div className="absolute bg-white flex items-start left-[20px] overflow-clip px-[12px] py-[5px] rounded-[100px] top-[24px]">
           <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#1a140f] text-[10px] tracking-[0.8px] whitespace-nowrap">
             DAMPAK SOSIAL
           </p>
@@ -762,7 +757,7 @@ function SectionSocialImpact() {
           <div className="flex flex-col gap-[20px] items-start pb-[36px] px-[20px] relative w-full">
             <p className="font-['Outfit',sans-serif] font-normal text-[13px] text-[rgba(255,255,255,0.6)] w-full leading-[1.55]">
               <span>{"Sebagian uang pendaftaranmu akan "}</span>
-              <span className="font-['Outfit',sans-serif] font-semibold text-[#d5c9aa]">
+              <span className="font-['Outfit',sans-serif] font-semibold text-[#b8c4dc]">
                 didonasikan untuk memberikan layanan pemakaman gratis bagi yang tak mampu.
               </span>
             </p>
@@ -892,7 +887,7 @@ export default function LandingPage() {
         />
         <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
-        <main className="flex flex-col w-full pb-[72px]">
+        <main className="flex flex-col w-full pb-[160px]">
           <SectionHero ctaRef={ctaRef} />
           <SectionProblems />
           <SectionPricing />

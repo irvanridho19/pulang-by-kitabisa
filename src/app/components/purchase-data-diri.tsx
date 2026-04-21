@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import svgChevron from "../../imports/svg-427pcoex8y";
 import svgNav from "../../imports/svg-avs0z7lyx4";
-import imgIconCareManager from "@/assets/care-manager-icon.png";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { usePageTransition } from "./page-transition";
 import { StepSlideWrapper } from "./step-slide-wrapper";
@@ -43,17 +42,17 @@ const labelClass =
   "font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px] w-full";
 
 /* ── Section label (warm accent) ─── */
-function SectionLabel({ text }: { text: string }) {
-  return (
-    <div className="flex items-center gap-[10px] w-full">
-      <div className="h-px flex-1 bg-[#e8e2d6]" />
-      <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#bda67a] text-[11px] tracking-[0.8px] uppercase shrink-0">
-        {text}
-      </p>
-      <div className="h-px flex-1 bg-[#e8e2d6]" />
-    </div>
-  );
-}
+// function SectionLabel({ text }: { text: string }) {
+//   return (
+//     <div className="flex items-center gap-[10px] w-full">
+//       <div className="h-px flex-1 bg-[#e8e2d6]" />
+//       <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#bda67a] text-[11px] tracking-[0.8px] uppercase shrink-0">
+//         {text}
+//       </p>
+//       <div className="h-px flex-1 bg-[#e8e2d6]" />
+//     </div>
+//   );
+// }
 
 /* ── Reusable Dropdown ─── */
 function Dropdown({

@@ -1,9 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import { usePageTransition } from "./page-transition";
-import { Check } from "lucide-react";
+// import { Check } from "lucide-react";
 import svgNav from "../../imports/svg-avs0z7lyx4";
-import imgIconCareManager from "@/assets/care-manager-icon.png";
+// import imgIconCareManager from "@/assets/care-manager-icon.png";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { StepSlideWrapper } from "./step-slide-wrapper";
 import { XenditBanner } from "./xendit-banner";

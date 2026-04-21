@@ -4,7 +4,9 @@
       "mcp__plugin_figma_figma__get_design_context",
       "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); text=data[0]['text']; print\\(text[:8000]\\)\")",
       "mcp__plugin_figma_figma__use_figma",
-      "mcp__plugin_figma_figma__get_screenshot"
+      "mcp__plugin_figma_figma__get_screenshot",
+      "mcp__plugin_figma_figma__send_code_connect_mappings",
+      "Bash(npx tsc *)"
     ]
   }
 }

@@ -550,7 +550,7 @@ export default function PurchaseDataDiriPage() {
                 <button
                   onClick={handleSubmit}
                   disabled={!isFormValid}
-                  className={`w-full h-[50px] rounded-[100px] border-none cursor-pointer transition-all duration-200 ${isFormValid
+                  className={`w-full h-[50px] rounded-[12px] border-none cursor-pointer transition-all duration-200 ${isFormValid
                     ? "bg-[#1f1912] cursor-pointer"
                     : "bg-[#d1d5db] cursor-not-allowed"
                     }`}

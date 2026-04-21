@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { usePageTransition } from "./page-transition";
 import svgPaths from "../../imports/svg-avs0z7lyx4";
-import imgDark1 from "@/assets/logo.png";
+import imgDark1 from "../../assets/logo.png";
 import { MobileMenu, Footer } from "./shared-layout";
 import { StepSlideWrapper } from "./step-slide-wrapper";
 
@@ -184,7 +184,7 @@ export default function PurchaseLayananPage() {
             <main className="flex flex-col flex-1 w-full bg-white relative">
 
               {/* Decorative gradient bg */}
-              <div className="absolute left-0 top-0 w-full h-[421px] pointer-events-none">
+              {/* <div className="absolute left-0 top-0 w-full h-[421px] pointer-events-none">
                 <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 360 421">
                   <defs>
                     <linearGradient gradientUnits="userSpaceOnUse" id="paint0_linear_layanan" x1="180" x2="180" y1="0" y2="421">
@@ -194,7 +194,7 @@ export default function PurchaseLayananPage() {
                   </defs>
                   <rect width="360" height="421" fill="url(#paint0_linear_layanan)" />
                 </svg>
-              </div>
+              </div> */}
 
               {/* Content */}
               <div className="relative flex flex-col gap-[32px] items-center px-[20px] py-[40px] w-full">
@@ -310,7 +310,7 @@ export default function PurchaseLayananPage() {
                       state: { ...onboardData, billingCycle: "tahunan", slideDir: "forward" },
                     })
                   }
-                  className="bg-[#1f1912] rounded-[100px] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] w-full border-none cursor-pointer"
+                  className="bg-[#1f1912] rounded-[12px] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] w-full border-none cursor-pointer"
                 >
                   <div className="flex items-center justify-center px-[20px] py-[14px] w-full">
                     <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[16px] text-white whitespace-nowrap">

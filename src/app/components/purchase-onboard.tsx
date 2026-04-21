@@ -3,7 +3,7 @@ import { format } from "date-fns";
 import { id as localeId } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { usePageTransition } from "./page-transition";
-import imgShieldIcon from "@/assets/shield-icon.png";
+import imgShieldIcon from "../../assets/shield-icon.png";
 import {
   NavbarMobileHeader,
   MobileMenu,
@@ -47,7 +47,7 @@ function BlockedModal({ onGoHome }: { onGoHome: () => void }) {
               <span>{" "}baru mencakup jangkauan operasional untuk wilayah{" "}</span>
               <span className="font-['Outfit',sans-serif] font-bold">Jabodetabek</span>
               <span>{" "}serta memenuhi ketentuan asuransi jiwa untuk{" "}</span>
-              <span className="font-['Outfit',sans-serif] font-bold">rentang usia 25 hingga 65 tahun</span>
+              <span className="font-['Outfit',sans-serif] font-bold">rentang usia 1 hingga 65 tahun</span>
               <span>.</span>
             </p>
             <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b7280] text-[16px] text-center w-full">
@@ -59,7 +59,7 @@ function BlockedModal({ onGoHome }: { onGoHome: () => void }) {
         <div className="w-full flex items-center justify-center p-[24px]">
           <button
             onClick={onGoHome}
-            className="bg-[#1f1f1f] flex gap-[8px] items-center justify-center px-[20px] py-[10px] rounded-[100px] cursor-pointer border-none"
+            className="bg-[#1f1f1f] flex gap-[8px] items-center justify-center px-[20px] py-[10px] rounded-[12px] cursor-pointer border-none"
           >
             <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] text-white whitespace-nowrap">
               Kembali ke Beranda
@@ -243,8 +243,8 @@ export default function PurchaseOnboardPage() {
     : "Di mana tempat tinggalmu saat ini?";
 
   return (
-    <div className="min-h-screen bg-[#fefefe] flex justify-center">
-      <div className="w-full max-w-[480px] relative flex flex-col min-h-screen bg-gradient-to-b from-[#fffdf9] to-[#f5f0e8]">
+    <div className="min-h-screen bg-white flex justify-center">
+      <div className="w-full max-w-[480px] relative flex flex-col min-h-screen bg-white">
         <NavbarMobileHeader
           onMenuToggle={() => setMenuOpen(!menuOpen)}
           menuOpen={menuOpen}
@@ -378,7 +378,7 @@ export default function PurchaseOnboardPage() {
           {/* CTA Button — pinned to bottom of content area */}
           <button
             disabled={!allSelected}
-            className={`relative rounded-[100px] shrink-0 w-full cursor-pointer border-none p-0 transition-all duration-200 mt-auto ${
+            className={`relative rounded-[12px] shrink-0 w-full cursor-pointer border-none p-0 transition-all duration-200 mt-auto ${
               allSelected
                 ? "bg-[#1f1912] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.2)]"
                 : "bg-[#d8d8d8] cursor-not-allowed"

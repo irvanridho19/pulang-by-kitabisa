@@ -174,7 +174,7 @@ export default function PerpanjangPage() {
           <button
             type="button"
             onClick={() => navigateWithLoading("/member")}
-            className="flex items-center justify-center size-[32px] rounded-full border-none cursor-pointer shrink-0"
+            className="flex items-center justify-center size-[32px] rounded-[12px] border-none cursor-pointer shrink-0"
             style={{ background: "rgba(189,166,122,0.12)" }}
           >
             <ArrowLeft size={16} color="#1f1912" strokeWidth={2} />
@@ -197,7 +197,7 @@ export default function PerpanjangPage() {
           <button
             type="button"
             onClick={() => navigateWithLoading("/")}
-            className="w-full rounded-[16px] border-none cursor-pointer"
+            className="w-full rounded-[12px] border-none cursor-pointer"
             style={{
               background: "#1f1912",
               boxShadow: "0px 5px 16px 0px rgba(26,18,10,0.22)",

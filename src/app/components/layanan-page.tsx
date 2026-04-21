@@ -156,7 +156,7 @@ function SectionCtaAnggota() {
         {/* Primary CTA — gold gradient pill */}
         <button
           onClick={() => navigate("/purchase")}
-          className="w-full rounded-[100px] border-none cursor-pointer shadow-[0px_6px_20px_0px_rgba(168,137,88,0.4)]"
+          className="w-full rounded-[12px] border-none cursor-pointer shadow-[0px_6px_20px_0px_rgba(168,137,88,0.4)]"
           style={{ background: "linear-gradient(to right, #d8be90, #a88958)" }}
         >
           <div className="flex items-center justify-center px-[24px] py-[14px] w-full">

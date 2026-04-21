@@ -1,4 +1,4 @@
-import imgFlip from "@/assets/flip-logo.png";
+import imgFlip from "../../assets/flip-logo.png";
 
 /** Shared Flip payment info card – used in /purchase/konfirmasi & /perpanjang */
 export function XenditBanner() {

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { usePageTransition } from "./page-transition";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
-import imgWhite1 from "@/assets/footer-logo.png";
+import imgWhite1 from "../../assets/footer-logo.png";
 
 /* ─── Digital Member Card ─── */
 function DigitalMemberCard() {
@@ -319,7 +319,7 @@ export default function MemberPage() {
           <button
             type="button"
             onClick={() => navigateWithLoading("/perpanjang")}
-            className="w-full rounded-[100px] border-none cursor-pointer"
+            className="w-full rounded-[12px] border-none cursor-pointer"
             style={{
               background: "#1f1912",
               boxShadow: "0px 5px 16px 0px rgba(26,18,10,0.22)",

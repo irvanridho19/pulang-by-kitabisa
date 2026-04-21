@@ -1,7 +1,7 @@
 import svgPaths from "../../imports/svg-gmo3e23oah";
 import svgChevron from "../../imports/svg-goo2oksqsl";
-import imgImageLogo from "@/assets/logo.png";
-import imgFooterLogo from "@/assets/footer-logo-dark.png";
+import imgImageLogo from "../../assets/logo.png";
+import imgFooterLogo from "../../assets/footer-logo-dark.png";
 import { usePageTransition } from "./page-transition";
 import { useLocation } from "react-router";
 import { useAuth } from "./auth-context";
@@ -76,6 +76,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
   const menuItems = [
     { label: "Layanan", to: "/layanan" },
     { label: "Cara akses layanan", to: "/cara-klaim" },
+    { label: "Misi Pulang", to: "/misi" },
   ];
 
   // ── Logged In variant ──
@@ -126,9 +127,9 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           {/* Masuk — triggers login */}
           <button
             onClick={() => { login(); }}
-            className="bg-white rounded-full w-full cursor-pointer border-none p-0 block shadow-[0px_4px_12px_0px_rgba(31,25,18,0.15)] relative"
+            className="bg-white rounded-[12px] w-full cursor-pointer border-none p-0 block shadow-[0px_4px_12px_0px_rgba(31,25,18,0.15)] relative"
           >
-            <div className="absolute border border-[#af9160] border-solid inset-0 pointer-events-none rounded-full" />
+            <div className="absolute border border-[#af9160] border-solid inset-0 pointer-events-none rounded-[12px]" />
             <div className="flex items-center justify-center px-[20px] py-[14px]">
               <p className="font-['Outfit',sans-serif] font-semibold leading-[21px] text-[14px] text-center text-[#1f1f1f]">
                 Masuk
@@ -139,7 +140,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           {/* Daftar jadi anggota — dark gradient */}
           <button
             onClick={() => { onClose(); navigateWithLoading("/purchase"); }}
-            className="rounded-full w-full cursor-pointer border-none p-0 block shadow-[0px_4px_12px_0px_rgba(31,25,18,0.15)]"
+            className="rounded-[12px] w-full cursor-pointer border-none p-0 block shadow-[0px_4px_12px_0px_rgba(31,25,18,0.15)]"
             style={{ backgroundImage: "linear-gradient(90deg, rgb(31, 25, 18) 0%, rgb(34, 27, 19) 10%, rgb(36, 29, 20) 20%, rgb(39, 31, 22) 30%, rgb(41, 33, 23) 40%, rgb(44, 35, 24) 50%, rgb(47, 37, 25) 60%, rgb(50, 40, 26) 70%, rgb(52, 42, 28) 80%, rgb(55, 44, 29) 90%, rgb(58, 46, 30) 100%)" }}
           >
             <div className="flex items-center justify-center px-[20px] py-[14px]">
@@ -180,6 +181,7 @@ export function MobileMenuLoggedIn({ open, onClose }: { open: boolean; onClose: 
   const menuItems = [
     { label: "Layanan", to: "/layanan" },
     { label: "Cara akses layanan", to: "/cara-klaim" },
+    { label: "Misi Pulang", to: "/misi" },
   ];
 
   return (

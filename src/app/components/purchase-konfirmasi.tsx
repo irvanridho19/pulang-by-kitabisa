@@ -454,7 +454,7 @@ export default function PurchaseKonfirmasiPage() {
                       state: { ...data, total, slideDir: "forward" },
                     })
                   }
-                  className={`w-full h-[52px] rounded-[100px] border-none cursor-pointer transition-all duration-200 ${
+                  className={`w-full h-[52px] rounded-[12px] border-none cursor-pointer transition-all duration-200 ${
                     agreedToTerms
                       ? "bg-[#1f1912] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] cursor-pointer"
                       : "bg-[#d1d5db] cursor-not-allowed"

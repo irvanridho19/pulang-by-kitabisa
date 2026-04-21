@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import svgPaths from "../../imports/svg-3qttxie8dt";
-import imgIconCareManager from "@/assets/care-manager-icon.png";
+import imgIconCareManager from "../../assets/care-manager-icon.png";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { usePageTransition } from "./page-transition";
 
@@ -270,7 +270,7 @@ export default function PurchaseSuccessPage() {
               >
                 {/* Primary: Lihat halaman keanggotaan */}
                 <button
-                  className="bg-[#1f1912] w-full rounded-[100px] cursor-pointer border-none"
+                  className="bg-[#1f1912] w-full rounded-[12px] cursor-pointer border-none"
                   style={{ boxShadow: "0px 5px 16px 0px rgba(26,18,10,0.22)" }}
                   onClick={() => navigateWithLoading("/member")}
                 >
@@ -283,13 +283,13 @@ export default function PurchaseSuccessPage() {
 
                 {/* Secondary: Kembali ke Beranda */}
                 <button
-                  className="bg-white w-full rounded-[100px] cursor-pointer relative"
+                  className="bg-white w-full rounded-[12px] cursor-pointer relative"
                   style={{ border: "none" }}
                   onClick={() => navigateWithLoading("/")}
                 >
                   <div
                     aria-hidden="true"
-                    className="absolute inset-0 rounded-[100px] pointer-events-none"
+                    className="absolute inset-0 rounded-[12px] pointer-events-none"
                     style={{ border: "1.5px solid rgba(189,166,122,0.55)" }}
                   />
                   <div className="flex items-center justify-center px-[24px] py-[14px] w-full">

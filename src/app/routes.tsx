@@ -12,6 +12,7 @@ import PurchaseSuccessPage from "./components/purchase-success";
 import MemberPage from "./components/member-page";
 import PerpanjangPage from "./components/perpanjang-page";
 import MemberEmptyPage from "./components/member-empty-page";
+import MisiPage from "./components/misi-page";
 
 function RootLayout() {
   return (
@@ -30,6 +31,7 @@ export const router = createBrowserRouter([
     children: [
       { index: true, Component: LandingPage },
       { path: "cara-klaim", Component: CaraKlaimPage },
+      { path: "misi", Component: MisiPage },
       { path: "layanan", Component: LayananPage },
       { path: "purchase", Component: PurchaseOnboardPage },
       { path: "purchase/layanan", Component: PurchaseLayananPage },

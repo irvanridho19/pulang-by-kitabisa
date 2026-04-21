@@ -116,7 +116,7 @@ export default function MemberEmptyPage() {
             <button
               type="button"
               onClick={() => navigateWithLoading("/purchase")}
-              className="w-full h-[49px] rounded-[100px] border-none cursor-pointer"
+              className="w-full h-[49px] rounded-[12px] border-none cursor-pointer"
               style={{
                 background: "#1f1912",
                 boxShadow: "0px 5px 16px 0px rgba(26,18,10,0.22)",

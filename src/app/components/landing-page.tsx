@@ -756,7 +756,7 @@ function SectionSocialImpact() {
           <div className="flex flex-col gap-[20px] items-start pb-[36px] px-[20px] relative w-full">
             <p className="font-['Outfit',sans-serif] font-normal text-[13px] text-[rgba(255,255,255,0.6)] w-full leading-[1.55]">
               <span>{"Sebagian uang pendaftaranmu akan "}</span>
-              <span className="font-['Outfit',sans-serif] font-semibold text-[#b8c4dc]">
+              <span className="font-['Outfit',sans-serif] font-semibold text-[#D5C9AA]">
                 didonasikan untuk memberikan layanan pemakaman gratis bagi yang tak mampu.
               </span>
             </p>

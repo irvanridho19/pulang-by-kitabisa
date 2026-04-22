@@ -1,4 +1,4 @@
-import { Menu, X, ChevronRight, ArrowRight } from "lucide-react";
+import { Menu, X, ChevronRight, ArrowRight, MessageCircle, Phone, Instagram } from "lucide-react";
 import imgImageLogo from "../../assets/logo.png";
 import imgFooterLogo from "../../assets/footer-logo-dark.png";
 import { usePageTransition } from "./page-transition";
@@ -271,12 +271,6 @@ export function MobileMenuLoggedIn({ open, onClose }: { open: boolean; onClose: 
 /* ── Footer ─── */
 export function Footer() {
   const { navigateWithLoading } = usePageTransition();
-  const navAction = useNavAction();
-
-  const footerNavLinks = [
-    { label: "Layanan", to: "/layanan", hash: "" },
-    { label: "Cara akses layanan", to: "/cara-klaim", hash: "" },
-  ];
 
   return (
     <div className="bg-[#1a140f] flex flex-col items-start shrink-0 w-full">
@@ -308,17 +302,38 @@ export function Footer() {
             {/* Inner Divider */}
             <div className="bg-[rgba(255,255,255,0.07)] h-px shrink-0 w-full" />
 
-            {/* Nav Row */}
-            <div className="flex h-[20px] items-center justify-start gap-4 overflow-clip shrink-0 w-full">
-              {footerNavLinks.map((link) => (
-                <button
-                  key={link.label}
-                  onClick={() => navAction(link)}
-                  className="font-['Outfit',sans-serif] font-medium leading-[normal] text-[13px] text-[rgba(255,255,255,0.55)] whitespace-nowrap bg-transparent border-none cursor-pointer p-0"
-                >
-                  {link.label}
-                </button>
-              ))}
+            {/* Nav Row - Diganti menjadi Icon Links */}
+            <div className="flex h-[24px] items-center justify-start gap-[20px] overflow-clip shrink-0 w-full">
+              {/* WhatsApp (Menggunakan MessageCircle sbg alternatif) */}
+              <a
+                href="https://wa.me/6281234567890"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[rgba(255,255,255,0.55)] hover:text-white transition-colors duration-200"
+                aria-label="WhatsApp"
+              >
+                <MessageCircle className="size-[20px]" />
+              </a>
+
+              {/* Telepon */}
+              <a
+                href="tel:+6281234567890"
+                className="text-[rgba(255,255,255,0.55)] hover:text-white transition-colors duration-200"
+                aria-label="Telepon"
+              >
+                <Phone className="size-[20px]" />
+              </a>
+
+              {/* Instagram */}
+              <a
+                href="https://instagram.com/kitabisacom"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-[rgba(255,255,255,0.55)] hover:text-white transition-colors duration-200"
+                aria-label="Instagram"
+              >
+                <Instagram className="size-[20px]" />
+              </a>
             </div>
 
             {/* Inner Divider 2 */}

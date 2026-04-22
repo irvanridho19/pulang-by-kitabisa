@@ -64,7 +64,7 @@ function DigitalMemberCard() {
           </p>
         </div>
         {/* Berlaku Hingga */}
-        <div className="flex flex-col gap-[2px] items-center">
+        <div className="flex flex-col gap-[2px] items-end">
           <p
             className="font-['Outfit',sans-serif] font-normal text-[8px] tracking-[0.8px] uppercase"
             style={{ color: "rgba(255,255,255,0.38)" }}
@@ -76,7 +76,7 @@ function DigitalMemberCard() {
           </p>
         </div>
         {/* Call Center */}
-        <div className="flex flex-col gap-[2px] items-end">
+        {/* <div className="flex flex-col gap-[2px] items-end">
           <p
             className="font-['Outfit',sans-serif] font-normal text-[8px] tracking-[0.8px] uppercase"
             style={{ color: "rgba(255,255,255,0.38)" }}
@@ -86,7 +86,7 @@ function DigitalMemberCard() {
           <p className="font-['Outfit',sans-serif] font-semibold text-[11px]" style={{ color: "rgba(255,255,255,0.85)" }}>
             (021) 123-4567
           </p>
-        </div>
+        </div> */}
       </div>
 
       {/* Bottom gold shimmer line */}

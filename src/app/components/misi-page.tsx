@@ -103,7 +103,7 @@ export default function MisiPage() {
               <div className="bg-[rgba(175,145,96,0.12)] relative rounded-[100px] shrink-0">
                 <div className="flex items-start overflow-clip px-[12px] py-[5px] rounded-[inherit]">
                   <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#967240] text-[10px] tracking-[1.5px] whitespace-nowrap">
-                    MISI
+                    MISI PULANG
                   </p>
                 </div>
                 <div className="absolute border border-[rgba(175,145,96,0.45)] border-solid inset-0 pointer-events-none rounded-[100px]" />

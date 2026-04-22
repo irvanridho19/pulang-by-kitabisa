@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { usePageTransition } from "./page-transition";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
+import stripImage from "../../assets/Misi/strip.svg";
 
 const misiPoints = [
   {
@@ -25,38 +26,7 @@ const misiPoints = [
 function TombstoneHero() {
   return (
     <div className="relative rounded-[16px] overflow-hidden w-full aspect-[4/3] shadow-[0px_8px_24px_0px_rgba(46,33,20,0.15)]">
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "linear-gradient(180deg, #8a7e6c 0%, #6b6054 40%, #4a4238 100%)",
-        }}
-      />
-      {/* Vignette */}
-      <div
-        className="absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, rgba(0,0,0,0) 40%, rgba(0,0,0,0.45) 100%)",
-        }}
-      />
-      {/* Stone surface */}
-      <div className="absolute inset-[12%] rounded-[6px] bg-gradient-to-b from-[#2e2924] to-[#1a1713] shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_4px_12px_rgba(0,0,0,0.4)]">
-        <div className="flex flex-col items-center justify-center h-full px-[6%] py-[8%] text-center gap-[8px]">
-          <div className="size-[42px] rounded-full bg-[#4a4238] border border-[#6b6054] flex items-center justify-center">
-            <span className="font-['Lora',serif] font-bold text-[#d5bf92] text-[14px]">P</span>
-          </div>
-          <p className="font-['Lora',serif] font-bold text-[#e6d9b8] text-[15px] leading-[1.2]">
-            CATHERINE ANNE<br />O&apos;HARA
-          </p>
-          <p className="font-['Outfit',sans-serif] font-medium text-[#bfa87d] text-[10px] tracking-[0.5px]">
-            March 4, 1954 &mdash; January 30, 2026
-          </p>
-          <p className="font-['Lora',serif] italic text-[rgba(230,217,184,0.75)] text-[9px] leading-[1.45] mt-[4px]">
-            &ldquo;I&apos;m pretty much a good Catholic girl<br />at heart and I believe in family.&rdquo;
-          </p>
-        </div>
-      </div>
+      <img src={stripImage} alt="Ilustrasi papan nisan" className="absolute inset-0 w-full h-full object-cover" />
     </div>
   );
 }
@@ -120,14 +90,14 @@ export default function MisiPage() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#fefefe] flex justify-center">
+    <div className="min-h-screen bg-white flex justify-center">
       <div className="w-full max-w-[480px] bg-white relative flex flex-col min-h-screen">
         <NavbarMobileHeader onMenuToggle={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
         <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
         <main className="flex flex-col w-full flex-1">
           {/* Content */}
-          <div className="bg-[#faf6ec] w-full">
+          <div className="bg-white w-full">
             <div className="flex flex-col gap-[20px] items-start px-[24px] py-[28px] w-full">
               {/* MISI badge */}
               <div className="bg-[rgba(175,145,96,0.12)] relative rounded-[100px] shrink-0">
@@ -139,13 +109,13 @@ export default function MisiPage() {
                 <div className="absolute border border-[rgba(175,145,96,0.45)] border-solid inset-0 pointer-events-none rounded-[100px]" />
               </div>
 
-              {/* Hero image */}
-              <TombstoneHero />
-
               {/* H1 */}
               <p className="font-['Lora',serif] font-bold text-[#1f1912] text-[22px] leading-[1.32] w-full">
                 Karena Hidup Sependek Tanda Strip (-)
               </p>
+
+              {/* Hero image */}
+              <TombstoneHero />
 
               {/* Intro */}
               <p className="font-['Outfit',sans-serif] font-normal text-[#3a2c1a] text-[14px] leading-[1.65] w-full">

@@ -1,5 +1,4 @@
-import svgPaths from "../../imports/svg-gmo3e23oah";
-import svgChevron from "../../imports/svg-goo2oksqsl";
+import { Menu, X, ChevronRight, ArrowRight } from "lucide-react";
 import imgImageLogo from "../../assets/logo.png";
 import imgFooterLogo from "../../assets/footer-logo-dark.png";
 import { usePageTransition } from "./page-transition";
@@ -44,23 +43,12 @@ export function NavbarMobileHeader({ onMenuToggle, menuOpen }: { onMenuToggle: (
       <button onClick={() => navigateWithLoading("/")} className="h-[45px] relative shrink-0 w-[90px] cursor-pointer bg-transparent border-none p-0">
         <img alt="Pulang Logo" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImageLogo} />
       </button>
-      <button onClick={onMenuToggle} className="relative shrink-0 size-[24px] cursor-pointer bg-transparent border-none p-0">
-        <div className="absolute inset-[18.75%_16.67%]">
-          <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 15">
-            {menuOpen ? (
-              <>
-                <path d="M1 1L15 14" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" />
-                <path d="M15 1L1 14" stroke="#3A3A3A" strokeWidth="2" strokeLinecap="round" />
-              </>
-            ) : (
-              <>
-                <path d={svgPaths.p21607980} fill="#3A3A3A" />
-                <path d={svgPaths.p2d36a500} fill="#3A3A3A" />
-                <path d={svgPaths.p3e646f0} fill="#3A3A3A" />
-              </>
-            )}
-          </svg>
-        </div>
+      <button onClick={onMenuToggle} className="relative shrink-0 size-[24px] cursor-pointer bg-transparent border-none p-0 flex items-center justify-center">
+        {menuOpen ? (
+          <X className="size-[22px] text-[#3A3A3A]" strokeWidth={2} />
+        ) : (
+          <Menu className="size-[22px] text-[#3A3A3A]" strokeWidth={2} />
+        )}
       </button>
     </div>
   );
@@ -245,17 +233,7 @@ export function MobileMenuLoggedIn({ open, onClose }: { open: boolean; onClose: 
               Keanggotaan
             </p>
             {/* chevron right */}
-            <div className="relative shrink-0 size-[16px]">
-              <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 16">
-                <path
-                  clipRule="evenodd"
-                  d={svgChevron.p31f21500}
-                  fill="#BDA67A"
-                  fillRule="evenodd"
-                  transform="scale(0.47) translate(3, 1.5)"
-                />
-              </svg>
-            </div>
+            <ChevronRight className="shrink-0 size-[16px] text-[#BDA67A]" />
           </button>
 
           <div className="h-px bg-[rgba(189,166,122,0.08)]" />
@@ -274,13 +252,7 @@ export function MobileMenuLoggedIn({ open, onClose }: { open: boolean; onClose: 
             <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#750d33] text-[13px] whitespace-nowrap">
               Pesan layanan darurat 24 jam via WhatsApp
             </p>
-            <svg className="shrink-0" width="12" height="10" viewBox="0 0 10.5 10.5" fill="none">
-              <path
-                d={svgChevron.p36c6cc00}
-                fill="#750D33"
-                transform="rotate(180, 5.25, 5.25)"
-              />
-            </svg>
+            <ArrowRight className="shrink-0 size-[12px] text-[#750D33]" />
           </a>
 
           {/* Keluar */}

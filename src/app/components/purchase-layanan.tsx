@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { usePageTransition } from "./page-transition";
-import svgPaths from "../../imports/svg-avs0z7lyx4";
+import { ArrowLeft } from "lucide-react";
 import imgDark1 from "../../assets/logo.png";
 import { MobileMenu, Footer } from "./shared-layout";
 import { StepSlideWrapper } from "./step-slide-wrapper";
@@ -325,13 +325,7 @@ export default function PurchaseLayananPage() {
                   className="self-start flex gap-[14px] items-center bg-transparent border-none cursor-pointer p-0"
                 >
                   <div className="bg-[rgba(189,166,122,0.15)] flex items-center p-[8px] rounded-[100px] shrink-0">
-                    <div className="overflow-clip relative shrink-0 size-[16px]">
-                      <div className="absolute inset-0">
-                        <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 12">
-                          <path d={svgPaths.p2b09b180} fill="#1F2A37" />
-                        </svg>
-                      </div>
-                    </div>
+                    <ArrowLeft className="size-[16px] text-[#1F2A37]" />
                   </div>
                   <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] text-black whitespace-nowrap">
                     Sebelumnya

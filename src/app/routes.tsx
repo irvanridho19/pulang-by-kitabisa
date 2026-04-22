@@ -13,6 +13,7 @@ import MemberPage from "./components/member-page";
 import PerpanjangPage from "./components/perpanjang-page";
 import MemberEmptyPage from "./components/member-empty-page";
 import MisiPage from "./components/misi-page";
+import NotFoundPage from "./components/not-found-page";
 
 function RootLayout() {
   return (
@@ -28,6 +29,7 @@ export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    ErrorBoundary: NotFoundPage,
     children: [
       { index: true, Component: LandingPage },
       { path: "cara-klaim", Component: CaraKlaimPage },
@@ -41,6 +43,7 @@ export const router = createBrowserRouter([
       { path: "member", Component: MemberPage },
       { path: "member-empty", Component: MemberEmptyPage },
       { path: "perpanjang", Component: PerpanjangPage },
+      { path: "*", Component: NotFoundPage },
     ],
   },
 ]);

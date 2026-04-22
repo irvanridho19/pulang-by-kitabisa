@@ -1,8 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import { usePageTransition } from "./page-transition";
-// import { Check } from "lucide-react";
-import svgNav from "../../imports/svg-avs0z7lyx4";
+import { ArrowLeft } from "lucide-react";
 // import imgIconCareManager from "@/assets/care-manager-icon.png";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { StepSlideWrapper } from "./step-slide-wrapper";
@@ -473,11 +472,7 @@ export default function PurchaseKonfirmasiPage() {
                   className="flex gap-[12px] items-center bg-transparent border-none cursor-pointer p-0"
                 >
                   <div className="bg-[rgba(189,166,122,0.15)] flex items-center justify-center p-[9px] rounded-[100px] shrink-0">
-                    <div className="relative shrink-0 size-[16px]">
-                      <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 16 12">
-                        <path d={svgNav.p2b09b180} fill="#3a3a3a" />
-                      </svg>
-                    </div>
+                    <ArrowLeft className="size-[16px] text-[#3a3a3a]" />
                   </div>
                   <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] text-[#3a3a3a] whitespace-nowrap">
                     Sebelumnya

@@ -64,15 +64,27 @@ function DigitalMemberCard() {
           </p>
         </div>
         {/* Berlaku Hingga */}
-        <div className="flex flex-col gap-[2px] items-end">
+        <div className="flex flex-col gap-[2px] items-center">
           <p
             className="font-['Outfit',sans-serif] font-normal text-[8px] tracking-[0.8px] uppercase"
             style={{ color: "rgba(255,255,255,0.38)" }}
           >
             BERLAKU HINGGA
           </p>
-          <p className="font-['Outfit',sans-serif] font-semibold text-[#bda67a] text-[11px]">
+          <p className="font-['Outfit',sans-serif] font-semibold text-[11px]" style={{ color: "rgba(255,255,255,0.85)" }}>
             31 Des 2026
+          </p>
+        </div>
+        {/* Call Center */}
+        <div className="flex flex-col gap-[2px] items-end">
+          <p
+            className="font-['Outfit',sans-serif] font-normal text-[8px] tracking-[0.8px] uppercase"
+            style={{ color: "rgba(255,255,255,0.38)" }}
+          >
+            CALL CENTER PULANG
+          </p>
+          <p className="font-['Outfit',sans-serif] font-semibold text-[11px]" style={{ color: "rgba(255,255,255,0.85)" }}>
+            (021) 123-4567
           </p>
         </div>
       </div>

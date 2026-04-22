@@ -174,9 +174,11 @@ function calcAge(d: Date | undefined): number | null {
   return age;
 }
 
+// Dirapikan: Sesuaikan rentang umur agar presisi jika disimpan ke session storage
 function ageToRange(age: number | null): string | null {
   if (age == null) return null;
-  if (age < 25) return "<25";
+  if (age < 1) return "<1";
+  if (age < 25) return "1-24";
   if (age <= 55) return "25-55";
   if (age <= 65) return "55-65";
   return ">65";
@@ -197,8 +199,11 @@ export default function PurchaseOnboardPage() {
   const ageRange = useMemo(() => ageToRange(age), [age]);
 
   const allSelected = target && birthDate && ceremony && domicile;
-  const isBlocked =
-    ageRange === "<25" || ageRange === ">65" || domicile === "non-jabodetabek";
+  
+  // Dirapikan: Pengecekan umur menggunakan angka agar lebih pasti dan rapi
+  // Jika umurnya di bawah 1 tahun atau di atas 65 tahun, maka isBlocked = true
+  const isBlocked = (age !== null && (age < 1 || age > 65)) || domicile === "non-jabodetabek";
+  
   const [showBlockedModal, setShowBlockedModal] = useState(false);
 
   const handleContinue = () => {

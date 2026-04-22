@@ -25,7 +25,7 @@ function LayananHeading() {
         Manfaat yang kamu dapatkan sebagai anggota
       </p>
       <p className="font-['Outfit',sans-serif] font-normal leading-[1.55] text-[#6b6b6b] text-[13px] w-full">
-        {"Dari sebelum hingga selepas pemakaman, "}
+        {"Di hari kematian hingga selepas pemakaman, "}
         <span className="font-['Outfit',sans-serif] font-bold">Pulang</span>
         {" hadir langsung membantumu dan keluarga."}
       </p>
@@ -49,36 +49,141 @@ function BulletItem({ text, dotColor }: { text: string; dotColor: string }) {
   );
 }
 
-/* ── Service Card (new simple box style) ─── */
-interface ServiceCardProps {
-  tag: string;
-  dotColor: string;
-  items: string[];
+/* ── Card Data ─── */
+type Faith = "muslim" | "nonMuslim";
+
+const hariKematianContent: Record<Faith, { sublabel: string; items: string[]; note: string }> = {
+  muslim: {
+    sublabel: "KHUSUS MUSLIM",
+    items: [
+      "Pemulasaran jenazah secara Islam",
+      "Kain kafan lengkap",
+      "Peralatan jenazah",
+      "Ambulans jenazah",
+      "Penggalian makam",
+      "Karangan bunga",
+      "Snack box 50 pak",
+      "Tenda & kursi untuk tamu",
+      "Pembawa jenazah",
+      "Imam & pembacaan doa",
+    ],
+    note: "*Tidak termasuk pencarian lahan makam dan rumah duka.",
+  },
+  nonMuslim: {
+    sublabel: "KHUSUS NON-MUSLIM",
+    items: [
+      "Pemulasaran jenazah non-muslim",
+      "Peti jenazah",
+      "Peralatan jenazah",
+      "Ambulans jenazah",
+      "Karangan bunga",
+      "Snack box 50 pak",
+      "Tenda & kursi untuk tamu",
+      "Pembawa jenazah",
+      "Pemandu upacara",
+      "Buku doa",
+      "Prosesi pemakaman standar",
+    ],
+    note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi dan larung.",
+  },
+};
+
+const pascaKematianContent: Record<Faith, { sublabel: string; items: string[] }> = {
+  muslim: {
+    sublabel: "KHUSUS MUSLIM",
+    items: [
+      "Asisten khusus untuk administrasi keluarga",
+      "Akta kematian dari Disdukcapil",
+      "Surat keterangan kepolisian",
+      "Penghentian BPJS",
+      "Buku Yasin 50 pcs",
+      "Uang kedukaan Rp1.000.000",
+      "Layanan konseling psikolog",
+    ],
+  },
+  nonMuslim: {
+    sublabel: "KHUSUS NON-MUSLIM",
+    items: [
+      "Asisten khusus untuk administrasi keluarga",
+      "Akta kematian dari Disdukcapil",
+      "Surat keterangan kepolisian",
+      "Penghentian BPJS",
+      "Uang kedukaan Rp1.000.000",
+      "Layanan konseling psikolog",
+    ],
+  },
+};
+
+/* ── Faith Tabs (shared toggle) ─── */
+function FaithTabs({ value, onChange }: { value: Faith; onChange: (v: Faith) => void }) {
+  const tabs = [
+    { key: "muslim" as const, label: "Muslim" },
+    { key: "nonMuslim" as const, label: "Non-Muslim" },
+  ];
+  return (
+    <div className="flex w-full items-center gap-[8px] bg-[rgba(189,166,122,0.12)] rounded-[100px] p-[4px] border border-[rgba(189,166,122,0.25)] self-center">
+      {tabs.map((t) => {
+        const active = value === t.key;
+        return (
+          <button
+            key={t.key}
+            type="button"
+            onClick={() => onChange(t.key)}
+            className={`flex w-full justify-center items-center gap-[6px] px-[14px] py-[6px] rounded-[100px] border-none cursor-pointer transition-all duration-200 ${active
+              ? "bg-[#bda67a] shadow-[0px_2px_6px_0px_rgba(151,114,64,0.25)]"
+              : "bg-transparent"
+              }`}
+          >
+            <span
+              className="size-[6px] rounded-full shrink-0"
+              style={{
+                backgroundColor: active ? "#1f1912" : "rgba(151,114,64,0.5)",
+              }}
+            />
+            <span
+              className={`font-['Outfit',sans-serif] font-semibold text-[13px] whitespace-nowrap ${active ? "text-[#1f1912]" : "text-[#876747]"
+                }`}
+            >
+              {t.label}
+            </span>
+          </button>
+        );
+      })}
+    </div>
+  );
 }
 
-function ServiceCard({ tag, dotColor, items }: ServiceCardProps) {
+function HariKematianCard({ faith }: { faith: Faith }) {
+  const data = hariKematianContent[faith];
+  const dotColor = "#8C6432";
+
   return (
     <div className="bg-[#fcfaf6] relative rounded-[16px] shrink-0 w-full">
-      <div className="flex flex-row items-center overflow-clip rounded-[inherit] size-full">
-        <div className="flex items-center p-[16px] relative size-full">
-          <div className="flex flex-col gap-[12px] items-start w-full">
-            {/* Tag */}
-            <div className="bg-[rgba(151,114,64,0.1)] flex items-center justify-center overflow-clip px-[12px] py-[4px] rounded-[100px] shrink-0">
-              <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#876747] text-[14px] whitespace-nowrap">
-                {tag}
-              </p>
-            </div>
-            {/* Items */}
-            <div className="flex flex-col gap-[8px] items-start w-full">
-              {items.map((item, i) => (
-                <BulletItem key={i} text={item} dotColor={dotColor} />
-              ))}
-            </div>
+      <div className="flex items-center p-[16px] relative size-full">
+        <div className="flex flex-col gap-[12px] items-start w-full">
+          <div className="bg-[rgba(151,114,64,0.1)] flex items-center justify-center overflow-clip px-[12px] py-[4px] rounded-[100px] shrink-0">
+            <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#876747] text-[14px] whitespace-nowrap">
+              Hari Kematian
+            </p>
           </div>
+
+          <p className="font-['Outfit',sans-serif] font-semibold text-[11px] tracking-[1.2px] text-[#876747]">
+            {data.sublabel}
+          </p>
+
+          <div className="flex flex-col gap-[8px] items-start w-full">
+            {data.items.map((item, i) => (
+              <BulletItem key={`${faith}-${i}`} text={item} dotColor={dotColor} />
+            ))}
+          </div>
+
+          <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[12px] text-[#b5896b] w-full">
+            {data.note}
+          </p>
         </div>
       </div>
-      {/* Border: thin on top/right/bottom, thick (4px) on left */}
-      <div className="absolute inset-0 pointer-events-none rounded-[16px]"
+      <div
+        className="absolute inset-0 pointer-events-none rounded-[16px]"
         style={{
           border: "1px solid rgba(151,114,64,0.2)",
           borderLeftWidth: "4px",
@@ -88,43 +193,41 @@ function ServiceCard({ tag, dotColor, items }: ServiceCardProps) {
   );
 }
 
-/* ── Card Data ─── */
-const serviceCards: ServiceCardProps[] = [
-  {
-    tag: "Sebelum Kematian",
-    dotColor: "#977240",
-    items: [
-      "Penulisan surat wasiat",
-      "Penyimpanan dokumen penting online",
-      "Pencarian & pemesanan makam",
-    ],
-  },
-  {
-    tag: "Hari Kematian",
-    dotColor: "#8C6432",
-    items: [
-      "Pemulasaran jenazah (muslim & non-muslim)",
-      "Peralatan jenazah lengkap",
-      "Ambulans jenazah",
-      "Penggalian makam",
-      "Karangan bunga",
-      "Snack box 50 pak",
-    ],
-  },
-  {
-    tag: "Pasca Kematian",
-    dotColor: "#7B5628",
-    items: [
-      "Asisten khusus untuk administrasi keluarga",
-      "Akta kematian dari Disdukcapil",
-      "Surat keterangan kepolisian",
-      "Penghentian BPJS",
-      "Buku Yasin 50 pcs (khusus Muslim)",
-      "Uang kedukaan Rp1.000.000",
-      "Layanan konseling psikolog",
-    ],
-  },
-];
+function PascaKematianCard({ faith }: { faith: Faith }) {
+  const data = pascaKematianContent[faith];
+  const dotColor = "#7B5628";
+
+  return (
+    <div className="bg-[#fcfaf6] relative rounded-[16px] shrink-0 w-full">
+      <div className="flex items-center p-[16px] relative size-full">
+        <div className="flex flex-col gap-[12px] items-start w-full">
+          <div className="bg-[rgba(151,114,64,0.1)] flex items-center justify-center overflow-clip px-[12px] py-[4px] rounded-[100px] shrink-0">
+            <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#876747] text-[14px] whitespace-nowrap">
+              Pasca Kematian
+            </p>
+          </div>
+
+          <p className="font-['Outfit',sans-serif] font-semibold text-[11px] tracking-[1.2px] text-[#876747]">
+            {data.sublabel}
+          </p>
+
+          <div className="flex flex-col gap-[8px] items-start w-full">
+            {data.items.map((item, i) => (
+              <BulletItem key={`${faith}-${i}`} text={item} dotColor={dotColor} />
+            ))}
+          </div>
+        </div>
+      </div>
+      <div
+        className="absolute inset-0 pointer-events-none rounded-[16px]"
+        style={{
+          border: "1px solid rgba(151,114,64,0.2)",
+          borderLeftWidth: "4px",
+        }}
+      />
+    </div>
+  );
+}
 
 /* ── CTA Section ─── */
 const arrowPath = "M11.9348 4.84337C11.9996 4.67929 12.0166 4.49875 11.9835 4.32457C11.9504 4.15039 11.8687 3.99041 11.7487 3.86487L8.31995 0.274058C8.24088 0.188318 8.14629 0.11993 8.04171 0.0728818C7.93713 0.025834 7.82465 0.00106968 7.71083 3.38947e-05C7.59701 -0.00100189 7.48414 0.0217114 7.37879 0.0668487C7.27344 0.111986 7.17774 0.178643 7.09725 0.262931C7.01677 0.347219 6.95312 0.44745 6.91002 0.557774C6.86692 0.668099 6.84523 0.786308 6.84622 0.905505C6.84721 1.0247 6.87085 1.1425 6.91578 1.25202C6.9607 1.36154 7.02601 1.4606 7.10788 1.54341L9.07429 3.60274H0.857197C0.629854 3.60274 0.411823 3.69732 0.251067 3.86568C0.0903117 4.03403 0 4.26236 0 4.50045C0 4.73853 0.0903117 4.96687 0.251067 5.13522C0.411823 5.30357 0.629854 5.39815 0.857197 5.39815H9.07429L7.10874 7.45659C7.02686 7.5394 6.96156 7.63846 6.91664 7.74798C6.87171 7.8575 6.84806 7.9753 6.84707 8.0945C6.84609 8.21369 6.86778 8.3319 6.91088 8.44223C6.95398 8.55255 7.01763 8.65278 7.09811 8.73707C7.17859 8.82136 7.2743 8.88801 7.37965 8.93315C7.485 8.97829 7.59787 9.001 7.71169 8.99997C7.82551 8.99893 7.93799 8.97417 8.04257 8.92712C8.14715 8.88007 8.24174 8.81168 8.32081 8.72594L11.7496 5.13513C11.829 5.05155 11.8919 4.95241 11.9348 4.84337Z";
@@ -150,7 +253,7 @@ function SectionCtaAnggota() {
 
         {/* Price */}
         <p className="font-['Outfit',sans-serif] font-bold leading-[1.6] text-[#f1eee3] text-[13.5px] text-center w-full">
-          Mulai dari Rp 20.000/bulan
+          Mulai dari Rp 200.000/tahun
         </p>
 
         {/* Primary CTA — gold gradient pill */}
@@ -188,6 +291,7 @@ function SectionCtaAnggota() {
 /* ── Main Page ─── */
 export default function LayananPage() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [faith, setFaith] = useState<Faith>("muslim");
   const location = useLocation();
 
   useEffect(() => {
@@ -209,21 +313,22 @@ export default function LayananPage() {
               <div className="flex flex-col gap-[24px] items-center justify-center px-[20px] py-[36px] w-full">
                 <LayananHeading />
 
+                <FaithTabs value={faith} onChange={setFaith} />
+
                 {/* Cards with connector line */}
                 <div className="flex flex-col items-start w-full">
-                  {serviceCards.map((card, i) => (
-                    <div key={i} className="w-full">
-                      <ServiceCard {...card} />
-                      {i < serviceCards.length - 1 && (
-                        <div className="relative h-[16px] w-full">
-                          <div
-                            className="absolute bg-[#bda67a] w-[3px] top-0 bottom-0"
-                            style={{ left: "1.5rem" }}
-                          />
-                        </div>
-                      )}
+                  <div className="w-full">
+                    <HariKematianCard faith={faith} />
+                    <div className="relative h-[16px] w-full">
+                      <div
+                        className="absolute bg-[#bda67a] w-[3px] top-0 bottom-0"
+                        style={{ left: "1.5rem" }}
+                      />
                     </div>
-                  ))}
+                  </div>
+                  <div className="w-full">
+                    <PascaKematianCard faith={faith} />
+                  </div>
                 </div>
               </div>
             </div>

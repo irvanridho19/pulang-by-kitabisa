@@ -30,52 +30,37 @@ function StepCard({ number, title, description }: { number: number; title: strin
 const stepsAnggota = [
   {
     number: 1,
-    title: "Kontak daruratmu menghubungi CS",
-    description: "Informasikan lewat WhatsApp ada anggota keluarga yang tutup usia.",
+    title: "Hubungi Call Center Pulang",
+    description: "Informasikan nama, nomor anggota, dan alamat anggota yang tutup usia.",
   },
   {
     number: 2,
-    title: "Isi form kebutuhan layanan",
-    description: "Lengkapi data anggota yang tutup usia dan layanan yang dibutuhkan.",
+    title: "Tim Pulang mengecek data",
+    description: "Pengecekan cepat ini memastikan layanan yang kamu dapatkan sesuai kebutuhan",
   },
   {
     number: 3,
-    title: "Koordinasi teknis lewat grup WhatsApp",
-    description: "Tim Pulang mengundang kontak daruratmu ke grup WhatsApp untuk koordinasi teknis layanan.",
-  },
-  {
-    number: 4,
     title: "Layanan diberikan",
-    description: "Tim Pulang hadir untuk melayani keluargamu di hari kepulanganmu.",
-  },
+    description: "Tim Pulang hadir untuk melayani keluarga di hari kepulangan dan pasca pemakaman.",
+  }
 ];
 
 const stepsDarurat = [
   {
     number: 1,
-    title: "Klik 'Pesan Layanan Darurat'",
-    description: "Informasikan ada anggota keluarga yang tutup usia.",
+    title: "Klik ‘Pesan layanan langsung 24 jam’",
+    description: "Informasikan nama dan alamat keluarga yang tutup usia.",
   },
   {
     number: 2,
-    title: "Isi form kebutuhan layanan",
-    description: "Lengkapi data anggota yang tutup usia dan layanan yang dibutuhkan.",
+    title: "Selesaikan pembayaran",
+    description: "Kami mengecek datamu dan memastikan layanan yang kamu dapatkan sesuai kebutuhan",
   },
   {
     number: 3,
-    title: "Selesaikan pembayaran",
-    description: "Bayar sesuai harga layanan yang dibutuhkan.",
-  },
-  {
-    number: 4,
-    title: "Koordinasi teknis lewat grup WhatsApp",
-    description: "Tim Pulang akan mengundang keluargamu ke grup WhatsApp untuk koordinasi teknis layanan.",
-  },
-  {
-    number: 5,
     title: "Layanan diberikan",
-    description: "Tim Pulang hadir untuk melayani keluargamu di hari kepulanganmu.",
-  },
+    description: "Tim Pulang hadir untuk melayani keluarga di hari kepulangan dan pasca pemakaman.",
+  }
 ];
 
 export default function CaraKlaimPage() {

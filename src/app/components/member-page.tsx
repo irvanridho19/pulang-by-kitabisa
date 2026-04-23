@@ -1,99 +1,90 @@
 import { useState } from "react";
 import { usePageTransition } from "./page-transition";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
-import imgWhite1 from "../../assets/footer-logo.png";
+import imgWhite1 from "../../assets/Logo/Logo-1.svg";
 
 /* ─── Digital Member Card ─── */
 function DigitalMemberCard() {
   return (
     <div
-      className="h-[186px] overflow-hidden relative rounded-[20px] shrink-0 w-full"
+      className="relative overflow-hidden rounded-[16px] shrink-0 w-full"
       style={{
+        // Rasio aspek kartu standar ATM/KTP (CR80)
+        aspectRatio: "1.586 / 1",
         background: "linear-gradient(134.808deg, rgb(54,41,25) 13.397%, rgb(35,27,16) 50%, rgb(23,17,10) 86.603%)",
         boxShadow: "0px 12px 32px 0px rgba(26,18,10,0.38)",
       }}
     >
-      {/* Decorative circles */}
-      <div className="absolute size-[130px]" style={{ left: 240, top: -50 }}>
+      {/* Decorative circles - menggunakan persentase agar responsif */}
+      <div className="absolute w-[40%] aspect-square" style={{ right: "-5%", top: "-25%" }}>
         <svg className="absolute block size-full" fill="none" viewBox="0 0 130 130">
           <circle cx="65" cy="65" fill="white" fillOpacity="0.06" r="65" />
         </svg>
       </div>
-      <div className="absolute size-[90px]" style={{ left: -30, top: 110 }}>
+      <div className="absolute w-[25%] aspect-square" style={{ left: "-10%", bottom: "-15%" }}>
         <svg className="absolute block size-full" fill="none" viewBox="0 0 90 90">
           <circle cx="45" cy="45" fill="white" fillOpacity="0.04" r="45" />
         </svg>
       </div>
 
-      {/* Logo */}
-      <div className="absolute w-[47px] h-[24px]" style={{ left: 20, top: 15 }}>
-        <img alt="Pulang" className="absolute inset-0 max-w-none object-cover size-full" src={imgWhite1} />
-      </div>
+      {/* Kontainer Utama Padding */}
+      <div className="absolute inset-0 flex flex-col justify-between p-[6%]">
+        
+        {/* Top: Logo */}
+        <div className="w-[20%] min-w-[50px] relative">
+           {/* Ganti object-cover menjadi object-contain agar logo tidak kepotong */}
+          <img alt="Pulang" className="w-full h-auto object-contain" src={imgWhite1} />
+        </div>
 
-      {/* Name & ID */}
-      <div className="absolute flex flex-col gap-[4px]" style={{ left: 20, top: 56 }}>
-        <p
-          className="font-['Outfit',sans-serif] font-medium text-[12px] tracking-[2px] w-[187px]"
-          style={{ color: "rgba(255,255,255,0.38)" }}
-        >
-          PLG – 2025 – 001847
-        </p>
-        <p className="font-['Lora',serif] font-bold text-[#e2d0a8] text-[19px]">
-          Joko Susilo Budiman
-        </p>
-      </div>
-
-      {/* Membership info row */}
-      <div
-        className="absolute flex items-end justify-between"
-        style={{ left: 20, right: 20, top: 136 }}
-      >
-        {/* Keanggotaan */}
-        <div className="flex flex-col gap-[2px]">
+        {/* Middle: Name & ID */}
+        <div className="flex flex-col gap-[1%] mt-[5%]">
           <p
-            className="font-['Outfit',sans-serif] font-normal text-[8px] tracking-[0.8px] uppercase"
+            className="font-['Outfit',sans-serif] font-medium text-[clamp(10px,3vw,14px)] tracking-[2px]"
             style={{ color: "rgba(255,255,255,0.38)" }}
           >
-            KEANGGOTAAN
+            PLG – 2025 – 001847
           </p>
-          <p
-            className="font-['Outfit',sans-serif] font-semibold text-[11px]"
-            style={{ color: "rgba(255,255,255,0.85)" }}
-          >
-            Tahunan
+          <p className="font-['Lora',serif] font-bold text-[#e2d0a8] text-[clamp(16px,5vw,22px)]">
+            Joko Susilo Budiman
           </p>
         </div>
-        {/* Berlaku Hingga */}
-        <div className="flex flex-col gap-[2px] items-end">
-          <p
-            className="font-['Outfit',sans-serif] font-normal text-[8px] tracking-[0.8px] uppercase"
-            style={{ color: "rgba(255,255,255,0.38)" }}
-          >
-            BERLAKU HINGGA
-          </p>
-          <p className="font-['Outfit',sans-serif] font-semibold text-[11px]" style={{ color: "rgba(255,255,255,0.85)" }}>
-            31 Des 2026
-          </p>
+
+        {/* Bottom: Membership info row */}
+        <div className="flex items-end justify-between w-full mt-auto pb-[2%]">
+          {/* Keanggotaan */}
+          <div className="flex flex-col gap-[2px]">
+            <p
+              className="font-['Outfit',sans-serif] font-normal text-[clamp(7px,2vw,10px)] tracking-[0.8px] uppercase"
+              style={{ color: "rgba(255,255,255,0.38)" }}
+            >
+              KEANGGOTAAN
+            </p>
+            <p
+              className="font-['Outfit',sans-serif] font-semibold text-[clamp(10px,3vw,13px)]"
+              style={{ color: "rgba(255,255,255,0.85)" }}
+            >
+              Tahunan
+            </p>
+          </div>
+          {/* Berlaku Hingga */}
+          <div className="flex flex-col gap-[2px] items-end">
+            <p
+              className="font-['Outfit',sans-serif] font-normal text-[clamp(7px,2vw,10px)] tracking-[0.8px] uppercase"
+              style={{ color: "rgba(255,255,255,0.38)" }}
+            >
+              BERLAKU HINGGA
+            </p>
+            <p className="font-['Outfit',sans-serif] font-semibold text-[clamp(10px,3vw,13px)]" style={{ color: "rgba(255,255,255,0.85)" }}>
+              31 Des 2026
+            </p>
+          </div>
         </div>
-        {/* Call Center */}
-        {/* <div className="flex flex-col gap-[2px] items-end">
-          <p
-            className="font-['Outfit',sans-serif] font-normal text-[8px] tracking-[0.8px] uppercase"
-            style={{ color: "rgba(255,255,255,0.38)" }}
-          >
-            CALL CENTER PULANG
-          </p>
-          <p className="font-['Outfit',sans-serif] font-semibold text-[11px]" style={{ color: "rgba(255,255,255,0.85)" }}>
-            (021) 123-4567
-          </p>
-        </div> */}
       </div>
 
       {/* Bottom gold shimmer line */}
       <div
-        className="absolute h-[3px] left-0 w-full"
+        className="absolute h-[3px] left-0 w-full bottom-0"
         style={{
-          top: 183,
           background: "linear-gradient(to right, rgba(189,166,122,0), rgba(189,166,122,0.85) 50%, rgba(189,166,122,0))",
         }}
       />
@@ -288,7 +279,7 @@ function ActKontakAsisten() {
           />
         </div>
         <p className="font-['Outfit',sans-serif] font-medium text-[#1f1912] text-[10px] text-center">
-          Kontak Asisten
+          Hubungi Call Center
         </p>
       </div>
     </button>

@@ -17,20 +17,18 @@ const hubunganDaruratOptions = [
   "Pasangan",
   "Orang Tua",
   "Anak",
-  "Saudara Kandung",
 ];
 const hubunganKeluargaOptions = [
   "Pasangan",
   "Orang Tua",
   "Anak",
-  "Saudara Kandung",
 ];
 
 /* ── Shared input class constants ─── */
 const getInputWrapperClass = (hasError: boolean, flex: boolean = false) => {
   const base = `bg-[#faf8f4] relative rounded-[10px] w-full border transition-all duration-200 focus-within:bg-white ${hasError
-      ? "border-red-500 focus-within:border-red-500"
-      : "border-[#e3ddd3] focus-within:border-[#bda67a]"
+    ? "border-red-500 focus-within:border-red-500"
+    : "border-[#e3ddd3] focus-within:border-[#bda67a]"
     }`;
   return flex ? `${base} flex items-center` : base;
 };
@@ -116,8 +114,8 @@ function Dropdown({
                 type="button"
                 onClick={() => onSelect(option)}
                 className={`w-full text-left px-[16px] py-[12px] font-['Outfit',sans-serif] font-normal leading-[1.5] text-[14px] cursor-pointer border-none transition-colors duration-150 ${value === option
-                    ? "bg-[#f5f0e8] text-[#1f1f1f]"
-                    : "bg-white text-[#4b5563] hover:bg-[#faf8f4]"
+                  ? "bg-[#f5f0e8] text-[#1f1f1f]"
+                  : "bg-white text-[#4b5563] hover:bg-[#faf8f4]"
                   }`}
               >
                 {option}
@@ -427,10 +425,24 @@ export default function PurchaseDataDiriPage() {
 
                     <div className="relative bg-gradient-to-br from-[#faf8f4] to-[#f5efe4] rounded-[14px] border border-[#e8e2d6] w-full overflow-hidden">
                       <div className="absolute top-0 left-0 w-[3px] h-full bg-[#bda67a]" />
-                      <div className="flex flex-col gap-[14px] p-[16px] pl-[18px] w-full">
-                        <p className="font-['Outfit',sans-serif] font-normal leading-[1.4] text-[#6b6050] text-[13px] flex-1">
-                          Kamu adalah pengelola akun yang bertugas menghubungi tim Pulang saat anggota keluargamu tutup usia.
+                      <div className="flex flex-col gap-[8px] p-[16px] pl-[18px] w-full">
+                        <p className="font-['Outfit',sans-serif] font-medium leading-[1.4] text-[#6b6050] text-[13px] w-full">
+                          Kamu adalah pengelola akun yang bertugas:
                         </p>
+                        <div className="flex flex-col gap-[6px] items-start w-full">
+                          <div className="flex gap-[8px] items-start w-full">
+                            <div className="shrink-0 mt-[6px] size-[4px] rounded-full bg-[#bda67a]" />
+                            <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.4] text-[#6b6050] text-[13px]">
+                              Perpanjang keanggotaan keluargamu
+                            </p>
+                          </div>
+                          <div className="flex gap-[8px] items-start w-full">
+                            <div className="shrink-0 mt-[6px] size-[4px] rounded-full bg-[#bda67a]" />
+                            <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.4] text-[#6b6050] text-[13px]">
+                              Menghubungi tim Pulang saat anggota keluargamu tutup usia
+                            </p>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -592,8 +604,8 @@ export default function PurchaseDataDiriPage() {
                   onClick={handleSubmit}
                   disabled={!isFormValid}
                   className={`w-full h-[50px] rounded-[12px] border-none transition-all duration-200 ${isFormValid
-                      ? "bg-[#1f1912] cursor-pointer"
-                      : "bg-[#d1d5db] cursor-not-allowed"
+                    ? "bg-[#1f1912] cursor-pointer"
+                    : "bg-[#d1d5db] cursor-not-allowed"
                     }`}
                 >
                   <div className="flex items-center justify-center w-full h-full px-[24px]">

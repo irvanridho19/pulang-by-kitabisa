@@ -56,10 +56,10 @@ function BenefitCard({ emoji, text }: { emoji: string; text: string }) {
 }
 
 const benefits = [
-  { emoji: "💰", text: "Santunan duka Rp 5.000.000 untuk keluarga" },
-  { emoji: "🕌", text: "Pemulasaran jenazah secara lengkap" },
-  { emoji: "📋", text: "Asisten pengurusan administrasi pasca duka" },
-  { emoji: "📝", text: "Pendampingan penulisan surat wasiat" },
+  { emoji: "🕌", text: "Pemulasaran jenazah" },
+  { emoji: "📋", text: "Asisten pengurusan administrasi pasca pemakaman" },
+  { emoji: "💰", text: "Uang kedukaan Rp 1.000.000 untuk keluarga" },
+  // { emoji: "📝", text: "Pendampingan penulisan surat wasiat" },
 ];
 
 /* ─── Main Page ─── */
@@ -82,13 +82,13 @@ export default function MemberEmptyPage() {
           <div className="flex flex-col gap-[16px] items-center px-[32px] pb-[40px] pt-[52px] w-full">
             <IllustrationNoMember />
             <p className="font-['Lora',serif] font-bold text-[#1f1912] text-[22px] text-center leading-[1.45]">
-              Kamu belum jadi anggota Pulang
+              Daftar untuk mulai menyiapkan kepulangan
             </p>
             <p
               className="font-['Outfit',sans-serif] font-normal text-[14px] text-center leading-[1.6]"
               style={{ color: "rgba(92,79,58,0.75)" }}
             >
-              Bergabung sebagai anggota Pulang dan pastikan kepulangan yang tenang — untuk dirimu dan yang kamu sayangi.
+              Dengan menjadi anggota, kamu bisa mendapatkan layanan lengkap agar tenang berpulang.
             </p>
           </div>
 
@@ -130,7 +130,7 @@ export default function MemberEmptyPage() {
               className="font-['Outfit',sans-serif] font-medium text-[12px] text-center leading-[1.5]"
               style={{ color: "rgba(112,112,112,0.6)" }}
             >
-              Mulai dari Rp 35.000/bulan
+              Mulai dari Rp200.000/tahun
             </p>
           </div>
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import svgPaths from "../../assets/Illustration/Success.svg";
-import imgIconCareManager from "../../assets/care-manager-icon.png";
+import { useLocation } from "react-router";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { usePageTransition } from "./page-transition";
 
@@ -23,6 +23,26 @@ function IllustrationSuccess() {
 export default function PurchaseSuccessPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { navigateWithLoading } = usePageTransition();
+  const location = useLocation();
+
+  // 1. Tarik data untuk mengetahui siapa yang didaftarkan
+  const data = (location.state as { target?: string } | null) ?? (() => {
+    try {
+      const stored = sessionStorage.getItem("pulang_purchase");
+      return stored ? JSON.parse(stored) : {};
+    } catch { return {}; }
+  })();
+
+  const isFamily = data?.target === "family";
+
+  // 2. Tentukan copy teks berdasarkan kondisi isFamily
+  const titleText = isFamily
+    ? "Terima kasih sudah membantu keluargamu tenang berpulang 🤍"
+    : "Terima kasih sudah membuat persiapan untuk hari kepulanganmu 🤍";
+
+  const subtitleText = isFamily
+    ? "Cek kartu anggota keluargamu di halaman keanggotaan. Kami juga mengirimkan kartu yang sama ke keluargamu melalui WhatsApp."
+    : "Cek kartu anggotamu di halaman keanggotaan. Kami juga mengirimkan kartu yang sama ke kontak daruratmu melalui WhatsApp.";
 
   // Staggered animation states
   const [cardVisible, setCardVisible] = useState(false);
@@ -72,18 +92,12 @@ export default function PurchaseSuccessPage() {
                 }}
               >
                 <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#4b5563] text-[16px] w-full">
-                  Terima kasih sudah memulai persiapan untuk hari yang tak terduga
+                  {titleText}
                 </p>
-                <div className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[#9ca3af] text-[12px] w-full">
-                  <p className="mb-[4px]">
-                    Menyiapkan kepulangan dapat membantu keluargamu menghadapi masa sulit lebih tenang 🤍
-                  </p>
-                  <p>
-                    Sekarang, kami akan mengirimkan tautan via WhatsApp berisi akses ke Kartu Persiapan Kepulangan digitalmu.
-                  </p>
-                </div>
+                <p className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[#9ca3af] text-[13px] w-full">
+                  {subtitleText}
+                </p>
               </div>
-
               {/* Buttons */}
               <div
                 className="flex flex-col gap-[12px] items-start w-full transition-all duration-700 ease-out"

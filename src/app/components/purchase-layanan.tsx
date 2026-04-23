@@ -18,6 +18,28 @@ function BulletItem({ text, color }: { text: string; color: string }) {
   );
 }
 
+/* ── Helper untuk sub-bullet Pasca Pemakaman ─── */
+function PascaBulletItem({ item, color }: { item: PascaItemType; color: string }) {
+  if (typeof item === "string") {
+    return <BulletItem text={item} color={color} />;
+  }
+  return (
+    <div className="flex flex-col gap-[4px] w-full">
+      <BulletItem text={item.text} color={color} />
+      <div className="flex flex-col gap-[4px] pl-[15px] w-full">
+        {item.subItems.map((sub, idx) => (
+          <div key={idx} className="flex gap-[6px] items-start w-full">
+            <div className="text-[rgba(58,44,26,0.6)] mt-[1px] leading-[1.5] text-[13px]">-</div>
+            <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.5] text-[13px] text-[rgba(58,44,26,0.6)]">
+              {sub}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ── Chip ─── */
 function Chip({ children }: { children: React.ReactNode }) {
   return (
@@ -34,12 +56,12 @@ function Chip({ children }: { children: React.ReactNode }) {
 
 /* ── Items data ─── */
 const muslimHariKematian = [
+  "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
   "Pemandian jenazah",
   "Pengkafanan sesuai syariat",
-  "Kain kafan lengkap, sabun & kamper",
-  "Kembang 7 rupa & air mawar",
-  "Papan nisan dan papan kayu penutup",
-  "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
+  "Kain kafan (sabun, kamper, dan parfum)",
+  "Bunga & air mawar (opsional, jika butuh)",
+  "Papan nisan dan papan kayu penutup makam",
   "Ambulans jenazah",
   "Penggantian biaya jasa penggalian makam",
   "Karangan bunga",
@@ -61,20 +83,30 @@ const nonMuslimHariKematian = [
   "Snack box 50 pak",
 ];
 
-const muslimPasca = [
-  "Asisten khusus untuk administrasi keluarga",
-  "Akta kematian dari Disdukcapil",
-  "Surat keterangan kepolisian",
-  "Penghentian BPJS",
-  "Buku Yasin 50 pcs (khusus Muslim)",
+type PascaItemType = string | { text: string; subItems: string[] };
+
+const muslimPasca: PascaItemType[] = [
+  {
+    text: "Asisten khusus pengurusan administrasi keluarga:",
+    subItems: [
+      "Akta kematian dari Disdukcapil",
+      "Surat keterangan kepolisian",
+      "Penghentian BPJS",
+    ]
+  },
+  "Buku Yasin 50 pcs (opsional, jika butuh)",
   "Layanan konseling psikolog",
 ];
 
-const nonMuslimPasca = [
-  "Asisten khusus untuk administrasi keluarga",
-  "Akta kematian dari Disdukcapil",
-  "Surat keterangan kepolisian",
-  "Penghentian BPJS",
+const nonMuslimPasca: PascaItemType[] = [
+  {
+    text: "Asisten khusus pengurusan administrasi keluarga:",
+    subItems: [
+      "Akta kematian dari Disdukcapil",
+      "Surat keterangan kepolisian",
+      "Penghentian BPJS",
+    ]
+  },
   "Layanan konseling psikolog",
 ];
 
@@ -168,9 +200,8 @@ export default function PurchaseLayananPage() {
                     </p>
                   </div>
                 )}
-                <p className={`font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] whitespace-nowrap ${
-                  step.number === currentStep ? "text-[#4b5563]" : "text-[#6b7280]"
-                }`}>
+                <p className={`font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] whitespace-nowrap ${step.number === currentStep ? "text-[#4b5563]" : "text-[#6b7280]"
+                  }`}>
                   {step.label}
                 </p>
               </div>
@@ -215,7 +246,11 @@ export default function PurchaseLayananPage() {
 
                     {/* Chips */}
                     <div className="flex gap-[8px] items-center flex-wrap">
-                      {isFamily && <Chip>👨‍👩‍👧 Untuk Keluarga</Chip>}
+                      {isFamily ? (
+                        <Chip>👨‍👩‍👧 Untuk Keluarga</Chip>
+                      ) : (
+                        <Chip>🧑 Diri Sendiri</Chip>
+                      )}
                       <Chip>{ceremonyChipLabel}</Chip>
                     </div>
 
@@ -254,6 +289,9 @@ export default function PurchaseLayananPage() {
                             <BulletItem key={item} text={item} color={dotColor} />
                           ))}
                         </div>
+                        <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#A80C45] text-[13px]">
+                          {footnoteExclusions}
+                        </p>
                       </div>
                       <div aria-hidden="true" className="absolute border border-[rgba(175,145,96,0.2)] border-solid inset-0 pointer-events-none rounded-[14px]" />
                     </div>
@@ -281,9 +319,10 @@ export default function PurchaseLayananPage() {
                           <div aria-hidden="true" className="absolute border border-[rgba(100,180,160,0.35)] border-solid inset-0 pointer-events-none rounded-[10px]" />
                         </div>
 
+                        {/* Menggunakan PascaBulletItem */}
                         <div className="flex flex-col gap-[8px] items-start w-full">
-                          {pascaItems.map((item) => (
-                            <BulletItem key={item} text={item} color="#8a6e3e" />
+                          {pascaItems.map((item, idx) => (
+                            <PascaBulletItem key={idx} item={item} color="#8a6e3e" />
                           ))}
                         </div>
                       </div>
@@ -291,14 +330,14 @@ export default function PurchaseLayananPage() {
                     </div>
 
                     {/* Divider */}
-                    <div className="bg-[rgba(200,191,175,0.4)] h-px w-full" />
+                    {/* <div className="bg-[rgba(200,191,175,0.4)] h-px w-full" /> */}
 
                     {/* Footnotes */}
-                    <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[11px] text-[rgba(58,44,26,0.7)] w-full">
+                    {/* <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[13px] text-[rgba(58,44,26,0.7)] w-full">
                       {footnoteExclusions}
-                    </p>
-                    <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[11px] text-[rgba(58,44,26,0.7)] w-full">
-                      **Semua layanan bisa diakses setelah melewati masa tunggu 6 bulan
+                    </p> */}
+                    <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[13px] text-[rgba(58,44,26,0.7)] w-full">
+                      *Semua layanan bisa diakses 6 bulan sejak terdaftar sebagai anggota aktif
                     </p>
                   </div>
                 </div>

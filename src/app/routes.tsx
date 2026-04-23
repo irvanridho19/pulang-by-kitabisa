@@ -14,6 +14,7 @@ import PerpanjangPage from "./components/perpanjang-page";
 import MemberEmptyPage from "./components/member-empty-page";
 import MisiPage from "./components/misi-page";
 import NotFoundPage from "./components/not-found-page";
+import FaqPage from "./components/faq-page";
 
 function RootLayout() {
   return (
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
       { path: "cara-klaim", Component: CaraKlaimPage },
       { path: "misi", Component: MisiPage },
       { path: "layanan", Component: LayananPage },
+      { path: "faq", Component: FaqPage },
       { path: "purchase", Component: PurchaseOnboardPage },
       { path: "purchase/layanan", Component: PurchaseLayananPage },
       { path: "purchase/data-diri", Component: PurchaseDataDiriPage },

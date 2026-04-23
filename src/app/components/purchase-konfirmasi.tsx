@@ -80,11 +80,11 @@ function SectionHeading({ text }: { text: string }) {
 /* ── Info Row ─── */
 function InfoRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex gap-[12px] items-start w-full">
-      <p className="font-['Outfit',sans-serif] font-medium leading-[1.6] text-[#9ca3af] text-[13px] w-[120px] shrink-0">
+    <div className="flex justify-between gap-[16px] items-start w-full">
+      <p className="font-['Outfit',sans-serif] font-medium leading-[1.6] text-[#9ca3af] text-[13px] shrink-0">
         {label}
       </p>
-      <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#3a3a3a] text-[13px] min-w-0 break-words">
+      <p className="font-['Outfit',sans-serif] font-medium leading-[1.6] text-[#3a3a3a] text-[13px] text-right break-words min-w-0">
         {value || "–"}
       </p>
     </div>
@@ -97,14 +97,12 @@ function ToggleSwitch({ on, onToggle }: { on: boolean; onToggle: () => void }) {
     <button
       type="button"
       onClick={onToggle}
-      className={`relative shrink-0 w-[44px] h-[24px] rounded-[40px] border-none cursor-pointer transition-colors duration-200 ${
-        on ? "bg-[#bda67a]" : "bg-[#e3ddd3]"
-      }`}
+      className={`relative shrink-0 w-[44px] h-[24px] rounded-[40px] border-none cursor-pointer transition-colors duration-200 ${on ? "bg-[#bda67a]" : "bg-[#e3ddd3]"
+        }`}
     >
       <div
-        className={`absolute top-[2px] w-[20px] h-[20px] bg-white rounded-full shadow-sm transition-all duration-200 ${
-          on ? "left-[22px]" : "left-[2px]"
-        }`}
+        className={`absolute top-[2px] w-[20px] h-[20px] bg-white rounded-full shadow-sm transition-all duration-200 ${on ? "left-[22px]" : "left-[2px]"
+          }`}
       />
     </button>
   );
@@ -181,8 +179,8 @@ export default function PurchaseKonfirmasiPage() {
     data.ceremony === "muslim"
       ? "Prosesi Muslim"
       : data.ceremony === "non-muslim"
-      ? "Prosesi Non-Muslim / Tradisi Lainnya"
-      : "–";
+        ? "Prosesi Non-Muslim / Tradisi Lainnya"
+        : "–";
 
   const recipientName = isFamily ? data.namaKeluarga : data.namaLengkap;
   const recipientWa = isFamily ? data.waKeluarga : data.whatsapp;
@@ -222,9 +220,8 @@ export default function PurchaseKonfirmasiPage() {
                   </div>
                 )}
                 <p
-                  className={`font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] whitespace-nowrap ${
-                    step.number === currentStep ? "text-[#3a3a3a]" : "text-[#9ca3af]"
-                  }`}
+                  className={`font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] whitespace-nowrap ${step.number === currentStep ? "text-[#3a3a3a]" : "text-[#9ca3af]"
+                    }`}
                 >
                   {step.label}
                 </p>
@@ -264,7 +261,20 @@ export default function PurchaseKonfirmasiPage() {
                 <div className="bg-[#faf8f4] rounded-[14px] border border-[#e8e2d6] w-full">
                   <div className="flex flex-col gap-[16px] items-start p-[20px] w-full">
                     <SectionHeading text="Detail Penerima Layanan" />
+                    {/* Subtitle khusus Family */}
+                    {isFamily && (
+                      <p className="font-['Outfit',sans-serif] font-normal text-[#9CA3AF] text-[12px] mt-[-10px]">
+                        Keluargamu yang didaftarkan
+                      </p>
+                    )}
+
                     <InfoRow label="Nama Lengkap" value={recipientName || "–"} />
+
+                    {/* Pindahan info Hubungan khusus Family */}
+                    {isFamily && (
+                      <InfoRow label="Hubungan denganmu" value={data.hubunganKeluarga || "–"} />
+                    )}
+
                     <InfoRow label="Nomor WhatsApp" value={recipientWa || "–"} />
                     <InfoRow label="Tanggal Lahir" value={data.dob || "–"} />
                     <InfoRow label="Umur" value={data.dob ? calculateAge(data.dob) : "–"} />
@@ -277,8 +287,13 @@ export default function PurchaseKonfirmasiPage() {
                     {isFamily ? (
                       <>
                         <SectionHeading text="Pengelola Akun" />
+                        {/* Subtitle khusus Family */}
+                        <p className="font-['Outfit',sans-serif] font-normal text-[#9CA3AF] text-[12px] mt-[-10px]">
+                          Data dirimu
+                        </p>
+
                         <InfoRow label="Nama Lengkap" value={data.namaPengelola || "–"} />
-                        <InfoRow label="Hubungan" value={data.hubunganKeluarga || "–"} />
+                        {/* Hubungan dihapus dari sini karena sudah pindah ke atas */}
                         <InfoRow label="Nomor WhatsApp" value={data.waPengelola || "–"} />
                       </>
                     ) : (
@@ -295,7 +310,7 @@ export default function PurchaseKonfirmasiPage() {
                 <SectionDivider />
 
                 {/* ── Donasi Tambahan Toggle ── */}
-                <div className="flex flex-col gap-[0px] items-start overflow-clip w-full">
+                {/* <div className="flex flex-col gap-[0px] items-start overflow-clip w-full">
                   <div className="flex gap-[16px] items-center w-full">
                     <ToggleSwitch on={donationOn} onToggle={() => setDonationOn(!donationOn)} />
                     <div className="flex flex-1 flex-col gap-[4px] items-start min-w-0">
@@ -306,10 +321,10 @@ export default function PurchaseKonfirmasiPage() {
                         Bantu lebih banyak keluarga yang membutuhkan.
                       </p>
                     </div>
-                  </div>
+                  </div> */}
 
                   {/* Expandable donation content */}
-                  <div
+                  {/* <div
                     className="overflow-hidden transition-all duration-300 ease-in-out w-full"
                     style={{ maxHeight: donationOn ? donationHeight + 24 : 0 }}
                   >
@@ -327,11 +342,10 @@ export default function PurchaseKonfirmasiPage() {
                             key={amount}
                             type="button"
                             onClick={() => handlePresetClick(amount)}
-                            className={`w-full rounded-[10px] px-[12px] py-[11px] cursor-pointer transition-all duration-200 font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] border ${
-                              selectedPreset === amount
+                            className={`w-full rounded-[10px] px-[12px] py-[11px] cursor-pointer transition-all duration-200 font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] border ${selectedPreset === amount
                                 ? "bg-[#bda67a] text-white border-[#bda67a] shadow-[0px_2px_8px_rgba(189,166,122,0.35)]"
                                 : "bg-white text-[#3a3a3a] border-[#e3ddd3] hover:border-[#bda67a]"
-                            }`}
+                              }`}
                           >
                             {formatRupiah(amount)}
                           </button>
@@ -420,15 +434,14 @@ export default function PurchaseKonfirmasiPage() {
                   <button
                     type="button"
                     onClick={() => setAgreedToTerms(!agreedToTerms)}
-                    className={`shrink-0 mt-[2px] w-[22px] h-[22px] rounded-[4px] border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${
-                      agreedToTerms
+                    className={`shrink-0 mt-[2px] w-[22px] h-[22px] rounded-[4px] border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${agreedToTerms
                         ? "border-[#1f1912] bg-[#1f1912]"
                         : "border-[#9ca3af] bg-white"
-                    }`}
+                      }`}
                   >
                     {agreedToTerms && (
                       <svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M1 3.5L4 6.5L10 1" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                        <path d="M1 3.5L4 6.5L10 1" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </button>
@@ -453,11 +466,10 @@ export default function PurchaseKonfirmasiPage() {
                       state: { ...data, total, slideDir: "forward" },
                     })
                   }
-                  className={`w-full h-[52px] rounded-[12px] border-none cursor-pointer transition-all duration-200 ${
-                    agreedToTerms
+                  className={`w-full h-[52px] rounded-[12px] border-none cursor-pointer transition-all duration-200 ${agreedToTerms
                       ? "bg-[#1f1912] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] cursor-pointer"
                       : "bg-[#d1d5db] cursor-not-allowed"
-                  }`}
+                    }`}
                 >
                   <div className="flex items-center justify-center w-full h-full px-[24px]">
                     <p className="font-['Outfit',sans-serif] font-medium leading-[normal] text-[16px] text-white whitespace-nowrap">

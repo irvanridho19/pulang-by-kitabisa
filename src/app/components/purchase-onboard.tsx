@@ -42,16 +42,15 @@ function BlockedModal({ onGoHome }: { onGoHome: () => void }) {
               Maaf, saat ini layanan belum tersedia untukmu
             </p>
             <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b7280] text-[16px] text-center w-full">
-              <span>Saat ini, paket berlangganan </span>
-              <span className="font-['Outfit',sans-serif] font-bold">Pulang</span>
-              <span>{" "}baru mencakup jangkauan operasional untuk wilayah{" "}</span>
+              <span>Saat ini, <span className="font-['Outfit',sans-serif] font-bold">Pulang</span></span>
+              <span>{" "}baru bisa melayani wilayah{" "}</span>
               <span className="font-['Outfit',sans-serif] font-bold">Jabodetabek</span>
-              <span>{" "}serta memenuhi ketentuan asuransi jiwa untuk{" "}</span>
-              <span className="font-['Outfit',sans-serif] font-bold">rentang usia 1 hingga 65 tahun</span>
+              <span>{" "}dengan usia orang yang didaftarkan{" "}</span>
+              <span className="font-['Outfit',sans-serif] font-bold">maksimal 65 tahun.</span>
               <span>.</span>
             </p>
             <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b7280] text-[16px] text-center w-full">
-              Terima kasih atas ketertarikanmu. Kami sedang berusaha memperluas jangkauan agar bisa segera hadir melindungi lebih banyak keluarga.
+              Kami berusaha meluaskan jangkauan agar bisa melayani lebih banyak keluarga.
             </p>
           </div>
         </div>
@@ -147,14 +146,14 @@ const ceremonyOptions = [
     emoji: "☪️",
     bg: "#ecf4f8",
     label: "Prosesi Muslim",
-    desc: "Sesuai syariat Islam, mencakup memandikan, mengkafani, dan pemakaman tanpa peti.",
+    desc: "Mencakup penyediaan perlengkapan jenazah, memandikan dan mengkafani.",
   },
   {
     value: "non-muslim",
     emoji: "✝️",
     bg: "#f4effc",
     label: "Prosesi Non-Muslim",
-    desc: "Mencakup penyediaan peti jenazah, formalin, kain tile, sarung tangan, kaos kaki, lembar duka, bunga, dll.",
+    desc: "Mencakup tata rias, dan perlengkapan jenazah seperti peti, formalin, sarung tangan, kaos kaki, bunga, dll",
   },
 ];
 

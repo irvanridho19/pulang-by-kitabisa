@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router";
-import { ChevronRight } from "lucide-react";
 import imgImageProblemsBackground from "../../assets/problems-background.png";
 import imgImage9 from "../../assets/image-9.png";
 import imgHero from "../../assets/Hero/hero.svg";
@@ -166,7 +165,7 @@ function SectionProblems() {
 
         {/* Heading */}
         <p className="font-['Lora',serif] font-bold text-white text-[18px] leading-[1.28] w-full">
-          <span className="text-[22px] font-bold">Menyiapkan</span> <span className="text-[22px] font-bold text-[#AF9160]">kepulangan</span><br/><hr className="my-4 w-[24px] border-[#d5bf92]" />Cara bertanggung jawab menjalani hidup yang sementara
+          <span className="text-[22px] font-bold">Menyiapkan</span> <span className="text-[22px] font-bold text-[#AF9160]">Kepulangan</span><br /><div className="my-2">=</div>Cara bertanggung jawab menjalani hidup yang sementara
         </p>
 
         {/* Intro paragraphs */}
@@ -175,7 +174,7 @@ function SectionProblems() {
             Simbol (-) pada papan nisan di antara tahun lahir dan tahun wafat mengingatkan kita bahwa hidup ini sangat singkat.
           </p>
           <p className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[14px] text-[rgba(255,255,255,0.82)] w-full">
-            Karena itu, Pulang menawarkan layanan menyiapkan kematian agar kamu dan keluarga tenang berpulang.
+            Karena itu, kami hadir untuk membantu kamu dan keluarga agar dapat berpulang dengan tenang.
           </p>
         </div>
 
@@ -195,12 +194,12 @@ function SectionProblems() {
         <button
           type="button"
           onClick={() => navigateWithLoading("/misi")}
-          className="w-full justify-center bg-[rgba(189,166,122,0.14)] border border-[rgba(189,166,122,0.4)] flex items-center px-[18px] py-[10px] rounded-[12px] mt-[4px] cursor-pointer transition-colors hover:bg-[rgba(189,166,122,0.22)]"
+          className="justify-center  flex items-center mt-[4px] cursor-pointer transition-colors hover:bg-[rgba(189,166,122,0.22)]"
         >
-          <p className="font-['Outfit',sans-serif] font-semibold text-[#d5bf92] text-[13px] whitespace-nowrap">
+          <p className="font-['Outfit',sans-serif] font-semibold text-[#d5bf92] text-[14px] whitespace-nowrap underline decoration-solid">
             Baca selengkapnya Misi Pulang
           </p>
-          <ChevronRight className="ml-[8px] size-[18px] text-[#d5bf92]" />
+          {/* <ChevronRight className="ml-[8px] size-[18px] text-[#d5bf92]" /> */}
         </button>
       </div>
     </div>
@@ -250,14 +249,39 @@ function SmallBulletItem({ text, color }: { text: string; color: string }) {
   );
 }
 
+/* ── Helper baru untuk merender sub-bullet ─── */
+function PascaBulletItem({ item }: { item: PascaItemType }) {
+  // Jika item hanya berupa string biasa (tanpa sub-item)
+  if (typeof item === "string") {
+    return <SmallBulletItem text={item} color="white" />;
+  }
+
+  // Jika item memiliki sub-items (seperti asisten administrasi)
+  return (
+    <div className="flex flex-col gap-[4px] w-full">
+      <SmallBulletItem text={item.text} color="white" />
+      <div className="flex flex-col gap-[4px] pl-[12px] w-full">
+        {item.subItems.map((sub, idx) => (
+          <div key={idx} className="flex gap-[6px] items-start w-full">
+            <div className="text-[rgba(255,255,255,0.7)] mt-[1px] leading-[18px] text-[12px]">-</div>
+            <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[18px] text-[12px] text-[rgba(255,255,255,0.7)]">
+              {sub}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ── Keanggotaan Card ─── */
 const muslimItems = [
+  "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
   "Pemandian jenazah",
   "Pengkafanan sesuai syariat",
-  "Kain kafan lengkap, sabun & kamper",
-  "Kembang 7 rupa & air mawar",
-  "Papan nisan dan papan kayu penutup",
-  "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
+  "Kain kafan (sabun, kamper, dan parfum)",
+  "Bunga & air mawar (opsional, jika butuh)",
+  "Papan nisan dan papan kayu penutup makam",
   "Ambulans jenazah",
   "Penggantian biaya jasa penggalian makam",
   "Karangan bunga",
@@ -279,20 +303,31 @@ const nonMuslimItems = [
   "Snack box 50 pak",
 ];
 
-const muslimPascaItems = [
-  "Asisten khusus untuk administrasi keluarga",
-  "Akta kematian dari Disdukcapil",
-  "Surat keterangan kepolisian",
-  "Penghentian BPJS",
-  "Buku Yasin 50 pcs",
+/* ── Data Pasca Pemakaman dengan Sub-items ─── */
+type PascaItemType = string | { text: string; subItems: string[] };
+
+const muslimPascaItems: PascaItemType[] = [
+  {
+    text: "Asisten khusus pengurusan administrasi keluarga:",
+    subItems: [
+      "Akta kematian dari Disdukcapil",
+      "Surat keterangan kepolisian",
+      "Penghentian BPJS",
+    ]
+  },
+  "50 buku Yasin (opsional, jika butuh)",
   "Layanan konseling psikolog",
 ];
 
-const nonMuslimPascaItems = [
-  "Asisten khusus untuk administrasi keluarga",
-  "Akta kematian dari Disdukcapil",
-  "Surat keterangan kepolisian",
-  "Penghentian BPJS",
+const nonMuslimPascaItems: PascaItemType[] = [
+  {
+    text: "Asisten khusus pengurusan administrasi keluarga:",
+    subItems: [
+      "Akta kematian dari Disdukcapil",
+      "Surat keterangan kepolisian",
+      "Penghentian BPJS",
+    ]
+  },
   "Layanan konseling psikolog",
 ];
 
@@ -407,12 +442,13 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
             </div>
           </div>
 
-          {/* Card: Pasca Kematian */}
+          {/* Card: Pasca Pemakaman */}
           <div className="bg-[rgba(255,255,255,0.06)] relative rounded-[16px] shrink-0 w-full">
             <div className="absolute border border-[rgba(23,66,145,0.15)] border-solid inset-0 pointer-events-none rounded-[16px]" />
             <div className="flex flex-col gap-[12px] items-start p-[12px] w-full">
+              {/* Judul disesuaikan dengan gambar */}
               <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#d5c9aa] text-[14px] whitespace-nowrap">
-                Pasca Kematian
+                Pasca Pemakaman
               </p>
               {/* Green note */}
               <div className="bg-[rgba(100,180,160,0.2)] relative rounded-[8px] shrink-0 w-full">
@@ -425,10 +461,10 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
                 </div>
                 <div className="absolute border border-[rgba(100,180,160,0.5)] border-solid inset-0 pointer-events-none rounded-[8px]" />
               </div>
-              {/* Bullet list */}
+              {/* Bullet list menggunakan PascaBulletItem */}
               <div className="flex flex-col gap-[8px] items-start w-full">
                 {(isMuslim ? muslimPascaItems : nonMuslimPascaItems).map((item, i) => (
-                  <SmallBulletItem key={i} text={item} color="white" />
+                  <PascaBulletItem key={i} item={item} />
                 ))}
               </div>
             </div>
@@ -456,12 +492,12 @@ function DaruratCard() {
   const [isMuslim, setIsMuslim] = useState(true);
 
   const muslimItems = [
+    "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
     "Pemandian jenazah",
     "Pengkafanan sesuai syariat",
-    "Kain kafan lengkap, sabun & kamper",
-    "Kembang 7 rupa & air mawar",
-    "Papan nisan dan papan kayu penutup",
-    "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
+    "Kain kafan (sabun, kamper, dan parfum)",
+    "Bunga & air mawar (opsional, jika butuh)",
+    "Papan nisan dan papan kayu penutup makam",
     "Ambulans jenazah",
     "Penggantian biaya jasa penggalian makam",
     "Karangan bunga",
@@ -674,7 +710,7 @@ function SectionCtaCards() {
           </div>
           <div className="flex flex-col gap-[14px] items-start w-full">
             <p className="font-['Outfit',sans-serif] font-normal leading-[1.48] text-[#707070] text-[12px] w-full">
-              Pastikan kepergianmu kelak tidak meninggalkan beban dan kebingungan bagi keluarga.
+              Siapkan kepulangan yang layak untukmu, dan pastikan kepergianmu kelak tidak merepotkan keluargamu.
             </p>
             <button
               onClick={() => navigateWithLoading("/purchase")}
@@ -697,7 +733,7 @@ function SectionCtaCards() {
           </div>
           <div className="flex flex-col gap-[14px] items-start w-full">
             <p className="font-['Outfit',sans-serif] font-normal leading-[1.48] text-[#707070] text-[12px] w-full">
-              Muliakan orang tua atau pasanganmu, pastikan mereka mendapat layanan terbaik saat berpulang.
+              Muliakan orang tua atau pasanganmu dengan prosesi kepulangan  yang bermartabat, tanpa merepotkan keluarga.
             </p>
             <button
               onClick={() => navigateWithLoading("/purchase")}

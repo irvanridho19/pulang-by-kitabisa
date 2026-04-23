@@ -1,17 +1,16 @@
 import { Menu, X, ChevronRight, ArrowRight, MessageCircle, Phone, Instagram } from "lucide-react";
-import imgImageLogo from "../../assets/logo.png";
-import imgFooterLogo from "../../assets/footer-logo-dark.png";
+import imgImageLogo from "../../assets/Logo/Logo.svg";
+import imgFooterLogo from "../../assets/Logo/Logo-1.svg";
 import { usePageTransition } from "./page-transition";
 import { useLocation } from "react-router";
 import { useAuth } from "./auth-context";
 
 /* ── Nav Links Config ─── */
 export const navLinks = [
-  { label: "Solusi", to: "/", hash: "#section-service" },
   { label: "Layanan", to: "/layanan", hash: "" },
-  { label: "Harga", to: "/", hash: "#section-pricing" },
-  { label: "Dampak", to: "/", hash: "#section-impact" },
   { label: "Cara Klaim", to: "/cara-klaim", hash: "" },
+  { label: "FAQ", to: "/faq", hash: "" },
+  { label: "Misi Pulang", to: "/misi", hash: "" },
 ];
 
 /** Scroll to a hash target, or navigate to landing page with hash */
@@ -39,9 +38,9 @@ function useNavAction() {
 export function NavbarMobileHeader({ onMenuToggle, menuOpen }: { onMenuToggle: () => void; menuOpen: boolean }) {
   const { navigateWithLoading } = usePageTransition();
   return (
-    <div className="sticky top-0 bg-white flex items-center justify-between px-[16px] py-[12px] w-full z-50 border-b border-[#e5e7eb]">
-      <button onClick={() => navigateWithLoading("/")} className="h-[45px] relative shrink-0 w-[90px] cursor-pointer bg-transparent border-none p-0">
-        <img alt="Pulang Logo" className="absolute inset-0 max-w-none object-cover pointer-events-none size-full" src={imgImageLogo} />
+    <div className="sticky top-0 bg-white flex items-center justify-between px-[16px] py-[16px] w-full z-50 border-b border-[#e5e7eb]">
+      <button onClick={() => navigateWithLoading("/")} className="h-[44px] shrink-0 cursor-pointer bg-transparent border-none p-0 flex items-center">
+        <img alt="Pulang Logo" className="h-full w-auto object-contain pointer-events-none" src={imgImageLogo} />
       </button>
       <button onClick={onMenuToggle} className="relative shrink-0 size-[24px] cursor-pointer bg-transparent border-none p-0 flex items-center justify-center">
         {menuOpen ? (
@@ -65,6 +64,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
     { label: "Layanan", to: "/layanan" },
     { label: "Cara akses layanan", to: "/cara-klaim" },
     { label: "Misi Pulang", to: "/misi" },
+    { label: "FAQ", to: "/faq" },
   ];
 
   // ── Logged In variant ──

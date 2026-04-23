@@ -49,6 +49,31 @@ function BulletItem({ text, dotColor }: { text: string; dotColor: string }) {
   );
 }
 
+/* ── Helper baru untuk merender sub-bullet Pasca Kematian ─── */
+function PascaBulletItem({ item, dotColor }: { item: PascaItemType; dotColor: string }) {
+  // Jika item hanya berupa string biasa
+  if (typeof item === "string") {
+    return <BulletItem text={item} dotColor={dotColor} />;
+  }
+
+  // Jika item memiliki sub-items (asisten administrasi)
+  return (
+    <div className="flex flex-col gap-[4px] w-full">
+      <BulletItem text={item.text} dotColor={dotColor} />
+      <div className="flex flex-col gap-[4px] pl-[12px] w-full">
+        {item.subItems.map((sub, idx) => (
+          <div key={idx} className="flex gap-[6px] items-start w-full">
+            <div className="text-[rgba(31,25,18,0.6)] mt-[1px] leading-[18px] text-[12px]">-</div>
+            <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[18px] text-[12px] text-[rgba(31,25,18,0.6)]">
+              {sub}
+            </p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
 /* ── Card Data ─── */
 type Faith = "muslim" | "nonMuslim";
 
@@ -56,59 +81,71 @@ const hariKematianContent: Record<Faith, { sublabel: string; items: string[]; no
   muslim: {
     sublabel: "KHUSUS MUSLIM",
     items: [
-      "Pemulasaran jenazah secara Islam",
-      "Kain kafan lengkap",
-      "Peralatan jenazah",
+      "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
+      "Pemandian jenazah",
+      "Pengkafanan sesuai syariat",
+      "Kain kafan (sabun, kamper, dan parfum)",
+      "Bunga & air mawar (opsional, jika butuh)",
+      "Papan nisan dan papan kayu penutup makam",
       "Ambulans jenazah",
-      "Penggalian makam",
+      "Penggantian biaya jasa penggalian makam",
       "Karangan bunga",
       "Snack box 50 pak",
-      "Tenda & kursi untuk tamu",
-      "Pembawa jenazah",
-      "Imam & pembacaan doa",
     ],
     note: "*Tidak termasuk pencarian lahan makam dan rumah duka.",
   },
   nonMuslim: {
     sublabel: "KHUSUS NON-MUSLIM",
     items: [
-      "Pemulasaran jenazah non-muslim",
+      "Pemandian jenazah",
+      "Tata rias jenazah",
+      "Pemberian formalin",
       "Peti jenazah",
-      "Peralatan jenazah",
+      "Kain penutup peti, sarung tangan & kaos kaki",
+      "Lembar duka, wewangian & lilin duka",
+      "Bunga salib atau bunga meja",
+      "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
       "Ambulans jenazah",
+      "Penggantian biaya jasa penggalian makam",
       "Karangan bunga",
       "Snack box 50 pak",
-      "Tenda & kursi untuk tamu",
-      "Pembawa jenazah",
-      "Pemandu upacara",
-      "Buku doa",
-      "Prosesi pemakaman standar",
     ],
     note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi dan larung.",
   },
 };
 
-const pascaKematianContent: Record<Faith, { sublabel: string; items: string[] }> = {
+/* ── Tipe data baru untuk mendukung sub-items ─── */
+type PascaItemType = string | { text: string; subItems: string[] };
+
+const pascaKematianContent: Record<Faith, { sublabel: string; items: PascaItemType[] }> = {
   muslim: {
     sublabel: "KHUSUS MUSLIM",
     items: [
-      "Asisten khusus untuk administrasi keluarga",
-      "Akta kematian dari Disdukcapil",
-      "Surat keterangan kepolisian",
-      "Penghentian BPJS",
-      "Buku Yasin 50 pcs",
-      "Uang kedukaan Rp1.000.000",
+      {
+        text: "Asisten khusus pengurusan administrasi keluarga:",
+        subItems: [
+          "Akta kematian dari Disdukcapil",
+          "Surat keterangan kepolisian",
+          "Penghentian BPJS",
+        ]
+      },
+      "Buku Yasin 50 pcs (opsional, jika butuh)",
+      "Uang kedukaan Rp1.000.000 untuk keluarga",
       "Layanan konseling psikolog",
     ],
   },
   nonMuslim: {
     sublabel: "KHUSUS NON-MUSLIM",
     items: [
-      "Asisten khusus untuk administrasi keluarga",
-      "Akta kematian dari Disdukcapil",
-      "Surat keterangan kepolisian",
-      "Penghentian BPJS",
-      "Uang kedukaan Rp1.000.000",
+      {
+        text: "Asisten khusus pengurusan administrasi keluarga:",
+        subItems: [
+          "Akta kematian dari Disdukcapil",
+          "Surat keterangan kepolisian",
+          "Penghentian BPJS",
+        ]
+      },
+      "Uang kedukaan Rp1.000.000 untuk keluarga",
       "Layanan konseling psikolog",
     ],
   },
@@ -213,7 +250,7 @@ function PascaKematianCard({ faith }: { faith: Faith }) {
 
           <div className="flex flex-col gap-[8px] items-start w-full">
             {data.items.map((item, i) => (
-              <BulletItem key={`${faith}-${i}`} text={item} dotColor={dotColor} />
+              <PascaBulletItem key={`${faith}-${i}`} item={item} dotColor={dotColor} />
             ))}
           </div>
         </div>
@@ -308,7 +345,7 @@ export default function LayananPage() {
         <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
         <main className="flex flex-col w-full">
-          <div className="bg-gradient-to-b from-[#faf8f4] to-[#f5f0e8] shrink-0 w-full">
+          <div className="bg-white shrink-0 w-full">
             <div className="flex flex-col items-center justify-center overflow-clip size-full">
               <div className="flex flex-col gap-[24px] items-center justify-center px-[20px] py-[36px] w-full">
                 <LayananHeading />

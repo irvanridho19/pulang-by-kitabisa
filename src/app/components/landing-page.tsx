@@ -713,7 +713,7 @@ function SectionCtaCards() {
               Siapkan kepulangan yang layak untukmu, dan pastikan kepergianmu kelak tidak merepotkan keluargamu.
             </p>
             <button
-              onClick={() => navigateWithLoading("/purchase")}
+              onClick={() => navigateWithLoading("/purchase", { state: { target: "self" } })}
               className="bg-[#AF9160] flex items-center justify-center overflow-clip px-[16px] py-[12px] rounded-[8px] shrink-0 w-full border-none cursor-pointer"
             >
               <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[13px] text-white whitespace-nowrap">
@@ -736,7 +736,7 @@ function SectionCtaCards() {
               Muliakan orang tua atau pasanganmu dengan prosesi kepulangan  yang bermartabat, tanpa merepotkan keluarga.
             </p>
             <button
-              onClick={() => navigateWithLoading("/purchase")}
+              onClick={() => navigateWithLoading("/purchase", { state: { target: "family" } })}
               className="bg-[#876747] flex items-center justify-center overflow-clip px-[16px] py-[12px] rounded-[12px] shrink-0 w-full border-none cursor-pointer"
             >
               <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[13px] text-white whitespace-nowrap">

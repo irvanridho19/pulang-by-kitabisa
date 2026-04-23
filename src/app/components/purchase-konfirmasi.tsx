@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import { usePageTransition } from "./page-transition";
 import { ArrowLeft } from "lucide-react";
-// import imgIconCareManager from "@/assets/care-manager-icon.png";
+import checkCircle from "../../assets/check-circle.svg";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { StepSlideWrapper } from "./step-slide-wrapper";
 import { XenditBanner } from "./xendit-banner";
@@ -92,21 +92,21 @@ function InfoRow({ label, value }: { label: string; value: string }) {
 }
 
 /* ── Toggle Switch ─── */
-function ToggleSwitch({ on, onToggle }: { on: boolean; onToggle: () => void }) {
-  return (
-    <button
-      type="button"
-      onClick={onToggle}
-      className={`relative shrink-0 w-[44px] h-[24px] rounded-[40px] border-none cursor-pointer transition-colors duration-200 ${on ? "bg-[#bda67a]" : "bg-[#e3ddd3]"
-        }`}
-    >
-      <div
-        className={`absolute top-[2px] w-[20px] h-[20px] bg-white rounded-full shadow-sm transition-all duration-200 ${on ? "left-[22px]" : "left-[2px]"
-          }`}
-      />
-    </button>
-  );
-}
+// function ToggleSwitch({ on, onToggle }: { on: boolean; onToggle: () => void }) {
+//   return (
+//     <button
+//       type="button"
+//       onClick={onToggle}
+//       className={`relative shrink-0 w-[44px] h-[24px] rounded-[40px] border-none cursor-pointer transition-colors duration-200 ${on ? "bg-[#bda67a]" : "bg-[#e3ddd3]"
+//         }`}
+//     >
+//       <div
+//         className={`absolute top-[2px] w-[20px] h-[20px] bg-white rounded-full shadow-sm transition-all duration-200 ${on ? "left-[22px]" : "left-[2px]"
+//           }`}
+//       />
+//     </button>
+//   );
+// }
 
 /* ── Main Page ─── */
 export default function PurchaseKonfirmasiPage() {
@@ -134,46 +134,46 @@ export default function PurchaseKonfirmasiPage() {
   const frekuensiLabel = isTahunan ? "Tahunan" : "Bulanan";
   const pembayaranLabel = isTahunan ? "Tahunan" : "Bulanan";
 
-  const [donationOn, setDonationOn] = useState(false);
-  const [donationAmount, setDonationAmount] = useState(0);
-  const [customDonation, setCustomDonation] = useState("");
-  const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
-  const donationContentRef = useRef<HTMLDivElement>(null);
-  const [donationHeight, setDonationHeight] = useState(0);
+  // const [donationOn, setDonationOn] = useState(false);
+  // const [donationAmount, setDonationAmount] = useState(0);
+  // const [customDonation, setCustomDonation] = useState("");
+  // const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
+  // const donationContentRef = useRef<HTMLDivElement>(null);
+  // const [donationHeight, setDonationHeight] = useState(0);
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
-  useEffect(() => {
-    if (donationContentRef.current) {
-      setDonationHeight(donationContentRef.current.scrollHeight);
-    }
-  }, [donationOn, selectedPreset, customDonation]);
+  // useEffect(() => {
+  //   if (donationContentRef.current) {
+  //     setDonationHeight(donationContentRef.current.scrollHeight);
+  //   }
+  // }, [donationOn, selectedPreset, customDonation]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    if (!donationOn) {
-      setDonationAmount(0);
-      setSelectedPreset(null);
-      setCustomDonation("");
-    }
-  }, [donationOn]);
+  // useEffect(() => {
+  //   if (!donationOn) {
+  //     setDonationAmount(0);
+  //     setSelectedPreset(null);
+  //     setCustomDonation("");
+  //   }
+  // }, [donationOn]);
 
-  const handlePresetClick = (amount: number) => {
-    setSelectedPreset(amount);
-    setCustomDonation(amount.toString());
-    setDonationAmount(amount);
-  };
+  // const handlePresetClick = (amount: number) => {
+  //   setSelectedPreset(amount);
+  //   setCustomDonation(amount.toString());
+  //   setDonationAmount(amount);
+  // };
 
-  const handleCustomDonation = (val: string) => {
-    const num = val.replace(/\D/g, "");
-    setCustomDonation(num);
-    setSelectedPreset(null);
-    setDonationAmount(num ? parseInt(num, 10) : 0);
-  };
+  // const handleCustomDonation = (val: string) => {
+  //   const num = val.replace(/\D/g, "");
+  //   setCustomDonation(num);
+  //   setSelectedPreset(null);
+  //   setDonationAmount(num ? parseInt(num, 10) : 0);
+  // };
 
-  const total = subtotal + (donationOn ? donationAmount : 0);
+  const total = subtotal;
 
   const ceremonyLabel =
     data.ceremony === "muslim"
@@ -293,7 +293,6 @@ export default function PurchaseKonfirmasiPage() {
                         </p>
 
                         <InfoRow label="Nama Lengkap" value={data.namaPengelola || "–"} />
-                        {/* Hubungan dihapus dari sini karena sudah pindah ke atas */}
                         <InfoRow label="Nomor WhatsApp" value={data.waPengelola || "–"} />
                       </>
                     ) : (
@@ -306,8 +305,6 @@ export default function PurchaseKonfirmasiPage() {
                     )}
                   </div>
                 </div>
-
-                <SectionDivider />
 
                 {/* ── Donasi Tambahan Toggle ── */}
                 {/* <div className="flex flex-col gap-[0px] items-start overflow-clip w-full">
@@ -379,7 +376,7 @@ export default function PurchaseKonfirmasiPage() {
 
                       <div className="flex items-center justify-between w-full">
                         <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">
-                          Subtotal Layanan
+                          Iuran Keanggotaan
                         </p>
                         <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">
                           {formatRupiah(subtotal)}
@@ -388,21 +385,21 @@ export default function PurchaseKonfirmasiPage() {
 
                       <div className="flex items-center justify-between w-full">
                         <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">
-                          Frekuensi
+                          Periode
                         </p>
                         <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">
                           {frekuensiLabel}
                         </p>
                       </div>
 
-                      <div className="flex items-center justify-between w-full">
+                      {/* <div className="flex items-center justify-between w-full">
                         <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">
                           Donasi Tambahan
                         </p>
                         <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">
                           {donationOn && donationAmount > 0 ? formatRupiah(donationAmount) : "Rp0"}
                         </p>
-                      </div>
+                      </div> */}
 
                       <div className="bg-[#e8e2d6] h-px w-full" />
 
@@ -410,24 +407,23 @@ export default function PurchaseKonfirmasiPage() {
                         <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#1f1912] text-[15px]">
                           Total Pembayaran
                         </p>
-                        <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#bda67a] text-[18px]">
+                        <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#876747] text-[18px]">
                           {formatRupiah(total)}
                         </p>
                       </div>
 
                       <div className="bg-white rounded-[10px] border border-[#e8e2d6] w-full">
-                        <div className="flex gap-[10px] items-start px-[14px] py-[12px] w-full">
-                          <span className="text-[14px] shrink-0 mt-[1px]">✅</span>
+                        <div className="flex gap-[8px] items-center px-[14px] py-[12px] w-full">
+                          {/* <span className="text-[14px] shrink-0 mt-[1px]">✅</span> */}
+                          <img src={checkCircle} className="w-[16px] h-[16px]" alt="Check Icon" />
                           <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#9ca3af] text-[12px]">
-                            Harga sudah mencakup donasi untuk pemulasaran warga yang membutuhkan, seperti tunawisma.
+                            Biaya sudah mencakup donasi untuk pemakaman gratis bagi yang tak mampu.
                           </p>
                         </div>
                       </div>
                     </div>
                   </div>
                 </div>
-
-                <SectionDivider />
 
                 {/* ── Checkbox Persetujuan ── */}
                 <div className="flex gap-[14px] items-start w-full">

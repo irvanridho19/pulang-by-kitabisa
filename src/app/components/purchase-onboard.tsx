@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from "react";
+import { useLocation } from "react-router";
 import { format } from "date-fns";
 import { id as localeId } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
@@ -187,8 +188,10 @@ function ageToRange(age: number | null): string | null {
 export default function PurchaseOnboardPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { navigateWithLoading } = usePageTransition();
+  const location = useLocation();
 
-  const [target, setTarget] = useState<string | null>(null);
+  const initialTarget = (location.state as { target?: string })?.target ?? null;
+  const [target, setTarget] = useState<string | null>(initialTarget);
   const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
   const [ceremony, setCeremony] = useState<string | null>(null);
   const [domicile, setDomicile] = useState<string | null>(null);

@@ -545,7 +545,7 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
 }
 
 /* ── Pesan Langsung Card ─── */
-function PesanLangsungCard({ onNavigate }: { onNavigate?: () => void }) {
+function PesanLangsungCard({ }: { onNavigate?: () => void }) {
   const [activeAccordion, setActiveAccordion] = useState<string>("islam");
   const waLink = "https://wa.me/6281234567890?text=Halo%2C%20saya%20ingin%20memesan%20layanan%20langsung%20Pulang";
 

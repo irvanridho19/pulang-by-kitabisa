@@ -55,7 +55,14 @@ function Chip({ children }: { children: React.ReactNode }) {
 }
 
 /* ── Items data ─── */
-const muslimHariKematian = [
+type PascaItemType = string | { text: string; subItems: string[] };
+
+const adminPasca = {
+  text: "Asisten khusus pengurusan administrasi keluarga:",
+  subItems: ["Akta kematian dari Disdukcapil", "Surat keterangan kepolisian", "Penghentian BPJS"],
+};
+
+const hariKematianIslam = [
   "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
   "Pemandian jenazah",
   "Pengkafanan sesuai syariat",
@@ -68,47 +75,47 @@ const muslimHariKematian = [
   "Snack box 50 pak",
 ];
 
-const nonMuslimHariKematian = [
+const hariKematianKristenKatolik = [
+  "Peti jenazah",
+  "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
   "Pemandian jenazah",
   "Tata rias jenazah",
   "Pemberian formalin",
-  "Peti jenazah",
-  "Kain penutup peti, sarung tangan & kaos kaki",
   "Lembar duka, wewangian & lilin duka",
+  "Kain penutup peti, sarung tangan & kaos kaki",
   "Bunga salib atau bunga meja",
-  "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
   "Ambulans jenazah",
   "Penggantian biaya jasa penggalian makam",
   "Karangan bunga",
   "Snack box 50 pak",
 ];
 
-type PascaItemType = string | { text: string; subItems: string[] };
-
-const muslimPasca: PascaItemType[] = [
-  {
-    text: "Asisten khusus pengurusan administrasi keluarga:",
-    subItems: [
-      "Akta kematian dari Disdukcapil",
-      "Surat keterangan kepolisian",
-      "Penghentian BPJS",
-    ]
-  },
-  "Buku Yasin 50 pcs (opsional, jika butuh)",
-  "Layanan konseling psikolog",
+const hariKematianHinduBuddhaKonghucu = [
+  "Peti jenazah",
+  "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
+  "Pemandian jenazah",
+  "Tata rias jenazah",
+  "Pemberian formalin",
+  "Lembar duka, wewangian & lilin duka",
+  "Kain penutup peti, sarung tangan & kaos kaki",
+  "Bunga meja",
+  "Ambulans jenazah",
+  "Penggantian biaya jasa penggalian makam",
+  "Karangan bunga",
+  "Snack box 50 pak",
 ];
 
-const nonMuslimPasca: PascaItemType[] = [
-  {
-    text: "Asisten khusus pengurusan administrasi keluarga:",
-    subItems: [
-      "Akta kematian dari Disdukcapil",
-      "Surat keterangan kepolisian",
-      "Penghentian BPJS",
-    ]
-  },
-  "Layanan konseling psikolog",
-];
+const pascaIslam: PascaItemType[] = [adminPasca, "Buku Yasin 50 pcs (opsional, jika butuh)", "Layanan konseling psikolog"];
+const pascaNonIslam: PascaItemType[] = [adminPasca, "Layanan konseling psikolog"];
+
+const RELIGION_CONFIG: Record<string, { chipLabel: string; dotColor: string; hariKematian: string[]; pasca: PascaItemType[]; note: string }> = {
+  islam:    { chipLabel: "☪️ Prosesi Islam",            dotColor: "#C4A46E", hariKematian: hariKematianIslam,             pasca: pascaIslam,    note: "*Tidak termasuk pencarian lahan makam dan rumah duka." },
+  kristen:  { chipLabel: "✝️ Prosesi Kristen Protestan", dotColor: "#6CB4EE", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka." },
+  katolik:  { chipLabel: "✝️ Prosesi Katolik",           dotColor: "#A084D4", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka." },
+  hindu:    { chipLabel: "🕉️ Prosesi Hindu",             dotColor: "#E88C5D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung." },
+  buddha:   { chipLabel: "☸️ Prosesi Buddha",            dotColor: "#66B68D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung." },
+  konghucu: { chipLabel: "☯️ Prosesi Konghucu",          dotColor: "#D65E7A", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung." },
+};
 
 /* ── Main Purchase Layanan Page ─── */
 export default function PurchaseLayananPage() {
@@ -130,16 +137,11 @@ export default function PurchaseLayananPage() {
   })();
 
   const isFamily = onboardData?.target === "family";
-  const isMuslim = onboardData?.ceremony !== "non-muslim";
-  const dotColor = isMuslim ? "#94C7B5" : "#9EB5DB";
-  const hariKematianItems = isMuslim ? muslimHariKematian : nonMuslimHariKematian;
-  const pascaItems = isMuslim ? muslimPasca : nonMuslimPasca;
+  const ceremonyKey = onboardData?.ceremony ?? "islam";
+  const religion = RELIGION_CONFIG[ceremonyKey] ?? RELIGION_CONFIG["islam"];
+  const { chipLabel: ceremonyChipLabel, dotColor, hariKematian: hariKematianItems, pasca: pascaItems, note: footnoteExclusions } = religion;
 
   const headingLabel = isFamily ? "Layanan untuk keluargamu" : "Layanan untukmu";
-  const ceremonyChipLabel = isMuslim ? "☪️ Prosesi Muslim" : "✝️ Prosesi Non Muslim";
-  const footnoteExclusions = isMuslim
-    ? "*Tidak termasuk pencarian lahan makam dan rumah duka."
-    : "*Tidak termasuk rumah duka, pencarian lahan makam, dekorasi rumah duka, kremasi dan larung.";
 
   const steps = [
     { number: 1, label: "Detail Layanan" },
@@ -321,7 +323,7 @@ export default function PurchaseLayananPage() {
 
                         {/* Menggunakan PascaBulletItem */}
                         <div className="flex flex-col gap-[8px] items-start w-full">
-                          {pascaItems.map((item, idx) => (
+                          {pascaItems.map((item: PascaItemType, idx: number) => (
                             <PascaBulletItem key={idx} item={item} color="#8a6e3e" />
                           ))}
                         </div>

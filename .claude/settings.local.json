@@ -6,7 +6,8 @@
       "mcp__plugin_figma_figma__use_figma",
       "mcp__plugin_figma_figma__get_screenshot",
       "mcp__plugin_figma_figma__send_code_connect_mappings",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(grep -n \"shared-layout\\\\|Footer\\\\|</main>\\\\|</div>\\\\s*$\" src/app/components/faq-page.tsx src/app/components/cara-klaim.tsx)"
     ]
   }
 }

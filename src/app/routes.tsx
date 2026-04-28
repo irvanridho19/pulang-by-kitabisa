@@ -2,7 +2,7 @@ import { createBrowserRouter, Outlet } from "react-router";
 import { PageTransitionProvider } from "./components/page-transition";
 import { AuthProvider } from "./components/auth-context";
 import LandingPage from "./components/landing-page";
-import CaraKlaimPage from "./components/cara-klaim";
+import CaraKlaimPage from "./components/cara-akses-layanan";
 import LayananPage from "./components/layanan-page";
 import PurchaseOnboardPage from "./components/purchase-onboard";
 import PurchaseLayananPage from "./components/purchase-layanan";
@@ -12,7 +12,7 @@ import PurchaseSuccessPage from "./components/purchase-success";
 import MemberPage from "./components/member-page";
 import PerpanjangPage from "./components/perpanjang-page";
 import MemberEmptyPage from "./components/member-empty-page";
-import MisiPage from "./components/misi-page";
+import MisiPage from "./components/manifesto";
 import NotFoundPage from "./components/not-found-page";
 import FaqPage from "./components/faq-page";
 
@@ -33,8 +33,8 @@ export const router = createBrowserRouter([
     ErrorBoundary: NotFoundPage,
     children: [
       { index: true, Component: LandingPage },
-      { path: "cara-klaim", Component: CaraKlaimPage },
-      { path: "misi", Component: MisiPage },
+      { path: "cara-akses-layanan", Component: CaraKlaimPage },
+      { path: "manifesto", Component: MisiPage },
       { path: "layanan", Component: LayananPage },
       { path: "faq", Component: FaqPage },
       { path: "purchase", Component: PurchaseOnboardPage },

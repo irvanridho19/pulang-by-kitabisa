@@ -142,20 +142,12 @@ const targetOptions = [
 ];
 
 const ceremonyOptions = [
-  {
-    value: "muslim",
-    emoji: "☪️",
-    bg: "#ecf4f8",
-    label: "Prosesi Muslim",
-    desc: "Mencakup penyediaan perlengkapan jenazah, memandikan dan mengkafani.",
-  },
-  {
-    value: "non-muslim",
-    emoji: "✝️",
-    bg: "#f4effc",
-    label: "Prosesi Non-Muslim",
-    desc: "Mencakup tata rias, dan perlengkapan jenazah seperti peti, formalin, sarung tangan, kaos kaki, bunga, dll",
-  },
+  { value: "islam", emoji: "☪️", bg: "#ecf4f8", label: "Prosesi Islam" },
+  { value: "kristen", emoji: "✝️", bg: "#f4effc", label: "Prosesi Kristen Protestan" },
+  { value: "katolik", emoji: "✝️", bg: "#f0ecf8", label: "Prosesi Katolik" },
+  { value: "hindu", emoji: "🕉️", bg: "#fcf3ec", label: "Prosesi Hindu" },
+  { value: "buddha", emoji: "☸️", bg: "#ecf8f2", label: "Prosesi Buddha" },
+  { value: "konghucu", emoji: "☯️", bg: "#fcedf1", label: "Prosesi Konghucu" },
 ];
 
 const domicileOptions = [
@@ -348,9 +340,6 @@ export default function PurchaseOnboardPage() {
                       <div className="flex flex-col gap-[2px] leading-[1.5]">
                         <p className="font-['Outfit',sans-serif] font-semibold text-[#1f2a37] text-[14px]">
                           {opt.label}
-                        </p>
-                        <p className="font-['Outfit',sans-serif] font-normal text-[#9ca3af] text-[12px]">
-                          {opt.desc}
                         </p>
                       </div>
                     </OptionCard>

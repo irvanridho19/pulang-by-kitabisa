@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { usePageTransition } from "./page-transition";
 import { ArrowLeft } from "lucide-react";
@@ -34,9 +34,6 @@ const steps = [
   { number: 3, label: "Konfirmasi Pembayaran" },
 ];
 
-/* ── Donation presets ─── */
-const donationPresets = [2000, 5000, 10000, 15000];
-
 function formatRupiah(n: number): string {
   return "Rp" + n.toLocaleString("id-ID");
 }
@@ -64,11 +61,6 @@ function calculateAge(dob: string): string {
   return `${years} Tahun, ${months} Bulan, ${days} Hari`;
 }
 
-/* ── Section divider ─── */
-function SectionDivider() {
-  return <div className="bg-[#e8e2d6] h-[1px] rounded-full w-full" />;
-}
-
 function SectionHeading({ text }: { text: string }) {
   return (
     <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#3a3a3a] text-[15px] w-full">
@@ -90,23 +82,6 @@ function InfoRow({ label, value }: { label: string; value: string }) {
     </div>
   );
 }
-
-/* ── Toggle Switch ─── */
-// function ToggleSwitch({ on, onToggle }: { on: boolean; onToggle: () => void }) {
-//   return (
-//     <button
-//       type="button"
-//       onClick={onToggle}
-//       className={`relative shrink-0 w-[44px] h-[24px] rounded-[40px] border-none cursor-pointer transition-colors duration-200 ${on ? "bg-[#bda67a]" : "bg-[#e3ddd3]"
-//         }`}
-//     >
-//       <div
-//         className={`absolute top-[2px] w-[20px] h-[20px] bg-white rounded-full shadow-sm transition-all duration-200 ${on ? "left-[22px]" : "left-[2px]"
-//           }`}
-//       />
-//     </button>
-//   );
-// }
 
 /* ── Main Page ─── */
 export default function PurchaseKonfirmasiPage() {
@@ -130,57 +105,19 @@ export default function PurchaseKonfirmasiPage() {
 
   const billingCycle = data.billingCycle ?? "bulanan";
   const isTahunan = billingCycle === "tahunan";
-  const subtotal = isTahunan ? 300000 : 25000;
-  const frekuensiLabel = isTahunan ? "Tahunan" : "Bulanan";
-  const pembayaranLabel = isTahunan ? "Tahunan" : "Bulanan";
-
-  // const [donationOn, setDonationOn] = useState(false);
-  // const [donationAmount, setDonationAmount] = useState(0);
-  // const [customDonation, setCustomDonation] = useState("");
-  // const [selectedPreset, setSelectedPreset] = useState<number | null>(null);
-  // const donationContentRef = useRef<HTMLDivElement>(null);
-  // const [donationHeight, setDonationHeight] = useState(0);
+  const total = isTahunan ? 200000 : 25000;
+  const periodeLabel = isTahunan ? "Tahunan" : "Bulanan";
   const [agreedToTerms, setAgreedToTerms] = useState(false);
-
-  // useEffect(() => {
-  //   if (donationContentRef.current) {
-  //     setDonationHeight(donationContentRef.current.scrollHeight);
-  //   }
-  // }, [donationOn, selectedPreset, customDonation]);
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-  // useEffect(() => {
-  //   if (!donationOn) {
-  //     setDonationAmount(0);
-  //     setSelectedPreset(null);
-  //     setCustomDonation("");
-  //   }
-  // }, [donationOn]);
-
-  // const handlePresetClick = (amount: number) => {
-  //   setSelectedPreset(amount);
-  //   setCustomDonation(amount.toString());
-  //   setDonationAmount(amount);
-  // };
-
-  // const handleCustomDonation = (val: string) => {
-  //   const num = val.replace(/\D/g, "");
-  //   setCustomDonation(num);
-  //   setSelectedPreset(null);
-  //   setDonationAmount(num ? parseInt(num, 10) : 0);
-  // };
-
-  const total = subtotal;
-
-  const ceremonyLabel =
-    data.ceremony === "muslim"
-      ? "Prosesi Muslim"
-      : data.ceremony === "non-muslim"
-        ? "Prosesi Non-Muslim / Tradisi Lainnya"
-        : "–";
+  const CEREMONY_LABELS: Record<string, string> = {
+    islam: "Islam", kristen: "Kristen Protestan", katolik: "Katolik",
+    hindu: "Hindu", buddha: "Buddha", konghucu: "Konghucu",
+  };
+  const ceremonyLabel = CEREMONY_LABELS[data.ceremony ?? ""] ?? "–";
 
   const recipientName = isFamily ? data.namaKeluarga : data.namaLengkap;
   const recipientWa = isFamily ? data.waKeluarga : data.whatsapp;
@@ -252,7 +189,7 @@ export default function PurchaseKonfirmasiPage() {
                 <div className="bg-[#faf8f4] rounded-[14px] border border-[#e8e2d6] w-full">
                   <div className="flex flex-col gap-[16px] items-start p-[20px] w-full">
                     <SectionHeading text="Ringkasan Layanan" />
-                    <InfoRow label="Pembayaran" value={pembayaranLabel} />
+                    <InfoRow label="Periode" value={periodeLabel} />
                     <InfoRow label="Prosesi Kepulangan" value={ceremonyLabel} />
                   </div>
                 </div>
@@ -261,23 +198,18 @@ export default function PurchaseKonfirmasiPage() {
                 <div className="bg-[#faf8f4] rounded-[14px] border border-[#e8e2d6] w-full">
                   <div className="flex flex-col gap-[16px] items-start p-[20px] w-full">
                     <SectionHeading text="Detail Penerima Layanan" />
-                    {/* Subtitle khusus Family */}
                     {isFamily && (
                       <p className="font-['Outfit',sans-serif] font-normal text-[#9CA3AF] text-[12px] mt-[-10px]">
-                        Keluargamu yang didaftarkan
+                        Anggota keluarga yang kamu daftarkan
                       </p>
                     )}
-
                     <InfoRow label="Nama Lengkap" value={recipientName || "–"} />
-
-                    {/* Pindahan info Hubungan khusus Family */}
-                    {isFamily && (
-                      <InfoRow label="Hubungan denganmu" value={data.hubunganKeluarga || "–"} />
-                    )}
-
-                    <InfoRow label="Nomor WhatsApp" value={recipientWa || "–"} />
                     <InfoRow label="Tanggal Lahir" value={data.dob || "–"} />
-                    <InfoRow label="Umur" value={data.dob ? calculateAge(data.dob) : "–"} />
+                    <InfoRow label="Usia" value={data.dob ? calculateAge(data.dob) : "–"} />
+                    {isFamily && (
+                      <InfoRow label="Hubungan Denganmu" value={data.hubunganKeluarga || "–"} />
+                    )}
+                    <InfoRow label="Nomor WhatsApp" value={recipientWa || "–"} />
                   </div>
                 </div>
 
@@ -287,18 +219,16 @@ export default function PurchaseKonfirmasiPage() {
                     {isFamily ? (
                       <>
                         <SectionHeading text="Pengelola Akun" />
-                        {/* Subtitle khusus Family */}
                         <p className="font-['Outfit',sans-serif] font-normal text-[#9CA3AF] text-[12px] mt-[-10px]">
                           Data dirimu
                         </p>
-
                         <InfoRow label="Nama Lengkap" value={data.namaPengelola || "–"} />
                         <InfoRow label="Nomor WhatsApp" value={data.waPengelola || "–"} />
                       </>
                     ) : (
                       <>
                         <SectionHeading text="Kontak Darurat" />
-                        <InfoRow label="Nama Kontak" value={data.namaKontakDarurat || "–"} />
+                        <InfoRow label="Nama Kontak Darurat" value={data.namaKontakDarurat || "–"} />
                         <InfoRow label="Hubungan" value={data.hubunganDarurat || "–"} />
                         <InfoRow label="Nomor WhatsApp" value={data.waKontakDarurat || "–"} />
                       </>
@@ -306,118 +236,29 @@ export default function PurchaseKonfirmasiPage() {
                   </div>
                 </div>
 
-                {/* ── Donasi Tambahan Toggle ── */}
-                {/* <div className="flex flex-col gap-[0px] items-start overflow-clip w-full">
-                  <div className="flex gap-[16px] items-center w-full">
-                    <ToggleSwitch on={donationOn} onToggle={() => setDonationOn(!donationOn)} />
-                    <div className="flex flex-1 flex-col gap-[4px] items-start min-w-0">
-                      <p className="font-['Outfit',sans-serif] font-semibold leading-[1.4] text-[#1f1912] text-[16px]">
-                        🤲 Donasi Tambahan
-                      </p>
-                      <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#9ca3af] text-[12px] w-full">
-                        Bantu lebih banyak keluarga yang membutuhkan.
-                      </p>
-                    </div>
-                  </div> */}
-
-                  {/* Expandable donation content */}
-                  {/* <div
-                    className="overflow-hidden transition-all duration-300 ease-in-out w-full"
-                    style={{ maxHeight: donationOn ? donationHeight + 24 : 0 }}
-                  >
-                    <div
-                      ref={donationContentRef}
-                      className="flex flex-col gap-[12px] items-start pt-[20px] w-full"
-                    >
-                      <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px] w-full">
-                        Masukkan nominal donasi
-                      </p>
-
-                      <div className="grid grid-cols-2 gap-[8px] w-full">
-                        {donationPresets.map((amount) => (
-                          <button
-                            key={amount}
-                            type="button"
-                            onClick={() => handlePresetClick(amount)}
-                            className={`w-full rounded-[10px] px-[12px] py-[11px] cursor-pointer transition-all duration-200 font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] border ${selectedPreset === amount
-                                ? "bg-[#bda67a] text-white border-[#bda67a] shadow-[0px_2px_8px_rgba(189,166,122,0.35)]"
-                                : "bg-white text-[#3a3a3a] border-[#e3ddd3] hover:border-[#bda67a]"
-                              }`}
-                          >
-                            {formatRupiah(amount)}
-                          </button>
-                        ))}
-                      </div>
-
-                      <div className="flex items-center w-full bg-[#faf8f4] rounded-[10px] border border-[#e3ddd3] transition-all duration-200 focus-within:bg-white focus-within:border-[#bda67a]">
-                        <span className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[14px] text-[#9ca3af] pl-[16px] select-none shrink-0">
-                          Rp
-                        </span>
-                        <input
-                          type="text"
-                          inputMode="numeric"
-                          value={customDonation}
-                          onChange={(e) => handleCustomDonation(e.target.value)}
-                          placeholder="Nominal lainnya"
-                          className="w-full bg-transparent border-none outline-none px-[8px] py-[12px] font-['Outfit',sans-serif] font-normal leading-[1.5] text-[14px] text-[#1f1f1f] placeholder-[#9ca3af]"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-                <SectionDivider />
-
                 {/* ── Rincian Biaya ── */}
                 <div className="flex flex-col gap-[16px] items-start w-full">
                   <SectionHeading text="Rincian Biaya" />
                   <div className="bg-[#faf8f4] rounded-[14px] border border-[#e8e2d6] w-full">
                     <div className="flex flex-col items-start p-[20px] w-full gap-[14px]">
-
                       <div className="flex items-center justify-between w-full">
-                        <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">
-                          Iuran Keanggotaan
-                        </p>
-                        <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">
-                          {formatRupiah(subtotal)}
-                        </p>
+                        <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">Iuran Keanggotaan</p>
+                        <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">{formatRupiah(total)}</p>
                       </div>
-
                       <div className="flex items-center justify-between w-full">
-                        <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">
-                          Periode
-                        </p>
-                        <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">
-                          {frekuensiLabel}
-                        </p>
+                        <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">Periode</p>
+                        <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">{periodeLabel}</p>
                       </div>
-
-                      {/* <div className="flex items-center justify-between w-full">
-                        <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">
-                          Donasi Tambahan
-                        </p>
-                        <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">
-                          {donationOn && donationAmount > 0 ? formatRupiah(donationAmount) : "Rp0"}
-                        </p>
-                      </div> */}
-
                       <div className="bg-[#e8e2d6] h-px w-full" />
-
                       <div className="flex items-center justify-between w-full">
-                        <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#1f1912] text-[15px]">
-                          Total Pembayaran
-                        </p>
-                        <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#876747] text-[18px]">
-                          {formatRupiah(total)}
-                        </p>
+                        <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#1f1912] text-[15px]">Total Pembayaran</p>
+                        <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#876747] text-[18px]">{formatRupiah(total)}</p>
                       </div>
-
                       <div className="bg-white rounded-[10px] border border-[#e8e2d6] w-full">
                         <div className="flex gap-[8px] items-center px-[14px] py-[12px] w-full">
-                          {/* <span className="text-[14px] shrink-0 mt-[1px]">✅</span> */}
                           <img src={checkCircle} className="w-[16px] h-[16px]" alt="Check Icon" />
                           <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#9ca3af] text-[12px]">
-                            Biaya sudah mencakup donasi untuk pemakaman gratis bagi yang tak mampu.
+                            Iuran sudah mencakup donasi untuk pemakaman gratis bagi yang tak mampu.
                           </p>
                         </div>
                       </div>
@@ -430,46 +271,36 @@ export default function PurchaseKonfirmasiPage() {
                   <button
                     type="button"
                     onClick={() => setAgreedToTerms(!agreedToTerms)}
-                    className={`shrink-0 mt-[2px] w-[22px] h-[22px] rounded-[4px] border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${agreedToTerms
-                        ? "border-[#1f1912] bg-[#1f1912]"
-                        : "border-[#9ca3af] bg-white"
-                      }`}
+                    className={`shrink-0 mt-[2px] w-[22px] h-[22px] rounded-[4px] border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${agreedToTerms ? "border-[#1f1912] bg-[#1f1912]" : "border-[#9ca3af] bg-white"}`}
                   >
                     {agreedToTerms && (
-                      <svg width="11" height="8" viewBox="0 0 11 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <svg width="11" height="8" viewBox="0 0 11 8" fill="none">
                         <path d="M1 3.5L4 6.5L10 1" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
                       </svg>
                     )}
                   </button>
                   <div className="flex flex-col gap-[6px] flex-1 min-w-0">
                     <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#1f1912] text-[14px]">
-                      Dengan ini, saya setuju untuk mendaftar layanan Pulang.
+                      Dengan mendaftar, saya setuju ikut program keanggotaan <span className="font-bold">Pulang.</span>
                     </p>
                     <p className="font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#6b7280] text-[13px]">
-                      Dengan mendaftar, sebagian biaya layanan akan disalurkan sebagai santunan kepada keluarga, donasi sosial, dan perlindungan asuransi jiwa bagi pendaftar.
+                      Saya memahami iuran anggota digunakan untuk penyelenggaraan program, donasi, pemberian manfaat kepada anggota, dan termasuk kepesertaan perlindungan jiwa.
                     </p>
                   </div>
                 </div>
 
-                {/* ── Xendit Payment Card ── */}
+                {/* ── Flip Payment Card ── */}
                 <XenditBanner />
 
-                {/* ── CTA: Selesaikan Pendaftaran ── */}
+                {/* ── CTA ── */}
                 <button
                   disabled={!agreedToTerms}
-                  onClick={() =>
-                    navigateWithLoading("/purchase/success", {
-                      state: { ...data, total, slideDir: "forward" },
-                    })
-                  }
-                  className={`w-full h-[52px] rounded-[12px] border-none cursor-pointer transition-all duration-200 ${agreedToTerms
-                      ? "bg-[#1f1912] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] cursor-pointer"
-                      : "bg-[#d1d5db] cursor-not-allowed"
-                    }`}
+                  onClick={() => navigateWithLoading("/purchase/success", { state: { ...data, total, slideDir: "forward" } })}
+                  className={`w-full h-[52px] rounded-[12px] border-none transition-all duration-200 ${agreedToTerms ? "bg-[#1f1912] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] cursor-pointer" : "bg-[#d1d5db] cursor-not-allowed"}`}
                 >
                   <div className="flex items-center justify-center w-full h-full px-[24px]">
                     <p className="font-['Outfit',sans-serif] font-medium leading-[normal] text-[16px] text-white whitespace-nowrap">
-                      Selesaikan Pendaftaran
+                      Selesaikan pendaftaran
                     </p>
                   </div>
                 </button>

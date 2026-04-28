@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
+import { NavbarMobileHeader, MobileMenu, Footer, SectionCtaAnggota } from "./shared-layout";
 
 /* ── Step Card ─── */
 function StepCard({ number, title, description }: { number: number; title: string; description: string }) {
@@ -74,8 +74,8 @@ export default function CaraKlaimPage() {
   const steps = activeTab === "anggota" ? stepsAnggota : stepsDarurat;
   const heading =
     activeTab === "anggota"
-      ? (<>Cara pesan layanan <span className="text-[#af9160]">Pulang</span> untuk anggota</>)
-      : (<>Cara pesan layanan <span className="text-[#af9160]">Pulang</span> untuk non-anggota</>);
+      ? (<>Cara pesan layanan <span className="text-[#af9160]">Pulang</span> saat anggota meninggal dunia untuk anggota</>)
+      : (<>Cara pesan layanan <span className="text-[#af9160]">Pulang</span> saat ada yang meninggal dunia (untuk non-anggota)</>);
 
   return (
     <div className="min-h-screen bg-[#fefefe] flex justify-center">
@@ -158,7 +158,7 @@ export default function CaraKlaimPage() {
                       className="flex items-center justify-center flex-1 bg-transparent border-none cursor-pointer p-0 relative"
                     >
                       <p className={`font-['Outfit',sans-serif] font-medium leading-[1.5] text-[15px] whitespace-nowrap ${activeTab === "darurat" ? "text-[#876747]" : "text-[#9ca3af]"}`}>
-                        Darurat
+                        Pesan Langsung
                       </p>
                       {activeTab === "darurat" && (
                         <div className="absolute bottom-0 left-0 right-0 h-[2.5px] bg-[#876747] z-10" />
@@ -188,6 +188,7 @@ export default function CaraKlaimPage() {
             </div>
           </div>
 
+          <SectionCtaAnggota />
           <Footer />
         </main>
       </div>

@@ -2,6 +2,8 @@ import { useState } from "react";
 import { usePageTransition } from "./page-transition";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import imgWhite1 from "../../assets/Logo/Logo-1.svg";
+import unduhKartuIcon from "../../assets/Illustration/Icons/Unduh Kartu.svg";
+import kontakAsistenIcon from "../../assets/Illustration/Icons/Kontak Asisten.svg";
 
 /* ─── Digital Member Card ─── */
 function DigitalMemberCard() {
@@ -238,20 +240,7 @@ function ActUnduhKartu() {
       style={{ background: "rgba(189,166,122,0.1)", border: "1px solid rgba(189,166,122,0.25)" }}
     >
       <div className="flex flex-col items-center gap-[2px] px-[4px] py-[12px] w-full">
-        {/* Icon */}
-        <div
-          className="relative rounded-[100px] size-[28px] overflow-hidden"
-          style={{ background: "rgba(189,166,122,0.18)" }}
-        >
-          <div
-            className="absolute rounded-[3px]"
-            style={{ background: "rgba(189,166,122,0.9)", height: 14, left: 8, top: 7, width: 12 }}
-          />
-          <div
-            className="absolute"
-            style={{ background: "rgba(189,166,122,0.9)", height: 3, left: 8, top: 18, width: 12 }}
-          />
-        </div>
+        <img src={unduhKartuIcon} alt="" className="size-[28px] object-contain" />
         <p className="font-['Outfit',sans-serif] font-medium text-[#1f1912] text-[10px] text-center">
           Unduh Kartu
         </p>
@@ -268,16 +257,7 @@ function ActKontakAsisten() {
       style={{ background: "rgba(189,166,122,0.1)", border: "1px solid rgba(189,166,122,0.25)" }}
     >
       <div className="flex flex-col items-center gap-[2px] px-[4px] py-[12px] w-full">
-        {/* Icon */}
-        <div
-          className="relative rounded-[100px] size-[28px] overflow-hidden"
-          style={{ background: "rgba(189,166,122,0.18)" }}
-        >
-          <div
-            className="absolute rounded-[3px]"
-            style={{ background: "rgba(189,166,122,0.9)", height: 12, left: 7, top: 8, width: 14 }}
-          />
-        </div>
+        <img src={kontakAsistenIcon} alt="" className="size-[28px] object-contain" />
         <p className="font-['Outfit',sans-serif] font-medium text-[#1f1912] text-[10px] text-center">
           Hubungi Call Center
         </p>

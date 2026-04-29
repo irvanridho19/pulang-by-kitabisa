@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router";
 import { usePageTransition } from "./page-transition";
 import { ArrowLeft } from "lucide-react";
-import imgDark1 from "../../assets/logo.png";
-import { MobileMenu, Footer } from "./shared-layout";
+import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { StepSlideWrapper } from "./step-slide-wrapper";
 
 /* ── Colored bullet item ─── */
@@ -64,6 +63,7 @@ const adminPasca = {
 
 const hariKematianIslam = [
   "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
+  "Informasi pencarian lahan makam",
   "Pemandian jenazah",
   "Pengkafanan sesuai syariat",
   "Kain kafan (sabun, kamper, dan parfum)",
@@ -77,6 +77,7 @@ const hariKematianIslam = [
 
 const hariKematianKristenKatolik = [
   "Peti jenazah",
+  "Informasi pencarian lahan makam",
   "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
   "Pemandian jenazah",
   "Tata rias jenazah",
@@ -92,6 +93,7 @@ const hariKematianKristenKatolik = [
 
 const hariKematianHinduBuddhaKonghucu = [
   "Peti jenazah",
+  "Informasi pencarian lahan makam",
   "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
   "Pemandian jenazah",
   "Tata rias jenazah",
@@ -109,12 +111,12 @@ const pascaIslam: PascaItemType[] = [adminPasca, "Buku Yasin 50 pcs (opsional, j
 const pascaNonIslam: PascaItemType[] = [adminPasca, "Layanan konseling psikolog"];
 
 const RELIGION_CONFIG: Record<string, { chipLabel: string; dotColor: string; hariKematian: string[]; pasca: PascaItemType[]; note: string }> = {
-  islam:    { chipLabel: "☪️ Prosesi Islam",            dotColor: "#C4A46E", hariKematian: hariKematianIslam,             pasca: pascaIslam,    note: "*Tidak termasuk pencarian lahan makam dan rumah duka." },
-  kristen:  { chipLabel: "✝️ Prosesi Kristen Protestan", dotColor: "#6CB4EE", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka." },
-  katolik:  { chipLabel: "✝️ Prosesi Katolik",           dotColor: "#A084D4", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka." },
-  hindu:    { chipLabel: "🕉️ Prosesi Hindu",             dotColor: "#E88C5D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung." },
-  buddha:   { chipLabel: "☸️ Prosesi Buddha",            dotColor: "#66B68D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung." },
-  konghucu: { chipLabel: "☯️ Prosesi Konghucu",          dotColor: "#D65E7A", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung." },
+  islam:    { chipLabel: "☪️ Prosesi Islam",            dotColor: "#C4A46E", hariKematian: hariKematianIslam,             pasca: pascaIslam,    note: "*Tidak termasuk rumah duka." },
+  kristen:  { chipLabel: "✝️ Prosesi Kristen Protestan", dotColor: "#6CB4EE", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka." },
+  katolik:  { chipLabel: "✝️ Prosesi Katolik",           dotColor: "#A084D4", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka." },
+  hindu:    { chipLabel: "🕉️ Prosesi Hindu",             dotColor: "#E88C5D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung." },
+  buddha:   { chipLabel: "☸️ Prosesi Buddha",            dotColor: "#66B68D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung." },
+  konghucu: { chipLabel: "☯️ Prosesi Konghucu",          dotColor: "#D65E7A", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung." },
 };
 
 /* ── Main Purchase Layanan Page ─── */
@@ -157,27 +159,7 @@ export default function PurchaseLayananPage() {
     <div className="min-h-screen bg-[#fefefe] flex justify-center">
       <div className="w-full max-w-[480px] bg-white relative flex flex-col min-h-screen">
 
-        {/* Header */}
-        <div className="bg-white flex items-center justify-between px-[16px] py-[12px] border-b border-[#f3f4f6] sticky top-0 z-50">
-          <div className="h-[45px] relative shrink-0 w-[90px]">
-            <img
-              alt="Pulang by Kitabisa"
-              className="absolute inset-0 max-w-none object-cover pointer-events-none size-full"
-              src={imgDark1}
-            />
-          </div>
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="bg-transparent border-none cursor-pointer p-2"
-            aria-label="Toggle menu"
-          >
-            <svg width="20" height="16" viewBox="0 0 20 16" fill="none">
-              <rect width="20" height="2" rx="1" fill="#1f1912" />
-              <rect y="7" width="14" height="2" rx="1" fill="#1f1912" />
-              <rect y="14" width="20" height="2" rx="1" fill="#1f1912" />
-            </svg>
-          </button>
-        </div>
+        <NavbarMobileHeader onMenuToggle={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
         <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
         {/* Stepper Navigation */}

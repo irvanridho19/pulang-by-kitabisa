@@ -4,7 +4,7 @@ import { format } from "date-fns";
 import { id as localeId } from "date-fns/locale";
 import { Calendar as CalendarIcon } from "lucide-react";
 import { usePageTransition } from "./page-transition";
-import imgShieldIcon from "../../assets/shield-icon.png";
+import imgShieldIcon from "../../assets/Illustration/Not Eligible.svg";
 import {
   NavbarMobileHeader,
   MobileMenu,
@@ -20,14 +20,6 @@ function BlockedModal({ onGoHome }: { onGoHome: () => void }) {
       <div className="absolute inset-0 bg-black/60" />
       <div className="relative bg-white rounded-[8px] w-[calc(100%-40px)] max-w-[440px] flex flex-col items-start">
         <div className="absolute inset-[-0.5px] border border-[#e5e7eb] rounded-[8.5px] pointer-events-none" />
-        <div className="w-full">
-          <div className="flex items-center p-[24px]">
-            <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#111928] text-[18px] whitespace-nowrap">
-              INFORMASI LAYANAN
-            </p>
-          </div>
-        </div>
-        <div className="h-px w-full bg-[#e5e7eb]" />
         <div className="w-full p-[24px]">
           <div className="flex flex-col gap-[14px] items-center justify-center w-full">
             <div className="relative size-[190px]">

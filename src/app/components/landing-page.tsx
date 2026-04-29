@@ -4,6 +4,8 @@ import imgImageProblemsBackground from "../../assets/problems-background.png";
 import imgVector from "../../assets/Section/Vector.svg";
 import imgImage9 from "../../assets/Section/bg_dampak.png";
 import imgHero from "../../assets/Hero/hero.svg";
+import daftarDiriSendiri from "../../assets/Illustration/Diri Sendiri.svg";
+import daftarKeluarga from "../../assets/Illustration/Keluarga.svg";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { usePageTransition } from "./page-transition";
 
@@ -199,6 +201,7 @@ const RELIGION_DATA = [
     dotColor: "#C4A46E",
     hariKematian: [
       "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
+      "Informasi pencarian lahan makam",
       "Pemandian jenazah",
       "Pengkafanan sesuai syariat",
       "Kain kafan (sabun, kamper, dan parfum)",
@@ -209,7 +212,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk pencarian lahan makam dan rumah duka.",
+    note: "Tidak termasuk rumah duka.",
     pascaKematian: [
       commonPascaItems[0],
       { main: "50 buku Yasin (opsional, jika butuh)" },
@@ -222,6 +225,7 @@ const RELIGION_DATA = [
     dotColor: "#6CB4EE",
     hariKematian: [
       "Peti jenazah",
+      "Informasi pencarian lahan makam",
       "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
       "Pemandian jenazah",
       "Tata rias jenazah",
@@ -234,7 +238,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka.",
+    note: "Tidak termasuk rumah duka, dekorasi rumah duka.",
     pascaKematian: commonPascaItems
   },
   {
@@ -243,6 +247,7 @@ const RELIGION_DATA = [
     dotColor: "#A084D4",
     hariKematian: [
       "Peti jenazah",
+      "Informasi pencarian lahan makam",
       "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
       "Pemandian jenazah",
       "Tata rias jenazah",
@@ -255,7 +260,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka.",
+    note: "Tidak termasuk rumah duka, dekorasi rumah duka.",
     pascaKematian: commonPascaItems
   },
   {
@@ -264,6 +269,7 @@ const RELIGION_DATA = [
     dotColor: "#E88C5D",
     hariKematian: [
       "Peti jenazah",
+      "Informasi pencarian lahan makam",
       "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
       "Pemandian jenazah",
       "Tata rias jenazah",
@@ -276,7 +282,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung.",
+    note: "Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung.",
     pascaKematian: commonPascaItems
   },
   {
@@ -285,6 +291,7 @@ const RELIGION_DATA = [
     dotColor: "#66B68D",
     hariKematian: [
       "Peti jenazah",
+      "Informasi pencarian lahan makam",
       "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
       "Pemandian jenazah",
       "Tata rias jenazah",
@@ -297,7 +304,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung.",
+    note: "Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung.",
     pascaKematian: commonPascaItems
   },
   {
@@ -306,6 +313,7 @@ const RELIGION_DATA = [
     dotColor: "#D65E7A",
     hariKematian: [
       "Peti jenazah",
+      "Informasi pencarian lahan makam",
       "Asisten dari Tim Pulang yang siap sedia membantu segala kebutuhan keluarga",
       "Pemandian jenazah",
       "Tata rias jenazah",
@@ -318,7 +326,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk pencarian lahan makam, rumah duka, dekorasi rumah duka, kremasi atau larung.",
+    note: "Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung.",
     pascaKematian: commonPascaItems
   }
 ];
@@ -329,12 +337,14 @@ function ReligionAccordion({
   data,
   isOpen,
   onToggle,
-  theme
+  theme,
+  showPasca = true,
 }: {
   data: typeof RELIGION_DATA[0],
   isOpen: boolean,
   onToggle: () => void,
-  theme: "dark" | "light"
+  theme: "dark" | "light",
+  showPasca?: boolean,
 }) {
   const isDark = theme === "dark";
   const accordionRef = useRef<HTMLDivElement>(null);
@@ -426,49 +436,49 @@ function ReligionAccordion({
               </div>
             </div>
 
-            {/* DIVIDER */}
-            <div className={`w-full h-px shrink-0 ${isDark ? 'bg-[rgba(255,255,255,0.08)]' : 'bg-[#e4ddd4]'}`} />
+            {showPasca && (
+              <>
+                {/* DIVIDER */}
+                <div className={`w-full h-px shrink-0 ${isDark ? 'bg-[rgba(255,255,255,0.08)]' : 'bg-[#e4ddd4]'}`} />
 
-            {/* PASCA KEMATIAN */}
-            <div className="flex flex-col gap-[12px] w-full">
-              <p className={`font-['Outfit',sans-serif] font-bold text-[12px] tracking-[1px] uppercase ${textColor}`}>
-                PASCA KEMATIAN
-              </p>
-              <div className={`border rounded-[8px] px-[12px] py-[10px] ${pascaBoxStyle}`}>
-                <p className="font-['Outfit',sans-serif] font-normal text-[12px] leading-[1.5]">
-                  Uang kedukaan <span className="font-semibold">Rp 1.000.000</span> untuk keluarga
-                </p>
-              </div>
-
-              <div className="flex flex-col gap-[10px]">
-                {data.pascaKematian.map((item, idx) => (
-                  <div key={idx} className="flex flex-col gap-[6px] w-full">
-                    {/* Item Utama (Round Bullet) */}
-                    <div className="flex gap-[10px] items-start w-full">
-                      {/* Menggunakan fillColor (HEX) */}
-                      <BulletDot color={fillColor} />
-                      <p className={`flex-1 font-['Outfit',sans-serif] font-normal leading-[1.5] text-[13px] ${textColor}`}>
-                        {item.main}
-                      </p>
-                    </div>
-                    {/* Sub-Items (Square Hyphen) */}
-                    {item.subs && (
-                      <div className="flex flex-col gap-[6px] pl-[14px]">
-                        {item.subs.map((sub, sIdx) => (
-                          <div key={sIdx} className="flex gap-[10px] items-start w-full">
-                            {/* Menggunakan fillColor (HEX) */}
-                            <SquareHyphen color={fillColor} />
-                            <p className={`flex-1 font-['Outfit',sans-serif] font-normal leading-[1.5] text-[13px] ${textColor}`}>
-                              {sub}
-                            </p>
-                          </div>
-                        ))}
-                      </div>
-                    )}
+                {/* PASCA KEMATIAN */}
+                <div className="flex flex-col gap-[12px] w-full">
+                  <p className={`font-['Outfit',sans-serif] font-bold text-[12px] tracking-[1px] uppercase ${textColor}`}>
+                    PASCA KEMATIAN
+                  </p>
+                  <div className={`border rounded-[8px] px-[12px] py-[10px] ${pascaBoxStyle}`}>
+                    <p className="font-['Outfit',sans-serif] font-normal text-[12px] leading-[1.5]">
+                      Uang kedukaan <span className="font-semibold">Rp 1.000.000</span> untuk keluarga
+                    </p>
                   </div>
-                ))}
-              </div>
-            </div>
+
+                  <div className="flex flex-col gap-[10px]">
+                    {data.pascaKematian.map((item, idx) => (
+                      <div key={idx} className="flex flex-col gap-[6px] w-full">
+                        <div className="flex gap-[10px] items-start w-full">
+                          <BulletDot color={fillColor} />
+                          <p className={`flex-1 font-['Outfit',sans-serif] font-normal leading-[1.5] text-[13px] ${textColor}`}>
+                            {item.main}
+                          </p>
+                        </div>
+                        {item.subs && (
+                          <div className="flex flex-col gap-[6px] pl-[14px]">
+                            {item.subs.map((sub, sIdx) => (
+                              <div key={sIdx} className="flex gap-[10px] items-start w-full">
+                                <SquareHyphen color={fillColor} />
+                                <p className={`flex-1 font-['Outfit',sans-serif] font-normal leading-[1.5] text-[13px] ${textColor}`}>
+                                  {sub}
+                                </p>
+                              </div>
+                            ))}
+                          </div>
+                        )}
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              </>
+            )}
 
           </div>
         </div>
@@ -532,7 +542,7 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
 
           <div className="flex flex-col gap-[8px] mt-[12px]">
             <p className="font-['Outfit',sans-serif] font-normal leading-[1.4] text-[12px] text-[rgba(255,255,255,0.7)] w-full">
-              *Semua layanan bisa diakses 3 bulan sejak terdaftar sebagai anggota aktif
+              *Semua layanan bisa diakses 3 bulan (90 hari) sejak terdaftar sebagai anggota aktif
             </p>
             <p className="font-['Outfit',sans-serif] font-normal leading-[1.4] text-[12px] text-[rgba(255,255,255,0.7)] w-full">
               **Maksimal usia pendaftaran 65 tahun
@@ -593,6 +603,7 @@ function PesanLangsungCard({ }: { onNavigate?: () => void }) {
               isOpen={activeAccordion === religion.id}
               onToggle={() => setActiveAccordion(activeAccordion === religion.id ? "" : religion.id)}
               theme="light"
+              showPasca={false}
             />
           ))}
         </div>
@@ -665,7 +676,9 @@ function SectionCtaCards() {
 
         <div className="bg-white flex flex-col gap-[16px] items-start justify-center overflow-clip px-[16px] py-[20px] relative rounded-[20px] shadow-[0px_2px_12px_0px_rgba(51,38,20,0.08)] shrink-0 w-full">
           <div className="flex gap-[16px] items-center shrink-0 w-full">
-            <div className="bg-[#f4eee5] rounded-[14px] shrink-0 size-[48px]" />
+            <div className="bg-[#f4eee5] rounded-[14px] shrink-0 size-[48px]">
+              <img src={daftarDiriSendiri} alt="Daftar Diri Sendiri" className="w-full h-full object-contain" />
+            </div>
             <p className="font-['Lora',serif] font-bold leading-[1.4] text-[#1f1f1f] text-[15px] whitespace-nowrap">
               Diri Sendiri
             </p>
@@ -687,7 +700,9 @@ function SectionCtaCards() {
 
         <div className="bg-white flex flex-col gap-[16px] items-start justify-center overflow-clip px-[16px] py-[20px] relative rounded-[20px] shadow-[0px_2px_12px_0px_rgba(51,38,20,0.08)] shrink-0 w-full">
           <div className="flex gap-[16px] items-center shrink-0 w-full">
-            <div className="bg-[#f4eee5] rounded-[14px] shrink-0 size-[48px]" />
+            <div className="bg-[#f4eee5] rounded-[14px] shrink-0 size-[48px]">
+              <img src={daftarKeluarga} alt="Daftar Keluarga" className="w-full h-full object-contain" />
+            </div>
             <p className="font-['Lora',serif] font-bold leading-[1.4] text-[#1f1f1f] text-[15px] whitespace-nowrap">
               Keluargamu
             </p>

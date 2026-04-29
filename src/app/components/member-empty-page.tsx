@@ -1,32 +1,7 @@
 import { useState } from "react";
 import { usePageTransition } from "./page-transition";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
-
-/* ─── Illustration ─── */
-function IllustrationNoMember() {
-  return (
-    <div className="relative shrink-0 size-[180px]">
-      <svg className="absolute block size-full" fill="none" preserveAspectRatio="none" viewBox="0 0 180 180">
-        <rect fill="#AF9160" fillOpacity="0.1" height="180" rx="90" width="180" />
-        <rect height="178.5" rx="89.25" stroke="#AF9160" strokeOpacity="0.2" strokeWidth="1.5" width="178.5" x="0.75" y="0.75" />
-        <circle cx="90" cy="90" fill="#AF9160" fillOpacity="0.08" r="60" />
-        <circle cx="90" cy="98" fill="#1F1912" fillOpacity="0.12" r="28" />
-        <circle cx="90" cy="98" fill="#D8BE90" fillOpacity="0.35" r="22" />
-        <circle cx="90" cy="98" fill="#AF9160" fillOpacity="0.9" r="14" />
-        <circle cx="88" cy="36" fill="#AF9160" fillOpacity="0.5" r="6" />
-        <circle cx="124.5" cy="58.5" fill="#AF9160" fillOpacity="0.5" r="4.5" />
-        <circle cx="129.5" cy="103.5" fill="#AF9160" fillOpacity="0.5" r="3.5" />
-        <circle cx="39.5" cy="103.5" fill="#AF9160" fillOpacity="0.5" r="3.5" />
-        <circle cx="46.5" cy="58.5" fill="#AF9160" fillOpacity="0.5" r="4.5" />
-        <circle cx="52" cy="44" fill="#D8BE90" fillOpacity="0.6" r="2" />
-        <circle cx="124" cy="44" fill="#D8BE90" fillOpacity="0.6" r="2" />
-        <circle cx="141.5" cy="81.5" fill="#D8BE90" fillOpacity="0.6" r="1.5" />
-        <circle cx="21.5" cy="81.5" fill="#D8BE90" fillOpacity="0.6" r="1.5" />
-        <circle cx="90.5" cy="20.5" fill="#D8BE90" fillOpacity="0.6" r="2.5" />
-      </svg>
-    </div>
-  );
-}
+import imgEmptyMember from "../../assets/Illustration/Empty Member.svg";
 
 /* ─── Benefit card ─── */
 function BenefitCard({ emoji, text }: { emoji: string; text: string }) {
@@ -80,7 +55,7 @@ export default function MemberEmptyPage() {
 
           {/* Hero empty state */}
           <div className="flex flex-col gap-[16px] items-center px-[32px] pb-[40px] pt-[52px] w-full">
-            <IllustrationNoMember />
+            <img src={imgEmptyMember} alt="" className="size-[180px] object-contain" />
             <p className="font-['Lora',serif] font-bold text-[#1f1912] text-[22px] text-center leading-[1.45]">
               Daftar untuk mulai menyiapkan kepulangan
             </p>

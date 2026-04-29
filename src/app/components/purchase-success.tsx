@@ -7,14 +7,8 @@ import { usePageTransition } from "./page-transition";
 /* ── Sun Illustration ─── */
 function IllustrationSuccess() {
   return (
-    <div
-      className="overflow-clip relative rounded-[20px] shrink-0 w-full"
-      style={{
-        background: "linear-gradient(to bottom, #fffaf1, #fef4e2 50%, #faedd1)",
-        height: "220px",
-      }}
-    >
-      <img src={svgPaths} alt="Ilustrasi Success" />
+    <div className="overflow-clip relative rounded-[20px] shrink-0 w-full" style={{ background: "linear-gradient(to bottom, #fffaf1, #fef4e2 50%, #faedd1)" }}>
+      <img src={svgPaths} alt="Ilustrasi Success" className="w-full h-auto block" />
     </div>
   );
 }

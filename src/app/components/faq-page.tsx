@@ -59,7 +59,7 @@ const FAQ_DATA: FaqCategory[] = [
       },
       {
         q: "Apakah setelah menjadi anggota bisa langsung menggunakan layanan Pulang?",
-        a: "Anggota memiliki masa tunggu selama 3 bulan. Artinya anggota dapat menggunakan layanan Pulang setelah melewati 3 bulan masa tunggu sejak mendaftar.\n\nPulang menerapkan masa tunggu 3 bulan untuk anggota karena konsep keanggotaannya untuk mempersiapkan kepulangan sejak jauh hari. Jika individu ingin langsung menggunakan layanan Pulang tanpa menunggu maka bisa menggunakan layanan Pesan Langsung tanpa keanggotaan.\n\nContoh masa tunggu: Anggota mendaftar pada 1 Januari 2026, maka ia dapat menggunakan layanan Pulang setelah melewati 3 bulan sejak 1 Januari 2026 yakni pada April 2026.",
+        a: "Anggota memiliki masa tunggu selama 3 bulan (90 hari). Artinya anggota dapat menggunakan layanan Pulang setelah melewati 3 bulan (90 hari) masa tunggu sejak mendaftar.\n\nPulang menerapkan masa tunggu 3 bulan (90 hari) untuk anggota karena konsep keanggotaannya untuk mempersiapkan kepulangan sejak jauh hari. Jika individu ingin langsung menggunakan layanan Pulang tanpa menunggu maka bisa menggunakan layanan Pesan Langsung tanpa keanggotaan.\n\nContoh masa tunggu: Anggota mendaftar pada 1 Januari 2026, maka ia dapat menggunakan layanan Pulang setelah melewati 3 bulan (90 hari) sejak 1 Januari 2026 yakni pada April 2026.",
       },
     ],
   },
@@ -158,7 +158,7 @@ const FAQ_DATA: FaqCategory[] = [
     items: [
       {
         q: "Siapa yang bisa mendapatkan layanan Pulang?",
-        a: "Ada dua jenis yang bisa mendapatkan layanan Pulang:\n1. Anggota aktif yang telah melewati masa tunggu 3 bulan.\n2. Individu yang memesan layanan Pesan Langsung (non-anggota) Pulang saat ada keluarga yang meninggal dunia.",
+        a: "Ada dua jenis yang bisa mendapatkan layanan Pulang:\n1. Anggota aktif yang telah melewati masa tunggu 3 bulan (90 hari).\n2. Individu yang memesan layanan Pesan Langsung (non-anggota) Pulang saat ada keluarga yang meninggal dunia.",
       },
       {
         q: "Seberapa cepat layanan Pulang bisa hadir setelah dihubungi?",

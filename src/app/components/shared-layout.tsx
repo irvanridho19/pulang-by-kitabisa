@@ -7,10 +7,11 @@ import { useAuth } from "./auth-context";
 
 /* ── Nav Links Config ─── */
 export const navLinks = [
-  { label: "Layanan", to: "/layanan", hash: "" },
-  { label: "Cara akses layanan", to: "/cara-akses-layanan", hash: "" },
-  { label: "FAQ", to: "/faq", hash: "" },
-  { label: "Manifesto Pulang", to: "/manifesto", hash: "" },
+  { label: "Layanan", to: "/layanan", hash: "", href: "" },
+  { label: "Cara akses layanan", to: "/cara-akses-layanan", hash: "", href: "" },
+  { label: "Manifesto Pulang", to: "/manifesto", hash: "", href: "" },
+  { label: "FAQ", to: "/faq", hash: "", href: "" },
+  { label: "Syarat & Ketentuan", to: "", hash: "", href: "https://form.kitabisa.com/syaratketentuanpulang" },
 ];
 
 /** Scroll to a hash target, or navigate to landing page with hash */
@@ -86,7 +87,7 @@ export function MobileMenu({ open, onClose }: { open: boolean; onClose: () => vo
           {navLinks.map((item) => (
             <button
               key={item.label}
-              onClick={() => { onClose(); navigateWithLoading(item.to); }}
+              onClick={() => { onClose(); item.href ? window.open(item.href, "_blank", "noopener,noreferrer") : navigateWithLoading(item.to); }}
               className="flex items-center gap-[12px] font-['Outfit',sans-serif] font-medium text-[16px] text-left bg-transparent border-none cursor-pointer rounded-[12px] px-[16px] py-[14px] text-[#1f1912] hover:bg-[rgba(189,166,122,0.08)] transition-all duration-200"
             >
               <span className="w-[5px] h-[5px] rounded-full shrink-0 bg-[#bda67a]/40" />
@@ -173,7 +174,7 @@ export function MobileMenuLoggedIn({ open, onClose }: { open: boolean; onClose: 
           {navLinks.map((item) => (
             <button
               key={item.label}
-              onClick={() => { onClose(); navigateWithLoading(item.to); }}
+              onClick={() => { onClose(); item.href ? window.open(item.href, "_blank", "noopener,noreferrer") : navigateWithLoading(item.to); }}
               className="flex items-center gap-[12px] font-['Outfit',sans-serif] font-medium text-[16px] text-left bg-transparent border-none cursor-pointer rounded-[12px] px-[16px] py-[14px] text-[#1f1912] hover:bg-[rgba(189,166,122,0.08)] transition-all duration-200"
             >
               <span className="w-[5px] h-[5px] rounded-full shrink-0 bg-[#bda67a]/40" />

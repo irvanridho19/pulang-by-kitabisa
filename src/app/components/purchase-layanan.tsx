@@ -111,12 +111,12 @@ const pascaIslam: PascaItemType[] = [adminPasca, "Buku Yasin 50 pcs (opsional, j
 const pascaNonIslam: PascaItemType[] = [adminPasca, "Layanan konseling psikolog"];
 
 const RELIGION_CONFIG: Record<string, { chipLabel: string; dotColor: string; hariKematian: string[]; pasca: PascaItemType[]; note: string }> = {
-  islam:    { chipLabel: "☪️ Prosesi Islam",            dotColor: "#C4A46E", hariKematian: hariKematianIslam,             pasca: pascaIslam,    note: "*Tidak termasuk rumah duka." },
-  kristen:  { chipLabel: "✝️ Prosesi Kristen Protestan", dotColor: "#6CB4EE", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka." },
-  katolik:  { chipLabel: "✝️ Prosesi Katolik",           dotColor: "#A084D4", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka." },
-  hindu:    { chipLabel: "🕉️ Prosesi Hindu",             dotColor: "#E88C5D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung." },
-  buddha:   { chipLabel: "☸️ Prosesi Buddha",            dotColor: "#66B68D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung." },
-  konghucu: { chipLabel: "☯️ Prosesi Konghucu",          dotColor: "#D65E7A", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung." },
+  islam:    { chipLabel: "☪️ Prosesi Islam",            dotColor: "#C4A46E", hariKematian: hariKematianIslam,             pasca: pascaIslam,    note: "*Tidak termasuk lahan makam dan rumah duka." },
+  kristen:  { chipLabel: "✝️ Prosesi Kristen Protestan", dotColor: "#6CB4EE", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk lahan makam, rumah duka, dan dekorasi rumah duka." },
+  katolik:  { chipLabel: "✝️ Prosesi Katolik",           dotColor: "#A084D4", hariKematian: hariKematianKristenKatolik,   pasca: pascaNonIslam, note: "*Tidak termasuk lahan makam, rumah duka, dan dekorasi rumah duka." },
+  hindu:    { chipLabel: "🕉️ Prosesi Hindu",             dotColor: "#E88C5D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk lahan makam, rumah duka, dekorasi rumah duka, dan kremasi atau larung." },
+  buddha:   { chipLabel: "☸️ Prosesi Buddha",            dotColor: "#66B68D", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk lahan makam, rumah duka, dekorasi rumah duka, dan kremasi atau larung." },
+  konghucu: { chipLabel: "☯️ Prosesi Konghucu",          dotColor: "#D65E7A", hariKematian: hariKematianHinduBuddhaKonghucu, pasca: pascaNonIslam, note: "*Tidak termasuk lahan makam, rumah duka, dekorasi rumah duka, dan kremasi atau larung." },
 };
 
 /* ── Main Purchase Layanan Page ─── */

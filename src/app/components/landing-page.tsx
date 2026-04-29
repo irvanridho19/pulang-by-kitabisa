@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import imgImageProblemsBackground from "../../assets/problems-background.png";
-import imgVector from "../../assets/Section/Vector.svg";
-import imgImage9 from "../../assets/Section/bg_dampak.png";
+import imgVector from "../../assets/Section/favicon.svg";
+import imgImage9 from "../../assets/Section/Dampak.png";
 import imgHero from "../../assets/Hero/hero.svg";
 import daftarDiriSendiri from "../../assets/Illustration/Diri Sendiri.svg";
 import daftarKeluarga from "../../assets/Illustration/Keluarga.svg";
@@ -212,7 +212,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk rumah duka.",
+    note: "Tidak termasuk lahan makam dan rumah duka.",
     pascaKematian: [
       commonPascaItems[0],
       { main: "50 buku Yasin (opsional, jika butuh)" },
@@ -238,7 +238,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk rumah duka, dekorasi rumah duka.",
+    note: "Tidak termasuk lahan makam, rumah duka, dan dekorasi rumah duka.",
     pascaKematian: commonPascaItems
   },
   {
@@ -260,7 +260,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk rumah duka, dekorasi rumah duka.",
+    note: "Tidak termasuk lahan makam, rumah duka, dan dekorasi rumah duka.",
     pascaKematian: commonPascaItems
   },
   {
@@ -282,7 +282,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung.",
+    note: "Tidak termasuk lahan makam, rumah duka, dekorasi rumah duka, dan kremasi atau larung.",
     pascaKematian: commonPascaItems
   },
   {
@@ -304,7 +304,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung.",
+    note: "Tidak termasuk lahan makam, rumah duka, dekorasi rumah duka, dan kremasi atau larung.",
     pascaKematian: commonPascaItems
   },
   {
@@ -326,7 +326,7 @@ const RELIGION_DATA = [
       "Karangan bunga",
       "Snack box 50 pak",
     ],
-    note: "Tidak termasuk rumah duka, dekorasi rumah duka, kremasi atau larung.",
+    note: "Tidak termasuk lahan makam, rumah duka, dekorasi rumah duka, dan kremasi atau larung.",
     pascaKematian: commonPascaItems
   }
 ];

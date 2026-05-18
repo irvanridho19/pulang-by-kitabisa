@@ -1,17 +1,22 @@
-import { Menu, X, ChevronRight, ArrowRight, MessageCircle, Phone, Instagram } from "lucide-react";
+import { Menu, X, ChevronRight, ArrowRight } from "lucide-react";
 import imgImageLogo from "../../assets/Logo/Logo.svg";
 import imgFooterLogo from "../../assets/Logo/Logo-1.svg";
+import instagramIcon from "../../assets/socials-icon/Instagram.svg";
+import phoneIcon from "../../assets/socials-icon/phone.svg";
+import whatsappIcon from "../../assets/socials-icon/ic_whatsapp.svg";
+import threadsIcon from "../../assets/socials-icon/Threads_(app)_logo 1.svg";
 import { usePageTransition } from "./page-transition";
 import { useLocation, useNavigate } from "react-router";
 import { useAuth } from "./auth-context";
+import { th } from "date-fns/locale";
 
 /* ── Nav Links Config ─── */
 export const navLinks = [
   { label: "Layanan", to: "/layanan", hash: "", href: "" },
   { label: "Cara akses layanan", to: "/cara-akses-layanan", hash: "", href: "" },
-  { label: "Manifesto Pulang", to: "/manifesto", hash: "", href: "" },
+  { label: "Partner", to: "/partner", hash: "", href: "" },
+  { label: "Manifesto", to: "/manifesto", hash: "", href: "" },
   { label: "FAQ", to: "/faq", hash: "", href: "" },
-  { label: "Syarat & Ketentuan", to: "", hash: "", href: "https://form.kitabisa.com/syaratketentuanpulang" },
 ];
 
 /** Scroll to a hash target, or navigate to landing page with hash */
@@ -36,18 +41,39 @@ export function useNavAction() {
 /* ── Navbar ─── */
 export function NavbarMobileHeader({ onMenuToggle, menuOpen }: { onMenuToggle: () => void; menuOpen: boolean }) {
   const { navigateWithLoading } = usePageTransition();
+  const { isLoggedIn, login } = useAuth();
   return (
     <div className="sticky top-0 bg-white flex items-center justify-between px-[16px] py-[16px] w-full z-50 border-b border-[#e5e7eb]">
       <button onClick={() => navigateWithLoading("/")} className="h-[44px] shrink-0 cursor-pointer bg-transparent border-none p-0 flex items-center">
         <img alt="Pulang Logo" className="h-full w-auto object-contain pointer-events-none" src={imgImageLogo} />
       </button>
-      <button onClick={onMenuToggle} className="relative shrink-0 size-[24px] cursor-pointer bg-transparent border-none p-0 flex items-center justify-center">
-        {menuOpen ? (
-          <X className="size-[22px] text-[#3A3A3A]" strokeWidth={2} />
+      <div className="flex items-center gap-[10px]">
+        {isLoggedIn ? (
+          <div
+            className="flex items-center justify-center p-[4px] cursor-pointer"
+            style={{ borderRadius: "999px", border: "1px solid rgba(175,144,59,0.40)", background: "#FCF6E5" }}
+          >
+            <div className="size-[32px] rounded-full bg-[#AF9160] flex items-center justify-center">
+              <span className="font-['Outfit',sans-serif] font-bold text-[13px] text-white leading-none">J</span>
+            </div>
+          </div>
         ) : (
-          <Menu className="size-[22px] text-[#3A3A3A]" strokeWidth={2} />
+          <button
+            onClick={login}
+            className="h-[36px] px-[16px] flex items-center font-['Outfit',sans-serif] font-semibold text-[13px] text-[#1f1912] whitespace-nowrap cursor-pointer"
+            style={{ borderRadius: "10px", border: "1px solid #AF9160", background: "#F1EEE3" }}
+          >
+            Masuk
+          </button>
         )}
-      </button>
+        <button onClick={onMenuToggle} className="relative shrink-0 size-[24px] cursor-pointer bg-transparent border-none p-0 flex items-center justify-center">
+          {menuOpen ? (
+            <X className="size-[22px] text-[#3A3A3A]" strokeWidth={2} />
+          ) : (
+            <Menu className="size-[22px] text-[#3A3A3A]" strokeWidth={2} />
+          )}
+        </button>
+      </div>
     </div>
   );
 }
@@ -268,15 +294,29 @@ export function Footer() {
 
             <div className="flex h-[24px] items-center justify-start gap-[20px] overflow-clip shrink-0 w-full">
               <a href="https://wa.me/6281234567890" target="_blank" rel="noopener noreferrer" className="text-[rgba(255,255,255,0.55)] hover:text-white transition-colors duration-200">
-                <MessageCircle className="size-[20px]" />
+                <img className="size-[20px]" src={whatsappIcon} alt="WhatsApp" />
               </a>
               <a href="tel:+6281234567890" className="text-[rgba(255,255,255,0.55)] hover:text-white transition-colors duration-200">
-                <Phone className="size-[20px]" />
+                <img className="size-[20px]" src={phoneIcon} alt="Phone" />
               </a>
               <a href="https://instagram.com/kitabisacom" target="_blank" rel="noopener noreferrer" className="text-[rgba(255,255,255,0.55)] hover:text-white transition-colors duration-200">
-                <Instagram className="size-[20px]" />
+                <img className="size-[20px]" src={instagramIcon} alt="Instagram" />
+              </a>
+              <a href="https://threads.com/kitabisacom" target="_blank" rel="noopener noreferrer" className="text-[rgba(255,255,255,0.55)] hover:text-white transition-colors duration-200">
+                <img className="size-[20px]" src={threadsIcon} alt="Threads" />
               </a>
             </div>
+
+            <div className="bg-[rgba(255,255,255,0.07)] h-px shrink-0 w-full" />
+
+            <a
+              href="https://form.kitabisa.com/syaratketentuanpulang"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="font-['Outfit',sans-serif] font-semibold text-[13px] text-[rgba(255,255,255,0.7)] no-underline hover:text-white transition-colors duration-200"
+            >
+              Syarat &amp; Ketentuan
+            </a>
 
             <div className="bg-[rgba(255,255,255,0.07)] h-px shrink-0 w-full" />
 
@@ -307,9 +347,14 @@ export function SectionCtaAnggota() {
           Siapkan sekarang agar tenang berpulang
         </p>
 
-        <p className="font-['Outfit',sans-serif] font-bold leading-[1.6] text-[#f1eee3] text-[13.5px] text-center w-full">
-          Mulai dari Rp 200.000/tahun
-        </p>
+        <div className="flex flex-col gap-[4px] items-center w-full">
+          <p className="font-['Outfit',sans-serif] font-bold leading-[1.6] text-[#f1eee3] text-[13.5px] text-center w-full">
+            Iuran mulai dari Rp200.000/tahun
+          </p>
+          <p className="font-['Outfit',sans-serif] font-normal leading-[1.4] text-[11px] text-center text-[rgba(255,255,255,0.45)]">
+            *Iuran disesuaikan dengan usia saat mendaftar.
+          </p>
+        </div>
 
         <button
           onClick={() => navigate("/purchase")}

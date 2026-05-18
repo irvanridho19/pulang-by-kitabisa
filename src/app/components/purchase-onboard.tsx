@@ -10,6 +10,7 @@ import {
   MobileMenu,
   Footer,
 } from "./shared-layout";
+import { DesktopPurchaseNavbar } from "./purchase-desktop-shared";
 import { Calendar } from "./ui/calendar";
 import { Popover, PopoverContent, PopoverTrigger } from "./ui/popover";
 
@@ -158,7 +159,6 @@ function calcAge(d: Date | undefined): number | null {
   return age;
 }
 
-// Dirapikan: Sesuaikan rentang umur agar presisi jika disimpan ke session storage
 function ageToRange(age: number | null): string | null {
   if (age == null) return null;
   if (age < 1) return "<1";
@@ -168,28 +168,72 @@ function ageToRange(age: number | null): string | null {
   return ">65";
 }
 
+/* ── Date Picker Field ─── */
+function DatePickerField({ value, onChange }: { value: Date | undefined; onChange: (d: Date | undefined) => void }) {
+  const [open, setOpen] = useState(false);
+  return (
+    <Popover open={open} onOpenChange={setOpen}>
+      <PopoverTrigger asChild>
+        <button
+          type="button"
+          className={`bg-white w-full rounded-[12px] border shadow-[0px_2px_8px_0px_rgba(46,33,20,0.06)] px-[20px] py-[14px] flex items-center justify-between gap-[8px] font-['Outfit',sans-serif] text-[14px] text-left outline-none transition-colors ${
+            value
+              ? "border-[#bda67a] text-[#1f2a37]"
+              : "border-[rgba(189,166,122,0.2)] text-[#9ca3af]"
+          }`}
+        >
+          <span>
+            {value ? format(value, "d MMMM yyyy", { locale: localeId }) : "dd/mm/yyyy"}
+          </span>
+          <CalendarIcon className="size-[18px] text-[#9ca3af] shrink-0" />
+        </button>
+      </PopoverTrigger>
+      <PopoverContent className="w-auto p-0" align="start">
+        <Calendar
+          mode="single"
+          selected={value}
+          onSelect={(d) => {
+            onChange(d);
+            setOpen(false);
+          }}
+          captionLayout="dropdown"
+          fromYear={1940}
+          toYear={new Date().getFullYear()}
+          defaultMonth={value ?? new Date(1990, 0)}
+          disabled={(d) => d > new Date()}
+        />
+      </PopoverContent>
+    </Popover>
+  );
+}
+
 /* ── Main Purchase Onboard Page ─── */
 export default function PurchaseOnboardPage() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { navigateWithLoading } = usePageTransition();
   const location = useLocation();
 
-  const initialTarget = (location.state as { target?: string })?.target ?? null;
+  const locState = (location.state as {
+    target?: string;
+    fromVoucher?: boolean;
+    voucherCode?: string;
+  } | null) ?? {};
+  const fromVoucher = locState.fromVoucher ?? false;
+  const voucherCode = locState.voucherCode ?? "";
+  const initialTarget = fromVoucher ? "self" : (locState.target ?? null);
+
   const [target, setTarget] = useState<string | null>(initialTarget);
   const [birthDate, setBirthDate] = useState<Date | undefined>(undefined);
   const [ceremony, setCeremony] = useState<string | null>(null);
   const [domicile, setDomicile] = useState<string | null>(null);
-  const [dateOpen, setDateOpen] = useState(false);
-
   const age = useMemo(() => calcAge(birthDate), [birthDate]);
   const ageRange = useMemo(() => ageToRange(age), [age]);
 
-  const allSelected = target && birthDate && ceremony && domicile;
-  
-  // Dirapikan: Pengecekan umur menggunakan angka agar lebih pasti dan rapi
-  // Jika umurnya di bawah 1 tahun atau di atas 65 tahun, maka isBlocked = true
+  const allSelected = fromVoucher
+    ? !!(birthDate && ceremony && domicile)
+    : !!(target && birthDate && ceremony && domicile);
+
   const isBlocked = (age !== null && (age < 1 || age > 65)) || domicile === "non-jabodetabek";
-  
   const [showBlockedModal, setShowBlockedModal] = useState(false);
 
   const handleContinue = () => {
@@ -199,11 +243,13 @@ export default function PurchaseOnboardPage() {
       return;
     }
     const onboardData = {
-      target,
+      target: target ?? "self",
       age: ageRange,
       birthDate: birthDate ? format(birthDate, "yyyy-MM-dd") : null,
       ceremony,
       domicile,
+      fromVoucher,
+      voucherCode,
     };
     sessionStorage.setItem("pulang_onboard", JSON.stringify(onboardData));
     navigateWithLoading("/purchase/layanan", {
@@ -223,9 +269,7 @@ export default function PurchaseOnboardPage() {
   }, [showBlockedModal]);
 
   const isFamily = target === "family";
-  const birthLabel = isFamily
-    ? "Tanggal Lahir Orang yang Didaftarkan"
-    : "Tanggal Lahirmu";
+  const birthLabel = isFamily ? "Tanggal Lahir Orang yang Didaftarkan" : "Tanggal Lahirmu";
   const ceremonyLabel = isFamily
     ? "Bagaimana tata cara kepulangan yang diharapkan keluargamu?"
     : "Bagaimana tata cara kepulangan yang kamu harapkan?";
@@ -233,123 +277,92 @@ export default function PurchaseOnboardPage() {
     ? "Di mana tempat tinggal keluargamu saat ini?"
     : "Di mana tempat tinggalmu saat ini?";
 
-  return (
-    <div className="min-h-screen bg-white flex justify-center">
-      <div className="w-full max-w-[480px] relative flex flex-col min-h-screen bg-white">
-        <NavbarMobileHeader
-          onMenuToggle={() => setMenuOpen(!menuOpen)}
-          menuOpen={menuOpen}
-        />
-        <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+  /* ── Shared form sections (used in both mobile and desktop) ── */
+  const formQuestions = (fontSize: "sm" | "md") => {
+    const heading = fontSize === "md"
+      ? "font-['Lora',serif] font-bold leading-[1.35] text-[#1f2a37] text-[20px]"
+      : "font-['Lora',serif] font-bold leading-[1.35] text-[#1f2a37] text-[18px]";
+    const optionText = fontSize === "md"
+      ? "font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#4b5563] text-[15px]"
+      : "font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#4b5563] text-[14px]";
+    return (
+      <div className="flex flex-col gap-[28px] items-start w-full">
+        {/* Birth date */}
+        <div className="flex flex-col gap-[14px] items-start w-full">
+          <p className={heading}>{birthLabel}</p>
+          <DatePickerField value={birthDate} onChange={setBirthDate} />
+        </div>
 
-        {/* Main Content */}
-        <main className="flex flex-col flex-1 w-full px-[20px] py-[32px] gap-[28px] min-h-[calc(100vh-160px)]">
-          {/* Question 1: Target — always visible */}
-          <div className="flex flex-col gap-[14px] items-start w-full">
-            <div className="flex flex-col gap-[6px] items-start w-full">
-              <p className="font-['Lora',serif] font-bold leading-[1.35] text-[#1f2a37] text-[20px]">
-                Siapa yang ingin kamu daftarkan?
-              </p>
-              <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#9ca3af] text-[13px]">
-                Layanan Pulang akan diberikan saat orang yang kamu daftarkan meninggal dunia.
-              </p>
-            </div>
-            <div className="flex flex-col gap-[10px] items-start w-full">
-              {targetOptions.map((opt) => (
-                <OptionCard
-                  key={opt.value}
-                  selected={target === opt.value}
-                  onClick={() => setTarget(opt.value)}
-                  emoji={opt.emoji}
-                  emojiBg={opt.bg}
-                >
-                  <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#4b5563] text-[14px]">
-                    {opt.label}
-                  </p>
-                </OptionCard>
-              ))}
-            </div>
+        {/* Ceremony */}
+        <div className="flex flex-col gap-[14px] items-start w-full">
+          <p className={heading}>{ceremonyLabel}</p>
+          <div className="flex flex-col gap-[10px] items-start w-full">
+            {ceremonyOptions.map((opt) => (
+              <OptionCard
+                key={opt.value}
+                selected={ceremony === opt.value}
+                onClick={() => setCeremony(opt.value)}
+                emoji={opt.emoji}
+                emojiBg={opt.bg}
+              >
+                <p className={`font-['Outfit',sans-serif] font-semibold text-[#1f2a37] ${fontSize === "md" ? "text-[15px]" : "text-[14px]"}`}>
+                  {opt.label}
+                </p>
+              </OptionCard>
+            ))}
           </div>
+        </div>
 
-          {/* Revealed only after target is selected */}
-          <Reveal show={!!target}>
-            <div className="flex flex-col gap-[28px] items-start w-full">
-              {/* Question 2: Birth date */}
-              <div className="flex flex-col gap-[14px] items-start w-full">
-                <p className="font-['Lora',serif] font-bold leading-[1.35] text-[#1f2a37] text-[18px]">
-                  {birthLabel}
-                </p>
-                <Popover open={dateOpen} onOpenChange={setDateOpen}>
-                  <PopoverTrigger asChild>
-                    <button
-                      type="button"
-                      className={`bg-white w-full rounded-[12px] border shadow-[0px_2px_8px_0px_rgba(46,33,20,0.06)] px-[20px] py-[14px] flex items-center justify-between gap-[8px] font-['Outfit',sans-serif] text-[14px] text-left outline-none transition-colors ${
-                        birthDate
-                          ? "border-[#bda67a] text-[#1f2a37]"
-                          : "border-[rgba(189,166,122,0.2)] text-[#9ca3af]"
-                      }`}
-                    >
-                      <span>
-                        {birthDate
-                          ? format(birthDate, "d MMMM yyyy", { locale: localeId })
-                          : "dd/mm/yyyy"}
-                      </span>
-                      <CalendarIcon className="size-[18px] text-[#9ca3af] shrink-0" />
-                    </button>
-                  </PopoverTrigger>
-                  <PopoverContent className="w-auto p-0" align="start">
-                    <Calendar
-                      mode="single"
-                      selected={birthDate}
-                      onSelect={(d) => {
-                        setBirthDate(d);
-                        setDateOpen(false);
-                      }}
-                      captionLayout="dropdown"
-                      fromYear={1940}
-                      toYear={new Date().getFullYear()}
-                      defaultMonth={birthDate ?? new Date(1990, 0)}
-                      disabled={(d) => d > new Date()}
-                    />
-                  </PopoverContent>
-                </Popover>
-              </div>
+        {/* Domicile */}
+        <div className="flex flex-col gap-[14px] items-start w-full">
+          <p className={heading}>{domicileLabel}</p>
+          <div className="flex flex-col gap-[10px] items-start w-full">
+            {domicileOptions.map((opt) => (
+              <OptionCard
+                key={opt.value}
+                selected={domicile === opt.value}
+                onClick={() => setDomicile(opt.value)}
+                emoji={opt.emoji}
+                emojiBg={opt.bg}
+              >
+                <p className={optionText}>{opt.label}</p>
+              </OptionCard>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  };
 
-              {/* Question 3: Ceremony */}
+  return (
+    <div className="min-h-screen bg-white">
+
+      {/* ══════════════════════════════════════
+          MOBILE  (hidden on md+)
+      ══════════════════════════════════════ */}
+      <div className="md:hidden flex justify-center bg-white">
+        <div className="w-full max-w-[480px] relative flex flex-col min-h-screen bg-white">
+          <NavbarMobileHeader onMenuToggle={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
+          <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+
+          <main className="flex flex-col flex-1 w-full px-[20px] py-[32px] gap-[28px] min-h-[calc(100vh-160px)]">
+            {/* Question 1: Target — skip if fromVoucher */}
+            {!fromVoucher && (
               <div className="flex flex-col gap-[14px] items-start w-full">
-                <p className="font-['Lora',serif] font-bold leading-[1.35] text-[#1f2a37] text-[18px]">
-                  {ceremonyLabel}
-                </p>
-                <div className="flex flex-col gap-[10px] items-start w-full">
-                  {ceremonyOptions.map((opt) => (
-                    <OptionCard
-                      key={opt.value}
-                      selected={ceremony === opt.value}
-                      onClick={() => setCeremony(opt.value)}
-                      emoji={opt.emoji}
-                      emojiBg={opt.bg}
-                    >
-                      <div className="flex flex-col gap-[2px] leading-[1.5]">
-                        <p className="font-['Outfit',sans-serif] font-semibold text-[#1f2a37] text-[14px]">
-                          {opt.label}
-                        </p>
-                      </div>
-                    </OptionCard>
-                  ))}
+                <div className="flex flex-col gap-[6px] items-start w-full">
+                  <p className="font-['Lora',serif] font-bold leading-[1.35] text-[#1f2a37] text-[20px]">
+                    Siapa yang ingin kamu daftarkan?
+                  </p>
+                  <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#9ca3af] text-[13px]">
+                    Layanan Pulang akan diberikan saat orang yang kamu daftarkan meninggal dunia.
+                  </p>
                 </div>
-              </div>
-
-              {/* Question 4: Domicile */}
-              <div className="flex flex-col gap-[14px] items-start w-full">
-                <p className="font-['Lora',serif] font-bold leading-[1.35] text-[#1f2a37] text-[18px]">
-                  {domicileLabel}
-                </p>
                 <div className="flex flex-col gap-[10px] items-start w-full">
-                  {domicileOptions.map((opt) => (
+                  {targetOptions.map((opt) => (
                     <OptionCard
                       key={opt.value}
-                      selected={domicile === opt.value}
-                      onClick={() => setDomicile(opt.value)}
+                      selected={target === opt.value}
+                      onClick={() => setTarget(opt.value)}
                       emoji={opt.emoji}
                       emojiBg={opt.bg}
                     >
@@ -360,29 +373,94 @@ export default function PurchaseOnboardPage() {
                   ))}
                 </div>
               </div>
-            </div>
-          </Reveal>
+            )}
 
-          {/* CTA Button — pinned to bottom of content area */}
-          <button
-            disabled={!allSelected}
-            className={`relative rounded-[12px] shrink-0 w-full cursor-pointer border-none p-0 transition-all duration-200 mt-auto ${
-              allSelected
-                ? "bg-[#1f1912] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.2)]"
-                : "bg-[#d8d8d8] cursor-not-allowed"
-            }`}
-            onClick={handleContinue}
+            {/* Questions 2–4 */}
+            <Reveal show={fromVoucher || !!target}>
+              {formQuestions("sm")}
+            </Reveal>
+
+            {/* CTA */}
+            <button
+              disabled={!allSelected}
+              className={`relative rounded-[12px] shrink-0 w-full border-none p-0 transition-all duration-200 mt-auto ${
+                allSelected
+                  ? "bg-[#1f1912] cursor-pointer shadow-[0px_5px_16px_0px_rgba(26,18,10,0.2)]"
+                  : "bg-[#989898] cursor-not-allowed"
+              }`}
+              onClick={handleContinue}
+            >
+              <div className="flex items-center justify-center px-[20px] py-[16px]">
+                <p className={`font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[16px] ${allSelected ? "text-white" : "text-[#d8d8d8]"}`}>
+                  Lanjutkan
+                </p>
+              </div>
+            </button>
+          </main>
+
+          <Footer />
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════
+          DESKTOP  (hidden on mobile)
+      ══════════════════════════════════════ */}
+      <div className="hidden md:flex flex-col min-h-screen" style={{ background: "#F9F7F3" }}>
+        <DesktopPurchaseNavbar />
+
+        <div className="flex-1 flex justify-center items-stretch py-[48px] px-[20px]">
+          <div
+            className="w-full max-w-[480px] bg-white rounded-[16px] border border-[#e7dfd1] px-[32px] py-[32px] flex flex-col gap-[28px]"
+            style={{ boxShadow: "0px 4px 20px 0px rgba(26,18,10,0.06)" }}
           >
-            <div className="flex items-center justify-center px-[20px] py-[16px]">
-              <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[16px] text-white">
-                Lanjutkan
-              </p>
-            </div>
-          </button>
-        </main>
+            {/* Target question — only in non-voucher flow */}
+            {!fromVoucher && (
+              <div className="flex flex-col gap-[14px]">
+                <div className="flex flex-col gap-[6px]">
+                  <p className="font-['Lora',serif] font-bold leading-[1.35] text-[#1f2a37] text-[20px]">
+                    Siapa yang ingin kamu daftarkan?
+                  </p>
+                  <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#9ca3af] text-[13px]">
+                    Layanan Pulang akan diberikan saat orang yang kamu daftarkan meninggal dunia.
+                  </p>
+                </div>
+                <div className="flex flex-col gap-[10px]">
+                  {targetOptions.map((opt) => (
+                    <OptionCard
+                      key={opt.value}
+                      selected={target === opt.value}
+                      onClick={() => setTarget(opt.value)}
+                      emoji={opt.emoji}
+                      emojiBg={opt.bg}
+                    >
+                      <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#4b5563] text-[14px]">
+                        {opt.label}
+                      </p>
+                    </OptionCard>
+                  ))}
+                </div>
+              </div>
+            )}
 
-        {/* Footer */}
-        <Footer />
+            {/* Questions 2–4 + CTA */}
+            {(fromVoucher || !!target) && (
+              <>
+                {formQuestions("md")}
+                <button
+                  disabled={!allSelected}
+                  onClick={handleContinue}
+                  className={`rounded-[12px] w-full border-none py-[16px] font-['Outfit',sans-serif] font-semibold text-[15px] transition-all ${
+                    allSelected
+                      ? "bg-[#1f1912] text-white cursor-pointer shadow-[0px_4px_16px_0px_rgba(26,18,10,0.18)]"
+                      : "bg-[#989898] text-[#d8d8d8] cursor-not-allowed"
+                  }`}
+                >
+                  Lanjutkan
+                </button>
+              </>
+            )}
+          </div>
+        </div>
       </div>
 
       {/* Blocked Modal */}

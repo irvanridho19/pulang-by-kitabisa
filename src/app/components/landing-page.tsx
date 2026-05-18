@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import { useLocation } from "react-router";
 import imgImageProblemsBackground from "../../assets/problems-background.png";
 import imgVector from "../../assets/Section/favicon.svg";
+import imgManifestoIcon from "../../assets/Section/manifesto-icon.svg";
 import imgImage9 from "../../assets/Section/Dampak.png";
 import imgHero from "../../assets/Hero/hero.svg";
 import daftarDiriSendiri from "../../assets/Illustration/Diri Sendiri.svg";
@@ -19,6 +20,9 @@ function StickyBottomCtaBar({ visible }: { visible: boolean }) {
       className={`fixed bottom-0 left-1/2 -translate-x-1/2 w-full max-w-[480px] z-50 transition-all duration-300 ease-in-out ${visible ? "translate-y-0 opacity-100" : "translate-y-full opacity-0"}`}
     >
       <div className="bg-[#f9f7f3] flex flex-col items-start overflow-clip pb-[16px] pt-[12px] px-[16px] rounded-tl-[12px] rounded-tr-[12px] shadow-[0px_-4px_20px_0px_rgba(89,70,53,0.12)] w-full">
+        <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#6b6050] text-[11px] w-full text-center mb-[8px]">
+          Mulai dari Rp200.000/tahun
+        </p>
         <button
           onClick={() => navigateWithLoading("/purchase")}
           className="bg-[#AF9160] flex h-[52px] items-center justify-center overflow-clip rounded-[12px] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] w-full cursor-pointer border-none p-0"
@@ -100,48 +104,6 @@ function SectionHero({ ctaRef }: { ctaRef?: React.RefObject<HTMLDivElement | nul
             </div>
           </a>
         </div>
-      </div>
-    </div>
-  );
-}
-
-/* ── Problems / Misi Section ─── */
-function SectionProblems() {
-  const { navigateWithLoading } = usePageTransition();
-
-  return (
-    <div className="relative shrink-0 w-full overflow-hidden bg-[#1a1613]">
-      <img alt="" src={imgImageProblemsBackground} className="absolute inset-0 size-full object-cover pointer-events-none" />
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{ background: "linear-gradient(180deg, rgba(20,16,12,0.55) 0%, rgba(20,16,12,0.75) 60%, rgba(20,16,12,0.92) 100%)" }}
-      />
-      <img src={imgVector} alt="" className="absolute top-[24px] right-[24px] w-[80px] h-auto pointer-events-none opacity-80" />
-
-      <div className="relative z-10 flex flex-col gap-[22px] items-start px-[24px] py-[44px] w-full">
-        <p className="font-['Lora',serif] font-bold text-white text-[18px] leading-[1.28] w-full">
-          <span className="text-[22px] font-bold">Manifesto</span> <span className="text-[22px] font-bold text-[#AF9160]">Pulang</span>
-        </p>
-        <div className="flex flex-col gap-[14px] w-full">
-          <p className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[14px] text-[rgba(255,255,255,0.82)] w-full">
-            Seperti simbol (-) pada papan nisan di antara tahun lahir dan wafat, hidup sejatinya sangat singkat.
-          </p>
-          <p className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[14px] text-[rgba(255,255,255,0.82)] w-full">
-            Dan menyiapkan kepulangan adalah cara sederhana menyadari kesementaraan hidup.
-          </p>
-          <p className="font-['Outfit',sans-serif] font-normal leading-[1.65] text-[14px] text-[rgba(255,255,255,0.82)] w-full">
-            <span className="text-[#AF9160] font-bold">Pulang</span> hadir untuk melayani dan memuliakan perjalanan terakhir manusia.
-          </p>
-        </div>
-        <button
-          type="button"
-          onClick={() => navigateWithLoading("/manifesto")}
-          className="justify-center flex items-center mt-[4px] cursor-pointer transition-colors hover:bg-[rgba(189,166,122,0.22)] bg-transparent border-none p-0"
-        >
-          <p className="font-['Outfit',sans-serif] font-semibold text-[#d5bf92] text-[14px] whitespace-nowrap underline decoration-solid">
-            Baca selengkapnya manifesto Pulang
-          </p>
-        </button>
       </div>
     </div>
   );
@@ -506,12 +468,15 @@ function KeanggotaanCard({ onNavigate }: { onNavigate: () => void }) {
 
           <div className="flex flex-col gap-[4px] items-start overflow-clip shrink-0 w-full mt-[4px]">
             <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#D5C9AA] text-[12px] whitespace-nowrap">
-              Iuran tahunan
+              Iuran mulai dari
             </p>
             <div className="flex gap-[6px] items-end leading-[normal] overflow-clip whitespace-nowrap">
               <p className="font-['Lora',serif] font-bold text-[#D5C9AA] text-[36px] tracking-[-0.5px]">Rp200.000</p>
               <p className="font-['Outfit',sans-serif] font-normal text-[15px] text-[rgba(255,255,255,0.4)] pb-[6px]">/ tahun</p>
             </div>
+            <p className="font-['Outfit',sans-serif] font-normal leading-[1.4] text-[12px] text-[rgba(255,255,255,0.5)]">
+              *Iuran disesuaikan dengan usia saat mendaftar.
+            </p>
           </div>
 
           <button
@@ -570,11 +535,17 @@ function PesanLangsungCard({ }: { onNavigate?: () => void }) {
         </p>
       </div>
 
-      <div className="flex flex-col items-start leading-[normal] overflow-clip shrink-0 w-full whitespace-nowrap mt-[4px]">
-        <div className="flex gap-[6px] items-end overflow-clip">
+      <div className="flex flex-col gap-[4px] items-start leading-[normal] overflow-clip shrink-0 w-full mt-[4px]">
+        <p className="font-['Outfit',sans-serif] font-semibold leading-[normal] text-[#6b6050] text-[12px] whitespace-nowrap">
+          Mulai dari
+        </p>
+        <div className="flex gap-[6px] items-end overflow-clip whitespace-nowrap">
           <p className="font-['Lora',serif] font-bold text-[#594635] text-[36px] tracking-[-0.5px]">Rp15.000.000</p>
-          <p className="font-['Outfit',sans-serif] font-normal text-[#9e9e9e] text-[15px] pb-[6px]">/ layanan</p>
+          <p className="font-['Outfit',sans-serif] font-normal text-[#9e9e9e] text-[15px] pb-[8px]">/ layanan</p>
         </div>
+        <p className="font-['Outfit',sans-serif] font-normal leading-[1.4] text-[12px] text-[#9e9e9e]">
+          *Iuran disesuaikan dengan domisili &amp; pilihan prosesi kepulangan.
+        </p>
       </div>
 
       <a
@@ -654,6 +625,49 @@ function SectionPricing() {
 
       {outerTab === "keanggotaan" && <KeanggotaanCard onNavigate={() => navigateWithLoading("/purchase")} />}
       {outerTab === "pesanLangsung" && <PesanLangsungCard />}
+    </div>
+  );
+}
+
+/* ── Section: Manifesto ─── */
+function SectionManifesto() {
+  const { navigateWithLoading } = usePageTransition();
+  return (
+    <div
+      className="w-full px-[20px] py-[36px]"
+      style={{ background: "linear-gradient(to bottom, #ffffff, #f1eee3)" }}
+    >
+      <div className="flex flex-col gap-[16px] items-center w-full">
+        {/* (–) icon */}
+        <img src={imgManifestoIcon} alt="" className="w-[47px] h-[48px] object-contain" />
+
+        {/* Title */}
+        <p className="font-['Lora',serif] font-bold text-[#1f1f1f] text-[22px] leading-[1.4] text-center w-full">
+          Manifesto <span className="text-[#1f1f1f]">Pulang</span>
+        </p>
+
+        {/* Body */}
+        <div className="flex flex-col gap-[8px] items-start w-full">
+          <p className="font-['Outfit',sans-serif] font-normal text-[#707070] text-[14px] leading-[1.55] text-center w-full">
+            Seperti simbol (-) pada papan nisan di antara tahun lahir dan wafat, hidup sejatinya sangat singkat.
+          </p>
+          <p className="font-['Outfit',sans-serif] font-normal text-[#707070] text-[14px] leading-[1.55] text-center w-full">
+            Dan menyiapkan kepulangan adalah cara sederhana menyadari kesementaraan hidup.
+          </p>
+          <p className="font-['Outfit',sans-serif] font-normal text-[#707070] text-[14px] leading-[1.55] text-center w-full">
+            <span className="font-bold text-[#af9160]">Pulang</span>
+            {" hadir untuk melayani dan memuliakan perjalanan terakhir manusia."}
+          </p>
+        </div>
+
+        {/* CTA link */}
+        <button
+          onClick={() => navigateWithLoading("/manifesto")}
+          className="bg-transparent border-none cursor-pointer p-0 font-['Outfit',sans-serif] font-bold text-[#af9160] text-[14px] leading-[1.55] underline decoration-solid text-center"
+        >
+          Baca selengkapnya manifesto Pulang
+        </button>
+      </div>
     </div>
   );
 }
@@ -813,10 +827,10 @@ export default function LandingPage() {
 
         <main className="flex flex-col w-full pb-[160px]">
           <SectionHero ctaRef={ctaRef} />
-          <SectionProblems />
           <SectionPricing />
           <SectionCtaCards />
           <SectionSocialImpact />
+          <SectionManifesto />
           <Footer />
         </main>
 

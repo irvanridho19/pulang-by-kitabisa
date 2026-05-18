@@ -15,6 +15,7 @@ import MemberEmptyPage from "./components/member-empty-page";
 import MisiPage from "./components/manifesto";
 import NotFoundPage from "./components/not-found-page";
 import FaqPage from "./components/faq-page";
+import PartnerPage from "./components/partner-page";
 
 function RootLayout() {
   return (
@@ -37,6 +38,7 @@ export const router = createBrowserRouter([
       { path: "manifesto", Component: MisiPage },
       { path: "layanan", Component: LayananPage },
       { path: "faq", Component: FaqPage },
+      { path: "partner", Component: PartnerPage },
       { path: "purchase", Component: PurchaseOnboardPage },
       { path: "purchase/layanan", Component: PurchaseLayananPage },
       { path: "purchase/data-diri", Component: PurchaseDataDiriPage },

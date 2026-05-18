@@ -4,6 +4,7 @@ import { ChevronDown, ArrowLeft } from "lucide-react";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { usePageTransition } from "./page-transition";
 import { StepSlideWrapper } from "./step-slide-wrapper";
+import { DesktopPurchaseNavbar, DesktopStepperBar } from "./purchase-desktop-shared";
 
 /* ── Stepper Data ─── */
 const steps = [
@@ -207,6 +208,7 @@ export default function PurchaseDataDiriPage() {
   const [waKontakDarurat, setWaKontakDarurat] = useState("");
   const [dropdownDaruratOpen, setDropdownDaruratOpen] = useState(false);
   const dropdownDaruratRef = useRef<HTMLDivElement>(null);
+  const dropdownDaruratDesktopRef = useRef<HTMLDivElement>(null);
 
   /* ── Family variant state ─── */
   const [namaKeluarga, setNamaKeluarga] = useState("");
@@ -216,6 +218,7 @@ export default function PurchaseDataDiriPage() {
   const [waPengelola, setWaPengelola] = useState("");
   const [dropdownKeluargaOpen, setDropdownKeluargaOpen] = useState(false);
   const dropdownKeluargaRef = useRef<HTMLDivElement>(null);
+  const dropdownKeluargaDesktopRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -224,15 +227,16 @@ export default function PurchaseDataDiriPage() {
   // Close dropdowns on outside click
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
+      const target = e.target as Node;
       if (
-        dropdownDaruratRef.current &&
-        !dropdownDaruratRef.current.contains(e.target as Node)
+        dropdownDaruratRef.current && !dropdownDaruratRef.current.contains(target) &&
+        dropdownDaruratDesktopRef.current && !dropdownDaruratDesktopRef.current.contains(target)
       ) {
         setDropdownDaruratOpen(false);
       }
       if (
-        dropdownKeluargaRef.current &&
-        !dropdownKeluargaRef.current.contains(e.target as Node)
+        dropdownKeluargaRef.current && !dropdownKeluargaRef.current.contains(target) &&
+        dropdownKeluargaDesktopRef.current && !dropdownKeluargaDesktopRef.current.contains(target)
       ) {
         setDropdownKeluargaOpen(false);
       }
@@ -306,13 +310,193 @@ export default function PurchaseDataDiriPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#fefefe] flex justify-center">
-      <div className="w-full max-w-[480px] bg-white relative flex flex-col min-h-screen">
-        <NavbarMobileHeader
-          onMenuToggle={() => setMenuOpen(!menuOpen)}
-          menuOpen={menuOpen}
-        />
-        <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+    <div className="min-h-screen bg-white">
+
+      {/* ══════════════════════════════════════
+          DESKTOP  (hidden on mobile)
+      ══════════════════════════════════════ */}
+      <div className="hidden md:flex flex-col min-h-screen" style={{ background: "#F9F7F3" }}>
+        <DesktopPurchaseNavbar />
+        <DesktopStepperBar currentStep={2} />
+        <div className="flex-1 flex justify-center items-start py-[48px] px-[20px]">
+          <div
+            className="w-full max-w-[480px] bg-white rounded-[16px] border border-[#e7dfd1] px-[32px] py-[32px] flex flex-col gap-[28px]"
+            style={{ boxShadow: "0px 4px 20px 0px rgba(26,18,10,0.06)" }}
+          >
+            {/* Heading */}
+            <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#1f1912] text-[22px]">
+              {isFamily ? "Sekarang, lengkapi data keluargamu" : "Sekarang, lengkapi data dirimu"}
+            </p>
+
+            {isFamily ? (
+              <>
+                <Field label="Nama Lengkap Keluarga sesuai KTP" error={namaKeluargaError}>
+                  <div className={getInputWrapperClass(!!namaKeluargaError)}>
+                    <input type="text" value={namaKeluarga} onChange={(e) => setNamaKeluarga(e.target.value)} placeholder="Masukkan nama keluargamu" className={inputClass} />
+                  </div>
+                </Field>
+
+                <Dropdown
+                  label="Hubungan denganmu"
+                  value={hubunganKeluarga}
+                  options={hubunganKeluargaOptions}
+                  open={dropdownKeluargaOpen}
+                  onToggle={() => setDropdownKeluargaOpen(!dropdownKeluargaOpen)}
+                  onSelect={(v) => { setHubunganKeluarga(v); setDropdownKeluargaOpen(false); }}
+                  dropdownRef={dropdownKeluargaDesktopRef}
+                />
+
+                <Field label="Nomor WhatsApp Keluargamu" error={waKeluargaError}>
+                  <div className={getInputWrapperClass(!!waKeluargaError, true)}>
+                    <span className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[14px] text-[#9ca3af] pl-[16px] select-none shrink-0">+62</span>
+                    <input type="tel" value={waKeluarga} onChange={(e) => setWaKeluarga(e.target.value.replace(/\D/g, ""))} placeholder="8123456789" className={inputClassWa} />
+                  </div>
+                </Field>
+
+                <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#1f1912] text-[22px]">Data dirimu</p>
+
+                <div className="relative bg-gradient-to-br from-[#faf8f4] to-[#f5efe4] rounded-[14px] border border-[#e8e2d6] w-full overflow-hidden">
+                  <div className="absolute top-0 left-0 w-[3px] h-full bg-[#bda67a]" />
+                  <div className="flex flex-col gap-[8px] p-[16px] pl-[18px] w-full">
+                    <p className="font-['Outfit',sans-serif] font-medium leading-[1.4] text-[#6b6050] text-[13px] w-full">Kamu adalah pengelola akun yang bertugas:</p>
+                    <div className="flex flex-col gap-[6px] items-start w-full">
+                      <div className="flex gap-[8px] items-start w-full">
+                        <div className="shrink-0 mt-[6px] size-[4px] rounded-full bg-[#bda67a]" />
+                        <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.4] text-[#6b6050] text-[13px]">Perpanjang keanggotaan keluargamu</p>
+                      </div>
+                      <div className="flex gap-[8px] items-start w-full">
+                        <div className="shrink-0 mt-[6px] size-[4px] rounded-full bg-[#bda67a]" />
+                        <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.4] text-[#6b6050] text-[13px]">Menghubungi tim Pulang saat anggota keluargamu tutup usia</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Field label="Nama Lengkapmu" error={namaPengelolaError}>
+                  <div className={getInputWrapperClass(!!namaPengelolaError)}>
+                    <input type="text" value={namaPengelola} onChange={(e) => setNamaPengelola(e.target.value)} placeholder="Masukkan nama lengkapmu" className={inputClass} />
+                  </div>
+                </Field>
+
+                <Field label="Nomor WhatsApp-mu" error={waPengelolaError}>
+                  <div className={getInputWrapperClass(!!waPengelolaError, true)}>
+                    <span className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[14px] text-[#9ca3af] pl-[16px] select-none shrink-0">+62</span>
+                    <input type="tel" value={waPengelola} onChange={(e) => setWaPengelola(e.target.value.replace(/\D/g, ""))} placeholder="8123456789" className={inputClassWa} />
+                  </div>
+                </Field>
+              </>
+            ) : (
+              <>
+                <Field label="Nama Lengkap sesuai KTP" error={namaLengkapError}>
+                  <div className={getInputWrapperClass(!!namaLengkapError)}>
+                    <input type="text" value={namaLengkap} onChange={(e) => setNamaLengkap(e.target.value)} placeholder="Masukkan nama lengkap" className={inputClass} />
+                  </div>
+                </Field>
+
+                <Field label="Nomor WhatsApp" error={whatsappError}>
+                  <div className={getInputWrapperClass(!!whatsappError, true)}>
+                    <span className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[14px] text-[#9ca3af] pl-[16px] select-none shrink-0">+62</span>
+                    <input type="tel" value={whatsapp} onChange={(e) => setWhatsapp(e.target.value.replace(/\D/g, ""))} placeholder="8123456789" className={inputClassWa} />
+                  </div>
+                </Field>
+
+                <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#1f1912] text-[22px]">Kontak Darurat</p>
+                <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#1f1912] text-[16px]">Siapa kontak darurat yang kamu tunjuk?</p>
+
+                <div className="relative bg-gradient-to-br from-[#faf8f4] to-[#f5efe4] rounded-[14px] border border-[#e8e2d6] w-full overflow-hidden">
+                  <div className="absolute top-0 left-0 w-[3px] h-full bg-[#bda67a]" />
+                  <div className="flex flex-col gap-[14px] p-[16px] pl-[18px] w-full">
+                    <div className="flex gap-[10px] items-start w-full">
+                      <div className="shrink-0 size-[20px] rounded-full bg-[#bda67a] flex items-center justify-center mt-[1px]">
+                        <p className="font-['Outfit',sans-serif] font-bold text-white text-[11px] leading-none">1</p>
+                      </div>
+                      <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[12px]">
+                        Kontak darurat bisa pasangan/orang tua/anak yang bertugas menghubungi tim{" "}
+                        <span className="font-bold text-[#3a3a3a]">Pulang</span> saat kamu tutup usia.
+                      </p>
+                    </div>
+                    <div className="flex gap-[10px] items-start w-full">
+                      <div className="shrink-0 size-[20px] rounded-full bg-[#bda67a] flex items-center justify-center mt-[1px]">
+                        <p className="font-['Outfit',sans-serif] font-bold text-white text-[11px] leading-none">2</p>
+                      </div>
+                      <div className="flex-1 flex flex-col gap-[8px]">
+                        <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[12px]">Setelah pendaftaran, kami akan mengirim WhatsApp ke kontak daruratmu berisi:</p>
+                        <div className="flex flex-col gap-[6px]">
+                          <div className="flex gap-[8px] items-start">
+                            <div className="shrink-0 mt-[7px] size-[4px] rounded-full bg-[#bda67a]" />
+                            <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[12px]">Cara akses layanan Pulang jika kamu meninggal dunia</p>
+                          </div>
+                          <div className="flex gap-[8px] items-start">
+                            <div className="shrink-0 mt-[7px] size-[4px] rounded-full bg-[#bda67a]" />
+                            <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[12px]">Kartu keanggotaanmu</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <Field label="Nama Lengkap Kontak Darurat" error={namaKontakDaruratError}>
+                  <div className={getInputWrapperClass(!!namaKontakDaruratError)}>
+                    <input type="text" value={namaKontakDarurat} onChange={(e) => setNamaKontakDarurat(e.target.value)} placeholder="Nama lengkap" className={inputClass} />
+                  </div>
+                </Field>
+
+                <Dropdown
+                  label="Hubungan dengan Kontak Darurat"
+                  value={hubunganDarurat}
+                  options={hubunganDaruratOptions}
+                  open={dropdownDaruratOpen}
+                  onToggle={() => setDropdownDaruratOpen(!dropdownDaruratOpen)}
+                  onSelect={(v) => { setHubunganDarurat(v); setDropdownDaruratOpen(false); }}
+                  dropdownRef={dropdownDaruratDesktopRef}
+                />
+
+                <Field label="Nomor WhatsApp Kontak Darurat" error={waKontakDaruratError}>
+                  <div className={getInputWrapperClass(!!waKontakDaruratError, true)}>
+                    <span className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[14px] text-[#9ca3af] pl-[16px] select-none shrink-0">+62</span>
+                    <input type="tel" value={waKontakDarurat} onChange={(e) => setWaKontakDarurat(e.target.value.replace(/\D/g, ""))} placeholder="8123456789" className={inputClassWa} />
+                  </div>
+                </Field>
+              </>
+            )}
+
+            {/* CTA */}
+            <button
+              onClick={handleSubmit}
+              disabled={!isFormValid}
+              className={`w-full h-[50px] rounded-[12px] border-none transition-all duration-200 ${isFormValid ? "bg-[#1f1912] cursor-pointer shadow-[0px_4px_16px_0px_rgba(26,18,10,0.18)]" : "bg-[#989898] cursor-not-allowed"}`}
+            >
+              <div className="flex items-center justify-center w-full h-full px-[24px]">
+                <p className={`font-['Outfit',sans-serif] font-bold leading-[normal] text-[15px] ${isFormValid ? "text-white" : "text-[#d8d8d8]"}`}>
+                  Selanjutnya
+                </p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigateWithLoading("/purchase/layanan", { state: { ...onboardData, slideDir: "back" } })}
+              className="flex gap-[12px] items-center bg-transparent border-none cursor-pointer p-0"
+            >
+              <div className="bg-[rgba(189,166,122,0.15)] flex items-center justify-center p-[9px] rounded-[100px] shrink-0">
+                <ArrowLeft className="size-[16px] text-[#3a3a3a]" />
+              </div>
+              <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] text-[#3a3a3a] whitespace-nowrap">Sebelumnya</p>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════
+          MOBILE  (hidden on md+)
+      ══════════════════════════════════════ */}
+      <div className="md:hidden min-h-screen bg-[#fefefe] flex justify-center">
+        <div className="w-full max-w-[480px] bg-white relative flex flex-col min-h-screen">
+          <NavbarMobileHeader
+            onMenuToggle={() => setMenuOpen(!menuOpen)}
+            menuOpen={menuOpen}
+          />
+          <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
         {/* Stepper Navigation */}
         <div
@@ -638,6 +822,8 @@ export default function PurchaseDataDiriPage() {
           </StepSlideWrapper>
         </div>
       </div>
+    </div>
+
     </div>
   );
 }

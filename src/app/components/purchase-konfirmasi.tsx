@@ -6,6 +6,7 @@ import checkCircle from "../../assets/check-circle.svg";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { StepSlideWrapper } from "./step-slide-wrapper";
 import { XenditBanner } from "./xendit-banner";
+import { DesktopPurchaseNavbar, DesktopStepperBar } from "./purchase-desktop-shared";
 
 /* ── Types ─── */
 type PurchaseState = {
@@ -15,6 +16,8 @@ type PurchaseState = {
   domicile?: string;
   billingCycle?: "bulanan" | "tahunan";
   dob?: string;
+  fromVoucher?: boolean;
+  voucherCode?: string;
   namaLengkap?: string;
   whatsapp?: string;
   namaKontakDarurat?: string;
@@ -83,6 +86,35 @@ function InfoRow({ label, value }: { label: string; value: string }) {
   );
 }
 
+/* ── Voucher Applied Card ─── */
+function VoucherAppliedCard({ code }: { code: string }) {
+  return (
+    <div className="flex flex-col gap-[12px] w-full">
+      <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#3a3a3a] text-[15px] w-full">
+        Kode Voucher
+      </p>
+      <div
+        className="rounded-[14px] border border-[#c3e8d6] w-full flex items-center gap-[14px] px-[16px] py-[14px]"
+        style={{ background: "rgba(195,232,214,0.18)" }}
+      >
+        <div className="shrink-0 size-[32px] rounded-full bg-[#2e9f60] flex items-center justify-center">
+          <svg width="14" height="11" viewBox="0 0 14 11" fill="none">
+            <path d="M1 5L5 9L13 1" stroke="white" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+        </div>
+        <div className="flex flex-col gap-[2px] flex-1 min-w-0">
+          <p className="font-['Outfit',sans-serif] font-bold leading-[1.4] text-[#1f8a55] text-[14px] tracking-[0.3px]">
+            {code}
+          </p>
+          <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b7280] text-[13px]">
+            Kode voucher berhasil digunakan
+          </p>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /* ── Main Page ─── */
 export default function PurchaseKonfirmasiPage() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -102,10 +134,13 @@ export default function PurchaseKonfirmasiPage() {
     })();
 
   const isFamily = data.target === "family";
+  const fromVoucher = data.fromVoucher ?? false;
+  const voucherCode = data.voucherCode ?? "";
 
   const billingCycle = data.billingCycle ?? "bulanan";
   const isTahunan = billingCycle === "tahunan";
-  const total = isTahunan ? 200000 : 25000;
+  const basePrice = isTahunan ? 200000 : 25000;
+  const total = fromVoucher ? 0 : basePrice;
   const periodeLabel = isTahunan ? "Tahunan" : "Bulanan";
   const [agreedToTerms, setAgreedToTerms] = useState(false);
 
@@ -123,10 +158,177 @@ export default function PurchaseKonfirmasiPage() {
   const recipientWa = isFamily ? data.waKeluarga : data.whatsapp;
 
   return (
-    <div className="min-h-screen bg-[#fefefe] flex justify-center">
-      <div className="w-full max-w-[480px] bg-white relative flex flex-col min-h-screen">
-        <NavbarMobileHeader onMenuToggle={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
-        <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
+    <div className="min-h-screen bg-white">
+
+      {/* ══════════════════════════════════════
+          DESKTOP  (hidden on mobile)
+      ══════════════════════════════════════ */}
+      <div className="hidden md:flex flex-col min-h-screen" style={{ background: "#F9F7F3" }}>
+        <DesktopPurchaseNavbar />
+        <DesktopStepperBar currentStep={3} />
+        <div className="flex-1 flex justify-center items-start py-[48px] px-[20px]">
+          <div
+            className="w-full max-w-[480px] bg-white rounded-[16px] border border-[#e7dfd1] px-[32px] py-[32px] flex flex-col gap-[28px]"
+            style={{ boxShadow: "0px 4px 20px 0px rgba(26,18,10,0.06)" }}
+          >
+            {/* Heading */}
+            <div className="flex flex-col gap-[8px] items-start w-full">
+              <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#1f1912] text-[22px]">
+                Satu langkah lagi, persiapanmu selesai
+              </p>
+              <p className="font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#6b6050] text-[13px] w-full">
+                Cek kembali detail di bawah ini. Pastikan semua data benar.
+              </p>
+            </div>
+
+            {/* Ringkasan Layanan */}
+            <div className="bg-[#faf8f4] rounded-[14px] border border-[#e8e2d6] w-full">
+              <div className="flex flex-col gap-[16px] items-start p-[20px] w-full">
+                <SectionHeading text="Ringkasan Layanan" />
+                <InfoRow label="Periode" value={periodeLabel} />
+                <InfoRow label="Prosesi Kepulangan" value={ceremonyLabel} />
+              </div>
+            </div>
+
+            {/* Detail Penerima */}
+            <div className="bg-[#faf8f4] rounded-[14px] border border-[#e8e2d6] w-full">
+              <div className="flex flex-col gap-[16px] items-start p-[20px] w-full">
+                <SectionHeading text="Detail Penerima Layanan" />
+                {isFamily && (
+                  <p className="font-['Outfit',sans-serif] font-normal text-[#9CA3AF] text-[12px] mt-[-10px]">
+                    Anggota keluarga yang kamu daftarkan
+                  </p>
+                )}
+                <InfoRow label="Nama Lengkap" value={recipientName || "–"} />
+                <InfoRow label="Tanggal Lahir" value={data.dob || "–"} />
+                <InfoRow label="Usia" value={data.dob ? calculateAge(data.dob) : "–"} />
+                {isFamily && <InfoRow label="Hubungan Denganmu" value={data.hubunganKeluarga || "–"} />}
+                <InfoRow label="Nomor WhatsApp" value={recipientWa || "–"} />
+              </div>
+            </div>
+
+            {/* Kontak Darurat / Pengelola */}
+            <div className="bg-[#faf8f4] rounded-[14px] border border-[#e8e2d6] w-full">
+              <div className="flex flex-col gap-[16px] items-start p-[20px] w-full">
+                {isFamily ? (
+                  <>
+                    <SectionHeading text="Pengelola Akun" />
+                    <p className="font-['Outfit',sans-serif] font-normal text-[#9CA3AF] text-[12px] mt-[-10px]">Data dirimu</p>
+                    <InfoRow label="Nama Lengkap" value={data.namaPengelola || "–"} />
+                    <InfoRow label="Nomor WhatsApp" value={data.waPengelola || "–"} />
+                  </>
+                ) : (
+                  <>
+                    <SectionHeading text="Kontak Darurat" />
+                    <InfoRow label="Nama Kontak Darurat" value={data.namaKontakDarurat || "–"} />
+                    <InfoRow label="Hubungan" value={data.hubunganDarurat || "–"} />
+                    <InfoRow label="Nomor WhatsApp" value={data.waKontakDarurat || "–"} />
+                  </>
+                )}
+              </div>
+            </div>
+
+            {/* Kode Voucher */}
+            {fromVoucher && <VoucherAppliedCard code={voucherCode} />}
+
+            {/* Rincian Biaya */}
+            <div className="flex flex-col gap-[16px] items-start w-full">
+              <SectionHeading text="Rincian Biaya" />
+              <div className="bg-[#faf8f4] rounded-[14px] border border-[#e8e2d6] w-full">
+                <div className="flex flex-col items-start p-[20px] w-full gap-[14px]">
+                  <div className="flex items-center justify-between w-full">
+                    <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">Iuran Keanggotaan</p>
+                    <p className={`font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] ${fromVoucher ? "line-through text-[#9ca3af]" : "text-[#3a3a3a]"}`}>
+                      {formatRupiah(basePrice)}
+                    </p>
+                  </div>
+                  {fromVoucher && (
+                    <div className="flex items-center justify-between w-full">
+                      <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#1f8a55] text-[14px]">Diskon Voucher</p>
+                      <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#1f8a55] text-[14px]">-{formatRupiah(basePrice)}</p>
+                    </div>
+                  )}
+                  <div className="flex items-center justify-between w-full">
+                    <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">Periode</p>
+                    <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">{periodeLabel}</p>
+                  </div>
+                  <div className="bg-[#e8e2d6] h-px w-full" />
+                  <div className="flex items-center justify-between w-full">
+                    <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#1f1912] text-[15px]">Total Pembayaran</p>
+                    <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#876747] text-[18px]">{formatRupiah(total)}</p>
+                  </div>
+                  {!fromVoucher && (
+                    <div className="bg-white rounded-[10px] border border-[#e8e2d6] w-full">
+                      <div className="flex gap-[8px] items-center px-[14px] py-[12px] w-full">
+                        <img src={checkCircle} className="w-[16px] h-[16px]" alt="Check Icon" />
+                        <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#9ca3af] text-[12px]">
+                          Iuran sudah mencakup donasi untuk pemakaman gratis bagi yang tak mampu.
+                        </p>
+                      </div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            {/* Checkbox Persetujuan */}
+            <div className="flex gap-[14px] items-start w-full">
+              <button
+                type="button"
+                onClick={() => setAgreedToTerms(!agreedToTerms)}
+                className={`shrink-0 mt-[2px] w-[22px] h-[22px] rounded-[4px] border-2 flex items-center justify-center transition-all duration-200 cursor-pointer ${agreedToTerms ? "border-[#1f1912] bg-[#1f1912]" : "border-[#9ca3af] bg-white"}`}
+              >
+                {agreedToTerms && (
+                  <svg width="11" height="8" viewBox="0 0 11 8" fill="none">
+                    <path d="M1 3.5L4 6.5L10 1" stroke="#ffffff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                )}
+              </button>
+              <div className="flex flex-col gap-[6px] flex-1 min-w-0">
+                <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#1f1912] text-[14px]">
+                  Dengan mendaftar, saya setuju ikut program keanggotaan <span className="font-bold">Pulang.</span>
+                </p>
+                <p className="font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#6b7280] text-[13px]">
+                  Saya memahami iuran anggota digunakan untuk penyelenggaraan program, donasi, pemberian manfaat kepada anggota, dan termasuk kepesertaan perlindungan jiwa.
+                </p>
+              </div>
+            </div>
+
+            <XenditBanner />
+
+            {/* CTA */}
+            <button
+              disabled={!agreedToTerms}
+              onClick={() => navigateWithLoading("/purchase/success", { state: { ...data, total, slideDir: "forward" } })}
+              className={`w-full h-[52px] rounded-[12px] border-none transition-all duration-200 ${agreedToTerms ? "bg-[#1f1912] shadow-[0px_5px_16px_0px_rgba(26,18,10,0.22)] cursor-pointer" : "bg-[#989898] cursor-not-allowed"}`}
+            >
+              <div className="flex items-center justify-center w-full h-full px-[24px]">
+                <p className={`font-['Outfit',sans-serif] font-medium leading-[normal] text-[16px] whitespace-nowrap ${agreedToTerms ? "text-white" : "text-[#d8d8d8]"}`}>
+                  Selesaikan pendaftaran
+                </p>
+              </div>
+            </button>
+
+            <button
+              onClick={() => navigateWithLoading("/purchase/data-diri", { state: { ...data, slideDir: "back" } })}
+              className="flex gap-[12px] items-center bg-transparent border-none cursor-pointer p-0"
+            >
+              <div className="bg-[rgba(189,166,122,0.15)] flex items-center justify-center p-[9px] rounded-[100px] shrink-0">
+                <ArrowLeft className="size-[16px] text-[#3a3a3a]" />
+              </div>
+              <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] text-[#3a3a3a] whitespace-nowrap">Sebelumnya</p>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      {/* ══════════════════════════════════════
+          MOBILE  (hidden on md+)
+      ══════════════════════════════════════ */}
+      <div className="md:hidden min-h-screen bg-[#fefefe] flex justify-center">
+        <div className="w-full max-w-[480px] bg-white relative flex flex-col min-h-screen">
+          <NavbarMobileHeader onMenuToggle={() => setMenuOpen(!menuOpen)} menuOpen={menuOpen} />
+          <MobileMenu open={menuOpen} onClose={() => setMenuOpen(false)} />
 
         {/* Stepper Navigation */}
         <div
@@ -236,6 +438,9 @@ export default function PurchaseKonfirmasiPage() {
                   </div>
                 </div>
 
+                {/* ── Kode Voucher ── */}
+                {fromVoucher && <VoucherAppliedCard code={voucherCode} />}
+
                 {/* ── Rincian Biaya ── */}
                 <div className="flex flex-col gap-[16px] items-start w-full">
                   <SectionHeading text="Rincian Biaya" />
@@ -243,8 +448,16 @@ export default function PurchaseKonfirmasiPage() {
                     <div className="flex flex-col items-start p-[20px] w-full gap-[14px]">
                       <div className="flex items-center justify-between w-full">
                         <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">Iuran Keanggotaan</p>
-                        <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">{formatRupiah(total)}</p>
+                        <p className={`font-['Outfit',sans-serif] font-medium leading-[1.5] text-[14px] ${fromVoucher ? "line-through text-[#9ca3af]" : "text-[#3a3a3a]"}`}>
+                          {formatRupiah(basePrice)}
+                        </p>
                       </div>
+                      {fromVoucher && (
+                        <div className="flex items-center justify-between w-full">
+                          <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#1f8a55] text-[14px]">Diskon Voucher</p>
+                          <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#1f8a55] text-[14px]">-{formatRupiah(basePrice)}</p>
+                        </div>
+                      )}
                       <div className="flex items-center justify-between w-full">
                         <p className="font-['Outfit',sans-serif] font-normal leading-[1.5] text-[#6b6050] text-[14px]">Periode</p>
                         <p className="font-['Outfit',sans-serif] font-medium leading-[1.5] text-[#3a3a3a] text-[14px]">{periodeLabel}</p>
@@ -254,14 +467,16 @@ export default function PurchaseKonfirmasiPage() {
                         <p className="font-['Outfit',sans-serif] font-semibold leading-[1.5] text-[#1f1912] text-[15px]">Total Pembayaran</p>
                         <p className="font-['Lora',serif] font-bold leading-[1.3] text-[#876747] text-[18px]">{formatRupiah(total)}</p>
                       </div>
-                      <div className="bg-white rounded-[10px] border border-[#e8e2d6] w-full">
-                        <div className="flex gap-[8px] items-center px-[14px] py-[12px] w-full">
-                          <img src={checkCircle} className="w-[16px] h-[16px]" alt="Check Icon" />
-                          <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#9ca3af] text-[12px]">
-                            Iuran sudah mencakup donasi untuk pemakaman gratis bagi yang tak mampu.
-                          </p>
+                      {!fromVoucher && (
+                        <div className="bg-white rounded-[10px] border border-[#e8e2d6] w-full">
+                          <div className="flex gap-[8px] items-center px-[14px] py-[12px] w-full">
+                            <img src={checkCircle} className="w-[16px] h-[16px]" alt="Check Icon" />
+                            <p className="flex-1 font-['Outfit',sans-serif] font-normal leading-[1.6] text-[#9ca3af] text-[12px]">
+                              Iuran sudah mencakup donasi untuk pemakaman gratis bagi yang tak mampu.
+                            </p>
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -325,6 +540,8 @@ export default function PurchaseKonfirmasiPage() {
           </StepSlideWrapper>
         </div>
       </div>
+    </div>
+
     </div>
   );
 }

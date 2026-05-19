@@ -10,7 +10,7 @@ import imgThreads from "../../assets/socials-icon/Threads_(app)_logo 1.svg";
 import { usePageTransition } from "./page-transition";
 
 /* ── Desktop Purchase Navbar ─── */
-export function DesktopPurchaseNavbar() {
+export function DesktopPurchaseNavbar({ activePath }: { activePath?: string } = {}) {
   const { navigateWithLoading } = usePageTransition();
   const navItems = [
     { label: "Beranda", to: "/" },
@@ -28,15 +28,18 @@ export function DesktopPurchaseNavbar() {
         <img alt="Pulang Logo" className="h-full w-auto object-contain pointer-events-none" src={imgLogo} />
       </button>
       <div className="flex gap-[32px] xl:gap-[40px] items-center">
-        {navItems.map((item) => (
-          <button
-            key={item.label}
-            onClick={() => navigateWithLoading(item.to)}
-            className="font-['Outfit',sans-serif] text-[14px] font-normal text-[#1f1f1f] leading-normal bg-transparent border-none cursor-pointer p-0 whitespace-nowrap"
-          >
-            {item.label}
-          </button>
-        ))}
+        {navItems.map((item) => {
+          const isActive = activePath === item.to;
+          return (
+            <button
+              key={item.label}
+              onClick={() => navigateWithLoading(item.to)}
+              className={`font-['Outfit',sans-serif] text-[14px] leading-normal bg-transparent border-none cursor-pointer p-0 whitespace-nowrap ${isActive ? "font-bold text-[#af9160]" : "font-normal text-[#1f1f1f]"}`}
+            >
+              {item.label}
+            </button>
+          );
+        })}
       </div>
       <div className="flex gap-[12px] items-center">
         <button

@@ -11,7 +11,12 @@
       "Bash(cat)",
       "Read(//tmp/**)",
       "mcp__claude_ai_Figma__get_design_context",
-      "Bash(curl -s \"https://www.figma.com/api/mcp/asset/2d67e833-3e5c-42f2-9661-8177f655c1fb\" -o \"/Users/irfanridho/Sites/Pulang Mobile First/src/assets/Section/manifesto-icon.svg\")"
+      "Bash(curl -s \"https://www.figma.com/api/mcp/asset/2d67e833-3e5c-42f2-9661-8177f655c1fb\" -o \"/Users/irfanridho/Sites/Pulang Mobile First/src/assets/Section/manifesto-icon.svg\")",
+      "Skill(figma:figma-implement-design)",
+      "Skill(figma:figma-implement-design:*)",
+      "mcp__claude_ai_Figma__get_metadata",
+      "mcp__claude_ai_Figma__get_screenshot",
+      "Bash(git stash *)"
     ]
   }
 }

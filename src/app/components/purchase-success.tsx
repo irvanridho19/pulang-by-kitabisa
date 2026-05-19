@@ -1,5 +1,8 @@
 import { useState, useEffect } from "react";
 import svgPaths from "../../assets/Illustration/Success.svg";
+import informasiMakam from "../../assets/Icon Pencarian Lahan Makam 1.svg";
+import hariKematian from "../../assets/Hari Kematian.svg";
+import pascaPemakaman from "../../assets/Pasca Kematian.svg";  
 import { useLocation } from "react-router";
 import { NavbarMobileHeader, MobileMenu, Footer } from "./shared-layout";
 import { usePageTransition } from "./page-transition";
@@ -16,11 +19,7 @@ function IllustrationSuccess() {
 
 /* ── Feature icon box ─── */
 function FeatureIcon({ children }: { children: React.ReactNode }) {
-  return (
-    <div className="shrink-0 size-[40px] rounded-[10px] flex items-center justify-center" style={{ background: "#f0ebe1" }}>
-      {children}
-    </div>
-  );
+  return <div className="shrink-0 flex items-center justify-center">{children}</div>;
 }
 
 /* ── Voucher Success Page Content ─── */
@@ -35,37 +34,17 @@ function VoucherSuccessContent({ onDaftarkan, onMember, onBeranda, cardVisible, 
     {
       title: "Informasi lahan makam",
       desc: "Bantuan mencari lahan makam terdekat dengan domisili.",
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M10 2C7.24 2 5 4.24 5 7c0 4.25 5 11 5 11s5-6.75 5-11c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 10 5a1.5 1.5 0 0 1 0 3.5z" fill="#8a7560"/>
-        </svg>
-      ),
+      icon: <img src={informasiMakam} alt="" className="size-[36px] object-contain" />,
     },
     {
       title: "Layanan hari kematian",
       desc: "Pengurusan jenazah sesuai tuntunan agama masing-masing, hingga pengantaran ke pemakaman.",
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="2" y="13" width="16" height="5" rx="1" fill="#8a7560"/>
-          <rect x="4" y="6" width="3" height="7" rx="0.5" fill="#8a7560"/>
-          <rect x="8.5" y="6" width="3" height="7" rx="0.5" fill="#8a7560"/>
-          <rect x="13" y="6" width="3" height="7" rx="0.5" fill="#8a7560"/>
-          <path d="M1 13h18" stroke="#8a7560" strokeWidth="1" strokeLinecap="round"/>
-          <path d="M10 2L2 6h16L10 2z" fill="#8a7560"/>
-        </svg>
-      ),
+      icon: <img src={hariKematian} alt="" className="size-[36px] object-contain" />,
     },
     {
       title: "Pasca pemakaman",
       desc: "Pendampingan mengurus akta kematian Disdukcapil, penutupan BPJS, dll.",
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="8.5" y="10" width="3" height="7" rx="1" fill="#8a7560"/>
-          <ellipse cx="10" cy="8" rx="2.5" ry="3.5" fill="#f5c842" opacity="0.85"/>
-          <ellipse cx="10" cy="6.5" rx="1.2" ry="1.8" fill="#e8a020" opacity="0.7"/>
-          <rect x="8.5" y="8.5" width="3" height="1.5" rx="0.5" fill="#8a7560"/>
-        </svg>
-      ),
+      icon: <img src={pascaPemakaman} alt="" className="size-[36px] object-contain" />,
     },
   ];
 
@@ -286,37 +265,17 @@ export default function PurchaseSuccessPage() {
     {
       title: "Informasi lahan makam",
       desc: "Bantuan mencari lahan makam terdekat dengan domisili.",
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <path d="M10 2C7.24 2 5 4.24 5 7c0 4.25 5 11 5 11s5-6.75 5-11c0-2.76-2.24-5-5-5zm0 6.5A1.5 1.5 0 1 1 10 5a1.5 1.5 0 0 1 0 3.5z" fill="#8a7560"/>
-        </svg>
-      ),
+      icon: <img src={informasiMakam} alt="" className="size-[36px] object-contain" />,
     },
     {
       title: "Layanan hari kematian",
       desc: "Pengurusan jenazah sesuai tuntunan agama masing-masing, hingga pengantaran ke pemakaman.",
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="2" y="13" width="16" height="5" rx="1" fill="#8a7560"/>
-          <rect x="4" y="6" width="3" height="7" rx="0.5" fill="#8a7560"/>
-          <rect x="8.5" y="6" width="3" height="7" rx="0.5" fill="#8a7560"/>
-          <rect x="13" y="6" width="3" height="7" rx="0.5" fill="#8a7560"/>
-          <path d="M1 13h18" stroke="#8a7560" strokeWidth="1" strokeLinecap="round"/>
-          <path d="M10 2L2 6h16L10 2z" fill="#8a7560"/>
-        </svg>
-      ),
+      icon: <img src={hariKematian} alt="" className="size-[36px] object-contain" />,
     },
     {
       title: "Pasca pemakaman",
       desc: "Pendampingan mengurus akta kematian Disdukcapil, penutupan BPJS, dll.",
-      icon: (
-        <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-          <rect x="8.5" y="10" width="3" height="7" rx="1" fill="#8a7560"/>
-          <ellipse cx="10" cy="8" rx="2.5" ry="3.5" fill="#f5c842" opacity="0.85"/>
-          <ellipse cx="10" cy="6.5" rx="1.2" ry="1.8" fill="#e8a020" opacity="0.7"/>
-          <rect x="8.5" y="8.5" width="3" height="1.5" rx="0.5" fill="#8a7560"/>
-        </svg>
-      ),
+      icon: <img src={pascaPemakaman} alt="" className="size-[36px] object-contain" />,
     },
   ];
 
@@ -450,7 +409,7 @@ export default function PurchaseSuccessPage() {
                     {features.map((f, i) => (
                       <div key={i}>
                         <div className="flex gap-[16px] items-start py-[16px]">
-                          <div className="shrink-0 size-[44px] rounded-[12px] flex items-center justify-center" style={{ background: "#f0ebe1" }}>
+                          <div className="shrink-0 flex items-center justify-center">
                             {f.icon}
                           </div>
                           <div className="flex flex-col gap-[4px] flex-1 min-w-0">
